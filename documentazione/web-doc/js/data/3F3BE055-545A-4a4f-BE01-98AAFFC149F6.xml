@@ -1,7 +1,7 @@
 tocTab[tocTab.length] = new Array("0.1.2:1", "", "Gestione Anagrafiche", "EARoot/EA1/EA2/EA15.htm", "180.png", "14", "0", "", "Use Case diagram0","{81B88198-A24F-4e6a-B3D2-1E82B0981711}");
 tocTab[tocTab.length] = new Array("0.1.2:2", "", "Cancellazione Cliente", "EARoot/EA1/EA2/EA18.htm", "7.png", "E45", "0", "", "UseCase0","{95A251D8-F22D-482f-9C1A-1A3EC17C2B4E}");
 tocTab[tocTab.length] = new Array("0.1.2:3", "", "Gestione Clienti", "EARoot/EA1/EA2/EA19.htm", "7.png", "E40", "0", "", "UseCase0","{E8031D05-E852-42b6-B4AB-42B6811DB0CB}");
-tocTab[tocTab.length] = new Array("0.1.2:4", "", "Gestione Conti Correnti", "EARoot/EA1/EA2/EA20.htm", "7.png", "E41", "0", "", "UseCase0","{EBC69B62-E068-43c2-AE14-1E5A3E812290}");
-tocTab[tocTab.length] = new Array("0.1.2:5", "", "Inserimento Cliente", "EARoot/EA1/EA2/EA21.htm", "7.png", "E44", "0", "", "UseCase0","{B9027AA5-81C4-47ac-A040-28130AB7B605}");
-tocTab[tocTab.length] = new Array("0.1.2:6", "", "Modifica Cliente", "EARoot/EA1/EA2/EA22.htm", "7.png", "E47", "0", "", "UseCase0","{C5A02D6A-CA9B-4ff2-B4FE-5E4E74F73224}");
-tocTab[tocTab.length] = new Array("0.1.2:7", "", "Ricerca Cliente", "EARoot/EA1/EA2/EA23.htm", "7.png", "E46", "0", "", "UseCase0","{8610941F-6E3C-4a7e-AFA9-AF24F4338D5C}");
+tocTab[tocTab.length] = new Array("0.1.2:4", "", "Gestione Conti Correnti", "EARoot/EA1/EA2/EA21.htm", "7.png", "E41", "0", "", "UseCase0","{EBC69B62-E068-43c2-AE14-1E5A3E812290}");
+tocTab[tocTab.length] = new Array("0.1.2:5", "", "Inserimento Cliente", "EARoot/EA1/EA2/EA22.htm", "7.png", "E44", "0", "", "UseCase0","{B9027AA5-81C4-47ac-A040-28130AB7B605}");
+tocTab[tocTab.length] = new Array("0.1.2:6", "", "Modifica Cliente", "EARoot/EA1/EA2/EA23.htm", "7.png", "E47", "0", "", "UseCase0","{C5A02D6A-CA9B-4ff2-B4FE-5E4E74F73224}");
+tocTab[tocTab.length] = new Array("0.1.2:7", "", "Ricerca Cliente", "EARoot/EA1/EA2/EA24.htm", "7.png", "E46", "0", "", "UseCase0","{8610941F-6E3C-4a7e-AFA9-AF24F4338D5C}");
