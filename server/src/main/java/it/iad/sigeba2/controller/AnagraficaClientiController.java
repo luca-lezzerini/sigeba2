@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AnagraficaClientiController {
 
     @RequestMapping("/cercaCliente")
-    public List<ClienteDto> cercaCliente(CriterioClienteDto criterio) {
+    @ResponseBody
+    public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
         throw new UnsupportedOperationException();
     }
     @ResponseBody
