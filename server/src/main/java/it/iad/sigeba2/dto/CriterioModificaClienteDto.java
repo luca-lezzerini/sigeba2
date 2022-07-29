@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class CriterioModificaClienteDto {
 
-    private String criterio;
+    private ClienteDto cliente;
+    private CriterioClienteDto filtro;
 }
