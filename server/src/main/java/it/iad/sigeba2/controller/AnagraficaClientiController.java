@@ -21,5 +21,6 @@ public class AnagraficaClientiController {
     public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto cliente) {
         throw new UnsupportedOperationException();
     }
+    
 
 }
