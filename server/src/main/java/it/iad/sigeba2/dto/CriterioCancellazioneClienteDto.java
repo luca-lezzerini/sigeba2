@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CriterioCancellazioneClienteDto {
 
-    private long idCliente;
+    private Long idCliente;
     private CriterioClienteDto filtro;
 }
