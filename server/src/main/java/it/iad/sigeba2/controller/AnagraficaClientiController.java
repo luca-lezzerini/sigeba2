@@ -14,12 +14,21 @@ public class AnagraficaClientiController {
     @RequestMapping("/cercaCliente")
     @ResponseBody
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
-        throw new UnsupportedOperationException();
+       
+        try {
+            if(criterio != null){
+            List<ClienteDto> lista = ClienteDto.findByCriterio();
+         return lista;}
+         else{
+             return null;
+             }
+        } catch (Exception e) {
+        return null;
+        }
     }
     @ResponseBody
     @RequestMapping("/inserisciCliente")
     public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto cliente) {
         throw new UnsupportedOperationException();
     }
-    
 }
