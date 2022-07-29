@@ -1,5 +1,5 @@
-tocTab[tocTab.length] = new Array("0.2.2:1", "", "Sequence", "EARoot/EA2/EA2/EA29.htm", "185.png", "12", "0", "", "Sequence diagram0","{51D43880-6220-473a-AC95-B323A0C35E83}");
-tocTab[tocTab.length] = new Array("0.2.2:2", "", "Dispatcher", "EARoot/EA2/EA2/EA32.htm", "57.png", "E29", "0", "", "Sequence0","{ECCDF7AB-F0C3-4a6f-B85D-A454153FD205}");
-tocTab[tocTab.length] = new Array("0.2.2:3", "", "Servlet/JSP", "EARoot/EA2/EA2/EA33.htm", "57.png", "E30", "0", "", "Sequence0","{FF335134-3A5F-4cea-AC7F-B130E835A353}");
-tocTab[tocTab.length] = new Array("0.2.2:4", "", "ServletX", "EARoot/EA2/EA2/EA34.htm", "57.png", "E28", "0", "", "Sequence0","{9E358F7D-0D87-4fb5-A8E9-BA208C8BCBB1}");
-tocTab[tocTab.length] = new Array("0.2.2:5", "", "Utente", "EARoot/EA2/EA2/EA35.htm", "6.png", "E27", "0", "", "Actor0","{30B83EC0-893E-4fd4-B1E7-FBBC068FBC55}");
+tocTab[tocTab.length] = new Array("0.2.2:1", "", "Sequence", "EARoot/EA2/EA2/EA49.htm", "185.png", "12", "0", "", "Sequence diagram0","{51D43880-6220-473a-AC95-B323A0C35E83}");
+tocTab[tocTab.length] = new Array("0.2.2:2", "", "Dispatcher", "EARoot/EA2/EA2/EA52.htm", "57.png", "E29", "0", "", "Sequence0","{ECCDF7AB-F0C3-4a6f-B85D-A454153FD205}");
+tocTab[tocTab.length] = new Array("0.2.2:3", "", "Servlet/JSP", "EARoot/EA2/EA2/EA53.htm", "57.png", "E30", "0", "", "Sequence0","{FF335134-3A5F-4cea-AC7F-B130E835A353}");
+tocTab[tocTab.length] = new Array("0.2.2:4", "", "ServletX", "EARoot/EA2/EA2/EA54.htm", "57.png", "E28", "0", "", "Sequence0","{9E358F7D-0D87-4fb5-A8E9-BA208C8BCBB1}");
+tocTab[tocTab.length] = new Array("0.2.2:5", "", "Utente", "EARoot/EA2/EA2/EA55.htm", "6.png", "E27", "0", "", "Actor0","{30B83EC0-893E-4fd4-B1E7-FBBC068FBC55}");
