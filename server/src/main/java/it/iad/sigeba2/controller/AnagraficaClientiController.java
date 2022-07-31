@@ -15,17 +15,7 @@ public class AnagraficaClientiController {
     @RequestMapping("/cercaCliente")
     @ResponseBody
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
-
-        try {
-            if (criterio != null) {
-                List<ClienteDto> lista = ClienteDto.findByCriterio();
-                return lista;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            return null;
-        }
+        throw new UnsupportedOperationException();
     }
 
     @ResponseBody
