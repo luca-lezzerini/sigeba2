@@ -4,6 +4,7 @@ import it.iad.sigeba2.dto.CriterioClienteDto;
 import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
+import it.iad.sigeba2.model.Cliente;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class AnagraficaClientiController {
 
     @ResponseBody
     @RequestMapping("/leggiCliente")
-    public List<SimpleIdDto> leggiCliente(@RequestBody ClienteDto cliente) {
+    public Cliente leggiCliente(@RequestBody SimpleIdDto cliente) {
         throw new UnsupportedOperationException();
 
     }
