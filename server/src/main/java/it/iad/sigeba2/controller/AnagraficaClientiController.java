@@ -30,4 +30,9 @@ public class AnagraficaClientiController {
         throw new UnsupportedOperationException();
 
     }
+    @RequestMapping("/cancellaCliente")
+    @ResponseBody
+    public List<ClienteDto> cancellaCliente(@RequestBody CriterioClienteDto criterio) {
+        throw new UnsupportedOperationException();
+    }
 }
