@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AnagraficaClientiController {
 
+    /* Il metodo prende in input un criterio di ricerca inserito dall'utente, tipicamente una stringa, 
+    che potrebbe essere una parte del nome o del cognome o del codice fiscale del cliente da cercare. 
+    Una volta inserito questo criterio di ricerca, comparirà l'elenco dei clienti che soddisfano 
+    quella ricerca, sotto forma di tabella. */
     @RequestMapping("/cercaCliente")
     @ResponseBody
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
