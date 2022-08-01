@@ -2,6 +2,7 @@ package it.iad.sigeba2.controller;
 
 import it.iad.sigeba2.dto.CriterioClienteDto;
 import it.iad.sigeba2.dto.ClienteDto;
+import it.iad.sigeba2.dto.CriterioCancellazioneClienteDto;
 import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
@@ -48,6 +49,7 @@ public class AnagraficaClientiController {
     @RequestMapping("/inserisciCliente")
 //creo il metodo inserisciCliente
     public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto cliente) {
+        System.out.println("Entrato");
         throw new UnsupportedOperationException();
     }
 
@@ -61,6 +63,7 @@ public class AnagraficaClientiController {
     @ResponseBody
     @RequestMapping("/leggiCliente")
     public Cliente leggiCliente(@RequestBody SimpleIdDto cliente) {
+        System.out.println("Entrato");
         throw new UnsupportedOperationException();
 
     }
@@ -76,13 +79,20 @@ public class AnagraficaClientiController {
     @ResponseBody
     @RequestMapping("/modificaCliente")
     public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modifica) {
+        System.out.println("Entrato");
         throw new UnsupportedOperationException();
 
     }
-
+/**
+ * Cancella il cliente dal DB.
+ * Il cliente da cancellare viene identificato mediante 
+ * @param criterio
+ * @return 
+ */
     @RequestMapping("/cancellaCliente")
     @ResponseBody
-    public List<ClienteDto> cancellaCliente(@RequestBody CriterioClienteDto criterio) {
+    public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto criterio) {
+        System.out.println("Entrato");
         throw new UnsupportedOperationException();
     }
 }
