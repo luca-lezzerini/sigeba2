@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.iad.sigeba2.dto.SalutoDto01;
 
+@Deprecated
 @RestController
 public class SalutoController01 {
 	

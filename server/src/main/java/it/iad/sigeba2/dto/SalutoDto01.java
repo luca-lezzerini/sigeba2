@@ -2,6 +2,7 @@ package it.iad.sigeba2.dto;
 
 import java.time.LocalTime;
 
+@Deprecated
 public class SalutoDto01 {
 
 	private LocalTime orario;

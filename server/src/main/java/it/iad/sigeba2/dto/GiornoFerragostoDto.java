@@ -2,6 +2,7 @@ package it.iad.sigeba2.dto;
 
 import java.time.LocalDate;
 
+@Deprecated
 public class GiornoFerragostoDto {
 
 	private LocalDate data;

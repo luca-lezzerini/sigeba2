@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.iad.sigeba2.dto.GiornoFerragostoDto;
 
+@Deprecated
 @RestController
 public class FerragostoController01 {
 	

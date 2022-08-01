@@ -1,7 +1,7 @@
 package it.iad.sigeba2.dto;
 
 
-
+@Deprecated
 public class RandomPariDispariDto {
 
 	private Integer randomNumero;

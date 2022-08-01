@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.iad.sigeba2.dto.RandomPariDispariDto;
 
+@Deprecated
 @RestController
 public class PariDispariController01 {
 
