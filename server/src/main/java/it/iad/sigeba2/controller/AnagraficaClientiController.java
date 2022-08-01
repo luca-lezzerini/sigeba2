@@ -53,7 +53,9 @@ public class AnagraficaClientiController {
 
     /**
      * Recupera i dati di un cliente fornito l'ID. Se non lo trova ritorna null.
-     * @param cliente il DTO con l'ID del cliente da cercare (diverso da null e da 0)
+     *
+     * @param cliente il DTO con l'ID del cliente da cercare (diverso da null e
+     * da 0)
      * @return il cliente trovato o null se non lo trova
      */
     @ResponseBody
@@ -63,6 +65,14 @@ public class AnagraficaClientiController {
 
     }
 
+    /**
+     * Il metodo modifica il cliente sostituendolo con quello passato cercandolo
+     * tramite id
+     *
+     * @param modifica contienem il cliente da sostituire sul data base, ed il
+     * criterio per ritornare la lista dei clienti aggiornata.
+     * @return la lista dei clienti aggiornata filtrata con il criterio passato
+     */
     @ResponseBody
     @RequestMapping("/modificaCliente")
     public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modifica) {
