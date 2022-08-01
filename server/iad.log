@@ -56,3 +56,7 @@ Action:
 
 Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 
+2022-08-01 17:29:22.801  INFO 11612 --- [main] it.iad.sigeba2.Sigeba2Application        : Starting Sigeba2Application using Java 17.0.1 on DESKTOP-ETE4PHS with PID 11612 (C:\Users\use\Documents\NetBeansProjects\sigeba2\server\target\classes started by use in C:\Users\use\Documents\NetBeansProjects\sigeba2\server)
+2022-08-01 17:29:22.804 DEBUG 11612 --- [main] it.iad.sigeba2.Sigeba2Application        : Running with Spring Boot v2.7.2, Spring v5.3.22
+2022-08-01 17:29:22.805  INFO 11612 --- [main] it.iad.sigeba2.Sigeba2Application        : No active profile set, falling back to 1 default profile: "default"
+2022-08-01 17:29:24.866  INFO 11612 --- [main] it.iad.sigeba2.Sigeba2Application        : Started Sigeba2Application in 2.534 seconds (JVM running for 2.894)
