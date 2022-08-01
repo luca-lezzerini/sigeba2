@@ -19,9 +19,11 @@ public class AnagraficaClientiController {
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
         throw new UnsupportedOperationException();
     }
-
+//istituisco la responsebody
     @ResponseBody
+// inserisco  la request verso inseriscicliente  
     @RequestMapping("/inserisciCliente")
+//creo il metodo inserisciCliente
     public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto cliente) {
         throw new UnsupportedOperationException();
     }
