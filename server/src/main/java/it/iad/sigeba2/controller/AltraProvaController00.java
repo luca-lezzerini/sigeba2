@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+@Deprecated
 @RestController
 public class AltraProvaController00 {
 
