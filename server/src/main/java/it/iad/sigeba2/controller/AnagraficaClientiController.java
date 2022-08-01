@@ -42,10 +42,10 @@ public class AnagraficaClientiController {
     }
 
     /**
-     * Inserisce un nuovo cliente nel DB
+     * Inserisce un nuovo dto nel DB
      *
-     * @param cliente il DTO con i dati del cliente da inserire (id deve essere
-     * null o zero) e il criterio di ricerca da applicare dopo l'inserimento
+     * @param dto il DTO con i dati del dto da inserire (id deve essere
+ null o zero) e il criterio di ricerca da applicare dopo l'inserimento
      * @return la lista dei clienti, dopo l'inserimento, che soddisfano ilc
      * riterio passato.
      */
@@ -53,14 +53,22 @@ public class AnagraficaClientiController {
 // inserisco  la request verso inseriscicliente  
     @RequestMapping("/inserisciCliente")
 //creo il metodo inserisciCliente
-    public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto cliente) {
+    public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto dto) {
+        log.debug("Entra in inserisciCliente");
         // riceve il DTO e lo trasforma in Cliente
-
-        // aggiunge il cliente alla lista dei clienti
-        
+        Cliente cliente = new Cliente();
+        cliente.setNome(dto.getNome());
+        cliente.setCognome(dto.getCognome());
+        cliente.setId(dto.getId());
+        cliente.setCodiceFiscale(dto.getCodiceFiscale());
+        // aggiunge il dto alla lista dei clienti
+        clienti.add(cliente);
         // chiama il metodo cercaCliente per ritornare la lista filtrata
         // TODO: da rimuovere
-        throw new UnsupportedOperationException();
+        log.debug("Esci da inserisciCliente");
+        List<ClienteDto> clienteDto = mostraTuttiClienti();
+        return clienteDto;
+       
     }
 
     /**
@@ -121,7 +129,7 @@ public class AnagraficaClientiController {
             dto.setCognome(cliente.getCognome());
             dto.setId(cliente.getId());
             dto.setNome(cliente.getNome());
-            
+
             dtos.add(dto);
         }
         log.debug("Uscito da mostraTuttiClienti");
