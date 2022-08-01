@@ -8,6 +8,7 @@ package it.iad.sigeba2.dto;
  *
  * @author ricca
  */
+@Deprecated
 public class DataDto06 {
 
     private String data;

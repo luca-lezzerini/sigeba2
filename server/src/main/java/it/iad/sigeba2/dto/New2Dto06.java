@@ -1,5 +1,5 @@
 package it.iad.sigeba2.dto;
-
+@Deprecated
 public class New2Dto06 {
 
    private String giorno;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
+@Deprecated
 public class New1Controller06 {
 
     @RequestMapping("/new1Controller06")

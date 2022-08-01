@@ -1,5 +1,5 @@
 package it.iad.sigeba2.dto;
-
+@Deprecated
 public class ProvaControllerDto {
 
     private String data;
