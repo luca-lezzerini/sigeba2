@@ -6,13 +6,15 @@ import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
 import java.util.List;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Log4j2
+@Slf4j
 @RestController
 public class AnagraficaClientiController {
 
