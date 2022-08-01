@@ -44,7 +44,9 @@ public class AnagraficaClientiController {
      * riterio passato.
      */
     @ResponseBody
+// inserisco  la request verso inseriscicliente  
     @RequestMapping("/inserisciCliente")
+//creo il metodo inserisciCliente
     public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto cliente) {
         throw new UnsupportedOperationException();
     }
