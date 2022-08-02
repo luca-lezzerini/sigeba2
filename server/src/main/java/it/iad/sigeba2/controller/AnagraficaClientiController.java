@@ -114,8 +114,20 @@ public class AnagraficaClientiController {
     @ResponseBody
     @RequestMapping("/modificaCliente")
     public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modifica) {
-        System.out.println("Entrato");
-        throw new UnsupportedOperationException();
+        
+        ClienteDto cli = modifica.getCliente();
+        
+        log.debug("Entrato in modificaClienti");
+        
+        for (Cliente cliente : clienti) {
+            if(cliente.getId().equals(cli.getId())){
+                cliente.setNome(cli.getNome());
+                cliente.setCognome(cli.getCognome());
+                cliente.setCodiceFiscale(cli.getCodiceFiscale());
+            }
+        }
+        log.debug("Esce da modificaClienti");
+        return mostraTuttiClienti();
 
     }
 
