@@ -37,8 +37,25 @@ public class AnagraficaClientiController {
     @RequestMapping("/cercaCliente")
     @ResponseBody
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
-        log.debug("Entrato");
-        throw new UnsupportedOperationException();
+
+        String crit = criterio.getCriterio();
+        List<ClienteDto> dtos = new ArrayList<>();
+        log.debug("Entrato in cercaCliente");
+        
+        for (Cliente cliente : clienti) {
+            if(cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
+                    || cliente.getCodiceFiscale().contains(crit)){
+                log.debug("Entrato in if cercaCliente");
+                ClienteDto dto = new ClienteDto();
+                dto.setCodiceFiscale(cliente.getCodiceFiscale());
+                dto.setCognome(cliente.getCognome());
+                dto.setId(cliente.getId());
+                dto.setNome(cliente.getNome());
+                dtos.add(dto);
+        }
+    }
+        log.debug("Uscito da cercaCliente");
+        return dtos;
     }
 
     /**
@@ -68,7 +85,7 @@ public class AnagraficaClientiController {
         log.debug("Esci da inserisciCliente");
         List<ClienteDto> clienteDto = mostraTuttiClienti();
         return clienteDto;
-       
+
     }
 
     /**
