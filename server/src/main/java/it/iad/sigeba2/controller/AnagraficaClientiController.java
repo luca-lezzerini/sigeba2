@@ -137,8 +137,15 @@ public class AnagraficaClientiController {
     @RequestMapping("/cancellaCliente")
     @ResponseBody
     public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto criterio) {
-        System.out.println("Entrato");
-        throw new UnsupportedOperationException();
+        Long Id = criterio.getIdCliente();
+        log.debug("Entrato in cancellaCliente");
+        List<ClienteDto> dtos = new ArrayList<>();
+        for (Cliente cliente : clienti) {
+            if (cliente.getId().equals(Id))
+                    log.debug("Uscito da cancellaCliente");
+        
+        }
+        return dtos;
     }
 
     @RequestMapping("/mostraTuttiClienti")
