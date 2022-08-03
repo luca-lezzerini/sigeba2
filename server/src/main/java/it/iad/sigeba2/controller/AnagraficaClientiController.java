@@ -3,6 +3,7 @@ package it.iad.sigeba2.controller;
 import it.iad.sigeba2.dto.CriterioClienteDto;
 import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.dto.CriterioCancellazioneClienteDto;
+import it.iad.sigeba2.dto.CriterioInserimentoClienteDto;
 import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
@@ -49,7 +50,7 @@ public class AnagraficaClientiController {
 // inserisco  la request verso inseriscicliente  
     @RequestMapping("/inserisciCliente")
 //creo il metodo inserisciCliente
-    public List<ClienteDto> inserisciCliente(@RequestBody ClienteDto dto) {
+    public List<ClienteDto> inserisciCliente(@RequestBody CriterioInserimentoClienteDto dto) {
         return anagraficaClientiService.inserisciCliente(dto);
 
     }

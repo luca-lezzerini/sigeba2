@@ -3,6 +3,7 @@ package it.iad.sigeba2.service.impl;
 import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.dto.CriterioCancellazioneClienteDto;
 import it.iad.sigeba2.dto.CriterioClienteDto;
+import it.iad.sigeba2.dto.CriterioInserimentoClienteDto;
 import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
@@ -41,10 +42,10 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
     }
 
     @Override
-    public List<ClienteDto> inserisciCliente(ClienteDto dto) {
+    public List<ClienteDto> inserisciCliente(CriterioInserimentoClienteDto dto) {
         log.debug("Entra in inserisciCliente");
         // riceve il DTO e lo trasforma in Cliente
-        Cliente cliente = new Cliente(dto);
+        Cliente cliente = new Cliente(dto.getCliente());
 
         // imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
         cliente.setId(prossimaChiave);
@@ -54,7 +55,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         mappaClienti.put(cliente.getId(), cliente);
         // chiama il metodo cercaCliente per ritornare la lista filtrata
         log.debug("Esci da inserisciCliente");
-        List<ClienteDto> clienteDto = mostraTuttiClienti();
+        List<ClienteDto> clienteDto = cercaCliente(dto.getFiltro());
         return clienteDto;
     }
 
@@ -73,7 +74,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
         mappaClienti.put(posizioneDaCambiare, clienteCheSostituisce);
         log.debug("Esce da modificaClienti");
-        return mostraTuttiClienti();
+        return cercaCliente(modificaDto.getFiltro());
     }
 
     @Override
@@ -87,24 +88,10 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
         // recupera i clienti rimasti
         List<ClienteDto> clientiRimasti;
-        clientiRimasti = mostraTuttiClienti();
+        clientiRimasti = cercaCliente(dtoCancellazione.getFiltro());
         log.debug("In uscita da cancellaCliente");
         return clientiRimasti;
     }
 
-    @Override
-    public List<ClienteDto> mostraTuttiClienti() {
-        log.debug("Entrato in mostraTuttiClienti");
-        // crea la lista risultato (vuota)
-        List<ClienteDto> clientiTrovati = new ArrayList<>();
-        // copia tutti i clienti nei DTO
-        Collection<Cliente> listaClienti = mappaClienti.values();
-        for (Cliente cliente : listaClienti) {
-            clientiTrovati.add(new ClienteDto(cliente));
-        }
-        log.debug("Uscito da mostraTuttiClienti");
-        // ritorna la lista dei DTO
-        return clientiTrovati;
-    }
-
+   
 }

@@ -3,6 +3,7 @@ package it.iad.sigeba2.service;
 import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.dto.CriterioCancellazioneClienteDto;
 import it.iad.sigeba2.dto.CriterioClienteDto;
+import it.iad.sigeba2.dto.CriterioInserimentoClienteDto;
 import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
@@ -28,7 +29,7 @@ public interface AnagraficaClientiService {
      * @return la lista dei clienti, dopo l'inserimento, che soddisfano il
      * criterio passato.
      */
-    List<ClienteDto> inserisciCliente(ClienteDto dto);
+    List<ClienteDto> inserisciCliente(CriterioInserimentoClienteDto dto);
 
     /**
      * Recupera i dati di un cliente fornito l'ID. Se non lo trova ritorna null.
@@ -58,9 +59,4 @@ public interface AnagraficaClientiService {
      */
     List<ClienteDto> cancellaCliente(CriterioCancellazioneClienteDto dtoCancellazione);
 
-    /**
-     * Restituisce la lista di tutti i clienti che soddisfano il criterio di ricerca passato
-     * @return la lista clienti filtrata per criterio
-     */
-    List<ClienteDto> mostraTuttiClienti();
 }
