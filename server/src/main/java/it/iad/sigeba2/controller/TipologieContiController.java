@@ -24,31 +24,31 @@ public class TipologieContiController {
     
     @RequestMapping("/cercaTipoConto")
     @ResponseBody
-    public List<TipoContoDto> cercaTipoContoDto(@RequestBody CriterioTipoContoDto criterio) {
-        throw new UnsupportedOperationException();
+    public List<TipoContoDto> cercaTipoConto(@RequestBody CriterioTipoContoDto criterio) {
+      return tipologieContiService.cercaTipoConto(criterio); 
     }
     
     @RequestMapping("/inserisciTipoConto")
     @ResponseBody
-    public List<TipoContoDto> inserisciTipoContoDto(@RequestBody TipoContoDto inserisci) {
+    public List<TipoContoDto> inserisciTipoConto(@RequestBody TipoContoDto inserisci) {
         throw new UnsupportedOperationException();
     }
     
     @RequestMapping("/cancellaTipoConto")
     @ResponseBody
-    public List<TipoContoDto> cancellaTipoContoDto(@RequestBody CriterioCancellazioneTipoContoDto cancella) {
-        throw new UnsupportedOperationException();
+    public List<TipoContoDto> cancellaTipoConto(@RequestBody CriterioCancellazioneTipoContoDto cancella) {
+       throw new UnsupportedOperationException();
     }
     
     @RequestMapping("/modificaTipoConto")
     @ResponseBody
-    public List<TipoContoDto> modificaTipoContoDto(@RequestBody CriterioModificaTipoContoDto modifica) {
+    public List<TipoContoDto> modificaTipoConto(@RequestBody CriterioModificaTipoContoDto modifica) {
         throw new UnsupportedOperationException();
     }
     
     @RequestMapping("/leggiTipoConto")
     @ResponseBody
-    public List<TipoContoDto> leggiTipoContoDto(@RequestBody SimpleIdDto leggi) {
+    public List<TipoContoDto> leggiTipoConto(@RequestBody SimpleIdDto leggi) {
         throw new UnsupportedOperationException();
     }
 

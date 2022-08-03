@@ -11,13 +11,13 @@ import java.util.List;
 public interface TipologieContiService {
 
 
-    List<TipoContoDto> cercaTipoContoDto(CriterioTipoContoDto criterio);
+    List<TipoContoDto> cercaTipoConto(CriterioTipoContoDto criterio);
 
-    List<TipoContoDto> inserisciTipoContoDto(TipoContoDto inserisci);
+    List<TipoContoDto> inserisciTipoConto(TipoContoDto inserisci);
 
-    List<TipoContoDto> cancellaTipoContoDto(CriterioCancellazioneTipoContoDto cancella);
+    List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto cancella);
 
-    List<TipoContoDto> modificaTipoContoDto(CriterioModificaTipoContoDto modifica);
+    List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica);
     
     TipoConto leggiCliente(SimpleIdDto cliente);
 
