@@ -36,9 +36,9 @@ public class AnagraficaClientiController {
     @ResponseBody
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
 
+        log.debug("Entrato in cercaCliente");
         String crit = criterio.getCriterio();
         List<ClienteDto> dtos = new ArrayList<>();
-        log.debug("Entrato in cercaCliente");
 
         // FIXME: dopo cambio mappa non funziona più
 //        for (Cliente cliente : clienti) {
