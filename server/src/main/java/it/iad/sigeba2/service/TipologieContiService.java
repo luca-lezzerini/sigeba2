@@ -1,6 +1,7 @@
 package it.iad.sigeba2.service;
 
 import it.iad.sigeba2.dto.CriterioCancellazioneTipoContoDto;
+import it.iad.sigeba2.dto.CriterioInserimentoTipoContoDto;
 import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
@@ -13,7 +14,7 @@ public interface TipologieContiService {
 
     List<TipoContoDto> cercaTipoConto(CriterioTipoContoDto criterio);
 
-    List<TipoContoDto> inserisciTipoConto(TipoContoDto inserisci);
+    List<TipoContoDto> inserisciTipoConto(CriterioInserimentoTipoContoDto contoDaInserireDto);
 
     List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto cancella);
 

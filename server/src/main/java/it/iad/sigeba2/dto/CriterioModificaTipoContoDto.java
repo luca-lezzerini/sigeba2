@@ -6,5 +6,17 @@ import lombok.Data;
 public class CriterioModificaTipoContoDto {
 
     private TipoContoDto tipoConto;
-    private TipoContoDto filtro;
+    private CriterioTipoContoDto filtro = new CriterioTipoContoDto("");
+
+    public CriterioModificaTipoContoDto() {
+    }
+    
+    public CriterioModificaTipoContoDto(TipoContoDto tipoConto) {
+        this.tipoConto = tipoConto;
+    }
+
+    public CriterioModificaTipoContoDto(TipoContoDto tipoConto, CriterioTipoContoDto filtro) {
+        this.tipoConto = tipoConto;
+        this.filtro = filtro;
+    }
 }
