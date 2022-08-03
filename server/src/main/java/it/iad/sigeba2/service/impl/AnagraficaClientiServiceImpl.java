@@ -29,19 +29,13 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         String crit = criterio.getCriterio();
         List<ClienteDto> dtos = new ArrayList<>();
 
-        // FIXME: dopo cambio mappa non funziona più
-//        for (Cliente cliente : clienti) {
-//            if (cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
-//                    || cliente.getCodiceFiscale().contains(crit)) {
-//                log.debug("Entrato in if cercaCliente");
-//                ClienteDto dto = new ClienteDto();
-//                dto.setCodiceFiscale(cliente.getCodiceFiscale());
-//                dto.setCognome(cliente.getCognome());
-//                dto.setId(cliente.getId());
-//                dto.setNome(cliente.getNome());
-//                dtos.add(dto);
-//            }
-//        }
+        Collection<Cliente> lista = mappaClienti.values();
+        for (Cliente cliente : lista) {
+            if (cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
+                    || cliente.getCodiceFiscale().contains(crit)) {
+                dtos.add(new ClienteDto(cliente));
+            }
+        }
         log.debug("Uscito da cercaCliente");
         return dtos;
     }

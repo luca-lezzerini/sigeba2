@@ -1,6 +1,7 @@
 package it.iad.sigeba2;
 
 import it.iad.sigeba2.dto.ClienteDto;
+import it.iad.sigeba2.dto.CriterioClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
 import it.iad.sigeba2.service.AnagraficaClientiService;
@@ -47,5 +48,16 @@ public class AnagraficaClientiTest {
          Cliente cli = anagraficaClientiService.leggiCliente(sid);
          Assertions.assertTrue(cli != null);
          Assertions.assertTrue(cli.getNome().equals("Antonio") && cli.getCognome().equals("Bianchi"));
+         
+         // verifico ricerca cliente
+         CriterioClienteDto criterio = new CriterioClienteDto();
+         criterio.setCriterio("oss");
+         List<ClienteDto> clientiTrovati = anagraficaClientiService.cercaCliente(criterio);
+         Assertions.assertTrue(clientiTrovati.size() == 1);
+         Assertions.assertTrue(clientiTrovati.get(0).getCognome().equals("Rossi"));
+         criterio.setCriterio("r");
+         clientiTrovati = anagraficaClientiService.cercaCliente(criterio);
+         Assertions.assertTrue(clientiTrovati.size() == 2);
+        
      }
 }
