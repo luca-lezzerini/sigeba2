@@ -1,3 +1,4 @@
 /client/sigeba2/nbproject/private/
 *.log
 *.tmp
+/server/nbproject/

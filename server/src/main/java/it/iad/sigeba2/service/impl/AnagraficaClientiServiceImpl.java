@@ -50,16 +50,12 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
     public List<ClienteDto> inserisciCliente(ClienteDto dto) {
         log.debug("Entra in inserisciCliente");
         // riceve il DTO e lo trasforma in Cliente
-        Cliente cliente = new Cliente();
+        Cliente cliente = new Cliente(dto);
 
 // imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
         cliente.setId(prossimaChiave);
         prossimaChiave += 1;
 
-        // popolo gli altri campi
-        cliente.setNome(dto.getNome());
-        cliente.setCognome(dto.getCognome());
-        cliente.setCodiceFiscale(dto.getCodiceFiscale());
         // aggiunge il dto alla lista dei clienti
         mappaClienti.put(cliente.getId(), cliente);
         // chiama il metodo cercaCliente per ritornare la lista filtrata
@@ -69,8 +65,8 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
     }
 
     @Override
-    public Cliente leggiCliente(SimpleIdDto cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Cliente leggiCliente(SimpleIdDto chiave) {
+        return mappaClienti.get(chiave.getId());
     }
 
     @Override
@@ -79,11 +75,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
         ClienteDto clienteModificato = modificaDto.getCliente();
 
-        Cliente clienteCheSostituisce = new Cliente();
-        clienteCheSostituisce.setNome(clienteModificato.getNome());
-        clienteCheSostituisce.setCognome(clienteModificato.getCognome());
-        clienteCheSostituisce.setCodiceFiscale(clienteModificato.getCodiceFiscale());
-        clienteCheSostituisce.setId(clienteModificato.getId());
+        Cliente clienteCheSostituisce = new Cliente(clienteModificato);
 
         Long posizioneDaCambiare = clienteModificato.getId();
         mappaClienti.put(posizioneDaCambiare, clienteCheSostituisce);
@@ -115,11 +107,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         // copia tutti i clienti nei DTO
         Collection<Cliente> listaClienti = mappaClienti.values();
         for (Cliente cliente : listaClienti) {
-            ClienteDto dto = new ClienteDto();
-            dto.setCodiceFiscale(cliente.getCodiceFiscale());
-            dto.setCognome(cliente.getCognome());
-            dto.setId(cliente.getId());
-            dto.setNome(cliente.getNome());
+            ClienteDto dto = new ClienteDto(cliente);
 
             clientiTrovati.add(dto);
         }
