@@ -7,4 +7,5 @@ public class CriterioTipoContoDto {
     
     private String criterio;
     
+    public CriterioTipoContoDto(){}    
 }
