@@ -32,9 +32,9 @@ public class AnagraficaClientiController {
     @ResponseBody
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
 
+        log.debug("Entrato in cercaCliente");
         String crit = criterio.getCriterio();
         List<ClienteDto> dtos = new ArrayList<>();
-        log.debug("Entrato in cercaCliente");
 
         for (Cliente cliente : clienti) {
             if (cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
