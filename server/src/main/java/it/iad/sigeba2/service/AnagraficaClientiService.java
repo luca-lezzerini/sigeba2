@@ -58,5 +58,9 @@ public interface AnagraficaClientiService {
      */
     List<ClienteDto> cancellaCliente(CriterioCancellazioneClienteDto dtoCancellazione);
 
+    /**
+     * Restituisce la lista di tutti i clienti che soddisfano il criterio di ricerca passato
+     * @return la lista clienti filtrata per criterio
+     */
     List<ClienteDto> mostraTuttiClienti();
 }

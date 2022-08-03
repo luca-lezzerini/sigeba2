@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +63,6 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         // aggiunge il dto alla lista dei clienti
         mappaClienti.put(cliente.getId(), cliente);
         // chiama il metodo cercaCliente per ritornare la lista filtrata
-        // TODO: da rimuovere
         log.debug("Esci da inserisciCliente");
         List<ClienteDto> clienteDto = mostraTuttiClienti();
         return clienteDto;
@@ -115,7 +113,6 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         // crea la lista risultato (vuota)
         List<ClienteDto> clientiTrovati = new ArrayList<>();
         // copia tutti i clienti nei DTO
-        // FIXME: cambiare dopo usao di mappa
         Collection<Cliente> listaClienti = mappaClienti.values();
         for (Cliente cliente : listaClienti) {
             ClienteDto dto = new ClienteDto();

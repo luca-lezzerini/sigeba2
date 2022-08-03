@@ -93,10 +93,4 @@ public class AnagraficaClientiController {
     public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto dtoCancellazione) {
         return anagraficaClientiService.cancellaCliente(dtoCancellazione);
     }
-
-    @RequestMapping("/mostraTuttiClienti")
-    @ResponseBody
-    public List<ClienteDto> mostraTuttiClienti() {
-        return anagraficaClientiService.mostraTuttiClienti();
-    }
 }
