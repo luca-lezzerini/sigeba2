@@ -27,9 +27,8 @@ public class TipoConto {
         numeroOperazioniGratis = dto.getNumeroOperazioniGratis();
         interessiAnnui = dto.getInteressiAnnui();
         fido = dto.getFido();
-         cartaCredito = dto.getCartaCredito();
-         costoOperazioneBancomat = dto.getCostoOperazioneBancomat();
-      
+        cartaCredito = dto.getCartaCredito();
+        costoOperazioneBancomat = dto.getCostoOperazioneBancomat();
     }
 
 }

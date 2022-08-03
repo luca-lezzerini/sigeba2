@@ -15,12 +15,11 @@ public class TipoContoDto {
     private Double fido;
     private Boolean cartaCredito;
     private Double costoOperazioneBancomat;
-    
 
     public TipoContoDto() {
     }
 
-      public TipoContoDto(TipoConto tipoConto) {
+    public TipoContoDto(TipoConto tipoConto) {
         id = tipoConto.getId();
         nome = tipoConto.getNome();
         descrizione = tipoConto.getDescrizione();
@@ -28,9 +27,9 @@ public class TipoContoDto {
         numeroOperazioniGratis = tipoConto.getNumeroOperazioniGratis();
         interessiAnnui = tipoConto.getInteressiAnnui();
         fido = tipoConto.getFido();
-         cartaCredito = tipoConto.getCartaCredito();
-         costoOperazioneBancomat = tipoConto.getCostoOperazioneBancomat();
-      
+        cartaCredito = tipoConto.getCartaCredito();
+        costoOperazioneBancomat = tipoConto.getCostoOperazioneBancomat();
+
     }
 
 }
