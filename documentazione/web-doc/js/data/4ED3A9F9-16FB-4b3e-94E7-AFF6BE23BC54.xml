@@ -1,0 +1,7 @@
+tocTab[tocTab.length] = new Array("0.5.2:1", "", "TipologieContiCorrenti", "EARoot/EA5/EA2/EA111.htm", "175.png", "19", "0", "", "Logical diagram0","{60B09C4C-8BB7-4854-9972-D05938D0EFB3}");
+tocTab[tocTab.length] = new Array("0.5.2:2", "", "CriterioCancellazioneTipoContoDto", "EARoot/EA5/EA2/EA114.htm", "5.png", "E82", "0", "", "Class0","{B5CF80B8-EC02-49ca-8AC2-17AD31051262}");
+tocTab[tocTab.length] = new Array("0.5.2:3", "", "CriterioModificaTipoContoDto", "EARoot/EA5/EA2/EA115.htm", "5.png", "E83", "0", "", "Class0","{13A8F0EF-8FD9-45b3-9E29-B5A5D11ABF57}");
+tocTab[tocTab.length] = new Array("0.5.2:4", "", "CriterioTipoContoDto", "EARoot/EA5/EA2/EA116.htm", "5.png", "E80", "0", "", "Class0","{508CEF78-3FB1-48d9-9553-38FF1E239FD0}");
+tocTab[tocTab.length] = new Array("0.5.2:5", "", "SimpleIdDto", "EARoot/EA5/EA2/EA117.htm", "5.png", "E84", "0", "", "Class0","{33F3669D-A714-4dbd-A5B7-9D418BB32A4D}");
+tocTab[tocTab.length] = new Array("0.5.2:6", "", "TipoContoDto", "EARoot/EA5/EA2/EA118.htm", "5.png", "E87", "0", "", "Class0","{C6467667-650B-4c93-BAEC-A7AC4169A63B}");
+tocTab[tocTab.length] = new Array("0.5.2:7", "", "TipologieContiController", "EARoot/EA5/EA2/EA119.htm", "5.png", "E79", "0", "", "Class0","{2C765D62-D70C-4ada-9321-173D4DCE0857}");
