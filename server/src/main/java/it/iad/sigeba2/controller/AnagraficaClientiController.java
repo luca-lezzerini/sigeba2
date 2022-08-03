@@ -44,8 +44,8 @@ public class AnagraficaClientiController {
     /**
      * Inserisce un nuovo dto nel DB
      *
-     * @param dto il DTO con i dati del dto da inserire (id deve essere
- null o zero) e il criterio di ricerca da applicare dopo l'inserimento
+     * @param dto il DTO con i dati del dto da inserire (id deve essere null o
+     * zero) e il criterio di ricerca da applicare dopo l'inserimento
      * @return la lista dei clienti, dopo l'inserimento, che soddisfano ilc
      * riterio passato.
      */
@@ -68,7 +68,7 @@ public class AnagraficaClientiController {
         log.debug("Esci da inserisciCliente");
         List<ClienteDto> clienteDto = mostraTuttiClienti();
         return clienteDto;
-       
+
     }
 
     /**
@@ -112,8 +112,15 @@ public class AnagraficaClientiController {
     @RequestMapping("/cancellaCliente")
     @ResponseBody
     public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto criterio) {
-        System.out.println("Entrato");
-        throw new UnsupportedOperationException();
+        Long Id = criterio.getIdCliente();
+        log.debug("Entrato in cancellaCliente");
+        List<ClienteDto> dtos = new ArrayList<>();
+        for (Cliente cliente : clienti) {
+            if (cliente.getId().equals(Id))
+                    log.debug("Uscito da cancellaCliente");
+        
+        }
+        return dtos;
     }
 
     @RequestMapping("/mostraTuttiClienti")
