@@ -2,6 +2,7 @@ package it.iad.sigeba2.controller;
 
 import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
 import it.iad.sigeba2.dto.CriterioCancellazioneTipoContoDto;
+import it.iad.sigeba2.dto.CriterioInserimentoTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
@@ -30,8 +31,8 @@ public class TipologieContiController {
     
     @RequestMapping("/inserisciTipoConto")
     @ResponseBody
-    public List<TipoContoDto> inserisciTipoConto(@RequestBody TipoContoDto inserisci) {
-        throw new UnsupportedOperationException();
+    public List<TipoContoDto> inserisciTipoConto(@RequestBody CriterioInserimentoTipoContoDto contoDaInserireDto) {
+        return tipologieContiService.inserisciTipoConto(contoDaInserireDto); 
     }
     
     @RequestMapping("/cancellaTipoConto")
