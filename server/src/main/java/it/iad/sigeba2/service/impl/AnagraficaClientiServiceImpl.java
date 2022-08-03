@@ -52,7 +52,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         // riceve il DTO e lo trasforma in Cliente
         Cliente cliente = new Cliente(dto);
 
-// imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
+        // imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
         cliente.setId(prossimaChiave);
         prossimaChiave += 1;
 
@@ -74,10 +74,9 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         log.debug("Entrato in modificaClienti");
 
         ClienteDto clienteModificato = modificaDto.getCliente();
-
         Cliente clienteCheSostituisce = new Cliente(clienteModificato);
-
         Long posizioneDaCambiare = clienteModificato.getId();
+
         mappaClienti.put(posizioneDaCambiare, clienteCheSostituisce);
         log.debug("Esce da modificaClienti");
         return mostraTuttiClienti();
@@ -107,9 +106,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         // copia tutti i clienti nei DTO
         Collection<Cliente> listaClienti = mappaClienti.values();
         for (Cliente cliente : listaClienti) {
-            ClienteDto dto = new ClienteDto(cliente);
-
-            clientiTrovati.add(dto);
+            clientiTrovati.add(new ClienteDto(cliente));
         }
         log.debug("Uscito da mostraTuttiClienti");
         // ritorna la lista dei DTO
