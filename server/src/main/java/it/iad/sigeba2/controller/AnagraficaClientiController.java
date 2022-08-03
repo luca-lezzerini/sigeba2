@@ -103,25 +103,25 @@ public class AnagraficaClientiController {
      * Il metodo modifica il cliente sostituendolo con quello passato cercandolo
      * tramite id
      *
-     * @param modifica contienem il cliente da sostituire sul data base, ed il
+     * @param modificaDto contienem il cliente da sostituire sul data base, ed il
      * criterio per ritornare la lista dei clienti aggiornata.
      * @return la lista dei clienti aggiornata filtrata con il criterio passato
      */
     @ResponseBody
     @RequestMapping("/modificaCliente")
-    public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modifica) {
-
-        ClienteDto cli = modifica.getCliente();
-
+    public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modificaDto) {
         log.debug("Entrato in modificaClienti");
 
-        for (Cliente cliente : clienti) {
-            if (cliente.getId().equals(cli.getId())) {
-                cliente.setNome(cli.getNome());
-                cliente.setCognome(cli.getCognome());
-                cliente.setCodiceFiscale(cli.getCodiceFiscale());
-            }
-        }
+        ClienteDto clienteModificato = modificaDto.getCliente();
+
+        Cliente clienteCheSostituisce = new Cliente();
+        clienteCheSostituisce.setNome(clienteModificato.getNome());
+        clienteCheSostituisce.setCognome(clienteModificato.getCognome());
+        clienteCheSostituisce.setCodiceFiscale(clienteModificato.getCodiceFiscale());
+        clienteCheSostituisce.setId(clienteModificato.getId());
+
+        int posizioneDaCambiare = clienteModificato.getId().intValue();
+        clienti.set(posizioneDaCambiare, clienteCheSostituisce);
         log.debug("Esce da modificaClienti");
         return mostraTuttiClienti();
 
