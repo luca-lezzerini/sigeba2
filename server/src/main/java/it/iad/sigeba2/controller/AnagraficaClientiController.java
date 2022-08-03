@@ -7,7 +7,10 @@ import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AnagraficaClientiController {
 
-    private final List<Cliente> clienti = new ArrayList<>();
+    private final Map<Long, Cliente> mappaClienti = new HashMap<>();
+    private Long prossimaChiave = 0L;
 
     /**
      * Cerca i clienti che soddisfano il criterio di ricerca passato.
@@ -36,18 +40,19 @@ public class AnagraficaClientiController {
         List<ClienteDto> dtos = new ArrayList<>();
         log.debug("Entrato in cercaCliente");
 
-        for (Cliente cliente : clienti) {
-            if (cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
-                    || cliente.getCodiceFiscale().contains(crit)) {
-                log.debug("Entrato in if cercaCliente");
-                ClienteDto dto = new ClienteDto();
-                dto.setCodiceFiscale(cliente.getCodiceFiscale());
-                dto.setCognome(cliente.getCognome());
-                dto.setId(cliente.getId());
-                dto.setNome(cliente.getNome());
-                dtos.add(dto);
-            }
-        }
+        // FIXME: dopo cambio mappa non funziona più
+//        for (Cliente cliente : clienti) {
+//            if (cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
+//                    || cliente.getCodiceFiscale().contains(crit)) {
+//                log.debug("Entrato in if cercaCliente");
+//                ClienteDto dto = new ClienteDto();
+//                dto.setCodiceFiscale(cliente.getCodiceFiscale());
+//                dto.setCognome(cliente.getCognome());
+//                dto.setId(cliente.getId());
+//                dto.setNome(cliente.getNome());
+//                dtos.add(dto);
+//            }
+//        }
         log.debug("Uscito da cercaCliente");
         return dtos;
     }
@@ -68,14 +73,17 @@ public class AnagraficaClientiController {
         log.debug("Entra in inserisciCliente");
         // riceve il DTO e lo trasforma in Cliente
         Cliente cliente = new Cliente();
-        // imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
-        cliente.setId((long) clienti.size());
+
+// imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
+        cliente.setId(prossimaChiave);
+        prossimaChiave += 1;
+
         // popolo gli altri campi
         cliente.setNome(dto.getNome());
         cliente.setCognome(dto.getCognome());
         cliente.setCodiceFiscale(dto.getCodiceFiscale());
         // aggiunge il dto alla lista dei clienti
-        clienti.add(cliente);
+        mappaClienti.put(cliente.getId(), cliente);
         // chiama il metodo cercaCliente per ritornare la lista filtrata
         // TODO: da rimuovere
         log.debug("Esci da inserisciCliente");
@@ -103,8 +111,8 @@ public class AnagraficaClientiController {
      * Il metodo modifica il cliente sostituendolo con quello passato cercandolo
      * tramite id
      *
-     * @param modificaDto contienem il cliente da sostituire sul data base, ed il
-     * criterio per ritornare la lista dei clienti aggiornata.
+     * @param modificaDto contienem il cliente da sostituire sul data base, ed
+     * il criterio per ritornare la lista dei clienti aggiornata.
      * @return la lista dei clienti aggiornata filtrata con il criterio passato
      */
     @ResponseBody
@@ -120,8 +128,8 @@ public class AnagraficaClientiController {
         clienteCheSostituisce.setCodiceFiscale(clienteModificato.getCodiceFiscale());
         clienteCheSostituisce.setId(clienteModificato.getId());
 
-        int posizioneDaCambiare = clienteModificato.getId().intValue();
-        clienti.set(posizioneDaCambiare, clienteCheSostituisce);
+        Long posizioneDaCambiare = clienteModificato.getId();
+        mappaClienti.put(posizioneDaCambiare, clienteCheSostituisce);
         log.debug("Esce da modificaClienti");
         return mostraTuttiClienti();
 
@@ -131,21 +139,24 @@ public class AnagraficaClientiController {
      * Cancella il cliente dal DB. Il cliente da cancellare viene identificato
      * mediante
      *
-     * @param criterio
+     * @param dtoCancellazione
      * @return
      */
     @RequestMapping("/cancellaCliente")
     @ResponseBody
-    public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto criterio) {
-        Long Id = criterio.getIdCliente();
+    public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto dtoCancellazione) {
         log.debug("Entrato in cancellaCliente");
-        List<ClienteDto> dtos = new ArrayList<>();
-        for (Cliente cliente : clienti) {
-            if (cliente.getId().equals(Id))
-                    log.debug("Uscito da cancellaCliente");
-        
-        }
-        return dtos;
+        // recupera l'id del cliente da rimuovere
+        Long idDaRimuovere = dtoCancellazione.getIdCliente();
+
+        // lo rimuove
+        mappaClienti.remove(idDaRimuovere);
+
+        // recupera i clienti rimasti
+        List<ClienteDto> clientiRimasti;
+        clientiRimasti = mostraTuttiClienti();
+        log.debug("In uscita da cancellaCliente");
+        return clientiRimasti;
     }
 
     @RequestMapping("/mostraTuttiClienti")
@@ -153,19 +164,21 @@ public class AnagraficaClientiController {
     public List<ClienteDto> mostraTuttiClienti() {
         log.debug("Entrato in mostraTuttiClienti");
         // crea la lista risultato (vuota)
-        List<ClienteDto> dtos = new ArrayList<>();
+        List<ClienteDto> clientiTrovati = new ArrayList<>();
         // copia tutti i clienti nei DTO
-        for (Cliente cliente : clienti) {
+        // FIXME: cambiare dopo usao di mappa
+        Collection<Cliente> listaClienti = mappaClienti.values();
+        for (Cliente cliente : listaClienti) {
             ClienteDto dto = new ClienteDto();
             dto.setCodiceFiscale(cliente.getCodiceFiscale());
             dto.setCognome(cliente.getCognome());
             dto.setId(cliente.getId());
             dto.setNome(cliente.getNome());
 
-            dtos.add(dto);
+            clientiTrovati.add(dto);
         }
         log.debug("Uscito da mostraTuttiClienti");
         // ritorna la lista dei DTO
-        return dtos;
+        return clientiTrovati;
     }
 }
