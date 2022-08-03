@@ -8,8 +8,6 @@ import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +20,6 @@ public class AnagraficaClientiController {
 
     private final List<Cliente> clienti = new ArrayList<>();
 
-    /* Il metodo prende in input un criterio di ricerca inserito dall'utente, tipicamente una stringa, 
-    che potrebbe essere una parte del nome o del cognome o del codice fiscale del cliente da cercare. 
-    Una volta inserito questo criterio di ricerca, comparirà l'elenco dei clienti che soddisfano 
-    quella ricerca, sotto forma di tabella. */
     /**
      * Cerca i clienti che soddisfano il criterio di ricerca passato.
      *
@@ -37,8 +31,25 @@ public class AnagraficaClientiController {
     @RequestMapping("/cercaCliente")
     @ResponseBody
     public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
-        log.debug("Entrato");
-        throw new UnsupportedOperationException();
+
+        String crit = criterio.getCriterio();
+        List<ClienteDto> dtos = new ArrayList<>();
+        log.debug("Entrato in cercaCliente");
+
+        for (Cliente cliente : clienti) {
+            if (cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
+                    || cliente.getCodiceFiscale().contains(crit)) {
+                log.debug("Entrato in if cercaCliente");
+                ClienteDto dto = new ClienteDto();
+                dto.setCodiceFiscale(cliente.getCodiceFiscale());
+                dto.setCognome(cliente.getCognome());
+                dto.setId(cliente.getId());
+                dto.setNome(cliente.getNome());
+                dtos.add(dto);
+            }
+        }
+        log.debug("Uscito da cercaCliente");
+        return dtos;
     }
 
     /**
@@ -46,8 +57,8 @@ public class AnagraficaClientiController {
      *
      * @param dto il DTO con i dati del dto da inserire (id deve essere null o
      * zero) e il criterio di ricerca da applicare dopo l'inserimento
-     * @return la lista dei clienti, dopo l'inserimento, che soddisfano ilc
-     * riterio passato.
+     * @return la lista dei clienti, dopo l'inserimento, che soddisfano il
+     * criterio passato.
      */
     @ResponseBody
 // inserisco  la request verso inseriscicliente  
@@ -57,9 +68,11 @@ public class AnagraficaClientiController {
         log.debug("Entra in inserisciCliente");
         // riceve il DTO e lo trasforma in Cliente
         Cliente cliente = new Cliente();
+        // imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
+        cliente.setId((long) clienti.size());
+        // popolo gli altri campi
         cliente.setNome(dto.getNome());
         cliente.setCognome(dto.getCognome());
-        cliente.setId(dto.getId());
         cliente.setCodiceFiscale(dto.getCodiceFiscale());
         // aggiunge il dto alla lista dei clienti
         clienti.add(cliente);
@@ -90,15 +103,27 @@ public class AnagraficaClientiController {
      * Il metodo modifica il cliente sostituendolo con quello passato cercandolo
      * tramite id
      *
-     * @param modifica contienem il cliente da sostituire sul data base, ed il
+     * @param modificaDto contienem il cliente da sostituire sul data base, ed il
      * criterio per ritornare la lista dei clienti aggiornata.
      * @return la lista dei clienti aggiornata filtrata con il criterio passato
      */
     @ResponseBody
     @RequestMapping("/modificaCliente")
-    public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modifica) {
-        System.out.println("Entrato");
-        throw new UnsupportedOperationException();
+    public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modificaDto) {
+        log.debug("Entrato in modificaClienti");
+
+        ClienteDto clienteModificato = modificaDto.getCliente();
+
+        Cliente clienteCheSostituisce = new Cliente();
+        clienteCheSostituisce.setNome(clienteModificato.getNome());
+        clienteCheSostituisce.setCognome(clienteModificato.getCognome());
+        clienteCheSostituisce.setCodiceFiscale(clienteModificato.getCodiceFiscale());
+        clienteCheSostituisce.setId(clienteModificato.getId());
+
+        int posizioneDaCambiare = clienteModificato.getId().intValue();
+        clienti.set(posizioneDaCambiare, clienteCheSostituisce);
+        log.debug("Esce da modificaClienti");
+        return mostraTuttiClienti();
 
     }
 
