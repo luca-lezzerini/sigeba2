@@ -5,8 +5,10 @@ import it.iad.sigeba2.dto.CriterioCancellazioneTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
+import it.iad.sigeba2.service.TipologieContiService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TipologieContiController {
 
+    @Autowired
+    private TipologieContiService tipologieContiService;
+    
+    
     @RequestMapping("/cercaTipoConto")
     @ResponseBody
     public List<TipoContoDto> cercaTipoContoDto(@RequestBody CriterioTipoContoDto criterio) {
