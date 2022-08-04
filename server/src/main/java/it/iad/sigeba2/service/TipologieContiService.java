@@ -20,6 +20,6 @@ public interface TipologieContiService {
 
     List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica);
     
-    TipoConto leggiTipoConto(SimpleIdDto cliente);
+    TipoConto leggiTipoConto(SimpleIdDto tipocontodto);
 
 }
