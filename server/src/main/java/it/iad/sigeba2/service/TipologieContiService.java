@@ -16,7 +16,7 @@ public interface TipologieContiService {
 
     List<TipoContoDto> inserisciTipoConto(CriterioInserimentoTipoContoDto contoDaInserireDto);
 
-    List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto cancella);
+    List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto dtoCancellazione);
 
     List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica);
     

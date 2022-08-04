@@ -1,5 +1,6 @@
 package it.iad.sigeba2.service.impl;
 
+import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.dto.CriterioCancellazioneTipoContoDto;
 import it.iad.sigeba2.dto.CriterioInserimentoTipoContoDto;
 import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
@@ -56,8 +57,23 @@ public class TipologieContiServiceImpl implements TipologieContiService {
     }
 
     @Override
-    public List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto cancella) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto dtoCancellazione) {
+        
+         log.debug("Entrato in cancellaTipoConto");
+        // recupera l'id del tipoConto da rimuovere
+        Long idDaRimuovere = dtoCancellazione.getIdTipoConto();
+
+        // lo rimuove
+        mappaTipoConti.remove(idDaRimuovere);
+
+        // recupera i tipoConto rimasti
+        List<TipoContoDto> tipoContoRimasti;
+        tipoContoRimasti = cercaTipoConto(dtoCancellazione.getFiltro());
+        log.debug("In uscita da cancellaTipoConto");
+        return tipoContoRimasti;
+        
+        
+        
     }
 
     @Override
