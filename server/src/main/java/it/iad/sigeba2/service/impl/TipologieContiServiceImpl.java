@@ -6,6 +6,7 @@ import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
+import it.iad.sigeba2.model.Cliente;
 import it.iad.sigeba2.model.TipoConto;
 import it.iad.sigeba2.service.TipologieContiService;
 import java.util.ArrayList;
@@ -65,10 +66,10 @@ public class TipologieContiServiceImpl implements TipologieContiService {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public TipoConto leggiCliente(SimpleIdDto cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+   @Override
+    public TipoConto leggiTipoConto(SimpleIdDto chiave) {
+        return mappaTipoConti.get(chiave.getId());
+    } 
+    
 
 }
