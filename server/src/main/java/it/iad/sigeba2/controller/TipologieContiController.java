@@ -38,7 +38,7 @@ public class TipologieContiController {
     @RequestMapping("/cancellaTipoConto")
     @ResponseBody
     public List<TipoContoDto> cancellaTipoConto(@RequestBody CriterioCancellazioneTipoContoDto dtoCancellazione) {
-       throw new UnsupportedOperationException();
+      return tipologieContiService.cancellaTipoConto(dtoCancellazione);
     }
     
     @RequestMapping("/modificaTipoConto")

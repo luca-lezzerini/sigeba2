@@ -5,14 +5,11 @@ import lombok.Data;
 @Data
 public class CriterioClienteDto {
 
-    public CriterioClienteDto() {
-    }
+    public CriterioClienteDto() {}
 
     public CriterioClienteDto(String criterio) {
         this.criterio = criterio;
     }
 
     private String criterio = "";
-    
-    
 }

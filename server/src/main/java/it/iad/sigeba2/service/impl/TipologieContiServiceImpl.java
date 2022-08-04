@@ -1,6 +1,5 @@
 package it.iad.sigeba2.service.impl;
 
-import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.dto.CriterioCancellazioneTipoContoDto;
 import it.iad.sigeba2.dto.CriterioInserimentoTipoContoDto;
 import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
