@@ -14,7 +14,7 @@ public class TipologieContiTest {
 
     @Test
     public void testaCaricamentoTipologieConti() {
-        
+
 
     }
 }
