@@ -80,10 +80,11 @@ public class TipologieContiServiceImpl implements TipologieContiService {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public TipoConto leggiCliente(SimpleIdDto cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+   @Override
+    public TipoContoDto leggiTipoConto(SimpleIdDto chiave) {
+        TipoConto tipo= mappaTipoConti.get(chiave.getId());
+        return new TipoContoDto(tipo);
+    } 
+    
 
 }
