@@ -1,5 +1,6 @@
 package it.iad.sigeba2.service.impl;
 
+import it.iad.sigeba2.dao.ClienteDao;
 import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.dto.CriterioCancellazioneClienteDto;
 import it.iad.sigeba2.dto.CriterioClienteDto;
@@ -9,19 +10,17 @@ import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.model.Cliente;
 import it.iad.sigeba2.service.AnagraficaClientiService;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
-    private final Map<Long, Cliente> mappaClienti = new HashMap<>();
-    private Long prossimaChiave = 0L;
+    @Autowired
+    private ClienteDao clienteDao;
 
     @Override
     public List<ClienteDto> cercaCliente(CriterioClienteDto criterio) {
@@ -30,12 +29,12 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         String crit = criterio.getCriterio();
         List<ClienteDto> dtos = new ArrayList<>();
 
-        Collection<Cliente> lista = mappaClienti.values();
-        for (Cliente cliente : lista) {
-            if (cliente.getNome().contains(crit) || cliente.getCognome().contains(crit)
-                    || cliente.getCodiceFiscale().contains(crit)) {
-                dtos.add(new ClienteDto(cliente));
-            }
+        // trova i clienti
+        List<Cliente> clienti = clienteDao.trovaPerNomeCognomeCodiceFiscale(crit);
+        
+        // li converte in lista di DTO
+        for (Cliente cliente : clienti) {
+            dtos.add(new ClienteDto(cliente));
         }
         log.debug("Uscito da cercaCliente");
         return dtos;
@@ -47,12 +46,10 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         // riceve il DTO e lo trasforma in Cliente
         Cliente cliente = new Cliente(dto.getCliente());
 
-        // imposta la chiave in base alla nuova posizione dove sarà aggiunto il cliente nella lista clienti
-        cliente.setId(prossimaChiave);
-        prossimaChiave += 1;
-
+        
         // aggiunge il dto alla lista dei clienti
-        mappaClienti.put(cliente.getId(), cliente);
+        clienteDao.inserisci(cliente);
+        
         // chiama il metodo cercaCliente per ritornare la lista filtrata
         log.debug("Esci da inserisciCliente");
         List<ClienteDto> clienteDto = cercaCliente(dto.getFiltro());
@@ -61,7 +58,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
     @Override
     public Cliente leggiCliente(SimpleIdDto chiave) {
-        return mappaClienti.get(chiave.getId());
+        return clienteDao.trovaClientePerId(chiave.getId());
     }
 
     @Override
@@ -70,9 +67,9 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
         ClienteDto clienteModificato = modificaDto.getCliente();
         Cliente clienteCheSostituisce = new Cliente(clienteModificato);
-        Long posizioneDaCambiare = clienteModificato.getId();
 
-        mappaClienti.put(posizioneDaCambiare, clienteCheSostituisce);
+        clienteDao.modifica(clienteCheSostituisce);
+        
         log.debug("Esce da modificaClienti");
         return cercaCliente(modificaDto.getFiltro());
     }
@@ -84,7 +81,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         Long idDaRimuovere = dtoCancellazione.getIdCliente();
 
         // lo rimuove
-        mappaClienti.remove(idDaRimuovere);
+        clienteDao.elimina(idDaRimuovere);
 
         // recupera i clienti rimasti
         List<ClienteDto> clientiRimasti;
@@ -93,5 +90,4 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
         return clientiRimasti;
     }
 
-   
 }
