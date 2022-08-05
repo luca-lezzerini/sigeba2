@@ -51,9 +51,9 @@ public class AnagraficaClientiTest {
         anagraficaClientiService.inserisciCliente(criterioInserimento);
 
         // verifico che i clienti siano 3
-//        CriterioClienteDto criterioTutti = new CriterioClienteDto("");
-//        List<ClienteDto> lista = anagraficaClientiService.cercaCliente(criterioTutti);
-//        Assertions.assertTrue(lista.size() == 3);
+        CriterioClienteDto criterioTutti = new CriterioClienteDto("");
+        List<ClienteDto> lista = anagraficaClientiService.cercaCliente(criterioTutti);
+        Assertions.assertTrue(lista.size() == 3);
         // verifico che cliente con id 0 sia Antonio Bianchi
         SimpleIdDto sid = new SimpleIdDto();
         sid.setId(2L);
@@ -62,13 +62,13 @@ public class AnagraficaClientiTest {
         Assertions.assertTrue(cli.getNome().equals("Antonio") && cli.getCognome().equals("Bianchi"));
 
         // verifico ricerca cliente
-//        CriterioClienteDto criterio = new CriterioClienteDto();
-//        criterio.setCriterio("oss");
-//        List<ClienteDto> clientiTrovati = anagraficaClientiService.cercaCliente(criterio);
-//        Assertions.assertTrue(clientiTrovati.size() == 1);
-//        Assertions.assertTrue(clientiTrovati.get(0).getCognome().equals("Rossi"));
-//        criterio.setCriterio("r");
-//        clientiTrovati = anagraficaClientiService.cercaCliente(criterio);
-//        Assertions.assertTrue(clientiTrovati.size() == 2);
+        CriterioClienteDto criterio = new CriterioClienteDto();
+        criterio.setCriterio("oss");
+        List<ClienteDto> clientiTrovati = anagraficaClientiService.cercaCliente(criterio);
+        Assertions.assertTrue(clientiTrovati.size() == 1);
+        Assertions.assertTrue(clientiTrovati.get(0).getCognome().equals("Rossi"));
+        criterio.setCriterio("r");
+        clientiTrovati = anagraficaClientiService.cercaCliente(criterio);
+        Assertions.assertTrue(clientiTrovati.size() == 2);
     }
 }
