@@ -6,7 +6,6 @@ import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
-import it.iad.sigeba2.model.Cliente;
 import it.iad.sigeba2.model.TipoConto;
 import it.iad.sigeba2.service.TipologieContiService;
 import java.util.ArrayList;
@@ -67,8 +66,9 @@ public class TipologieContiServiceImpl implements TipologieContiService {
     }
 
    @Override
-    public TipoConto leggiTipoConto(SimpleIdDto chiave) {
-        return mappaTipoConti.get(chiave.getId());
+    public TipoContoDto leggiTipoConto(SimpleIdDto chiave) {
+        TipoConto tipo= mappaTipoConti.get(chiave.getId());
+        return new TipoContoDto(tipo);
     } 
     
 
