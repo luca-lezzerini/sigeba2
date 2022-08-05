@@ -4,6 +4,7 @@ import it.iad.sigeba2.dto.TipoContoDto;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ import lombok.Data;
 public class TipoConto implements Serializable{
 
     @Id
+    @GeneratedValue
     private Long id;
     @Column
     private String nome;
