@@ -1,14 +1,25 @@
 package it.iad.sigeba2.model;
 
 import it.iad.sigeba2.dto.ClienteDto;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import lombok.Data;
 
 @Data
-public class Cliente {
+@Entity
+public class Cliente implements Serializable{
 
+    @Id
+    @GeneratedValue
     private Long id;
+    @Column
     private String nome;
+    @Column
     private String cognome;
+    @Column
     private String codiceFiscale;
 
     public Cliente() {

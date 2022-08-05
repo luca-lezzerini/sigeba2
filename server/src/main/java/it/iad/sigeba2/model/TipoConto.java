@@ -1,19 +1,33 @@
 package it.iad.sigeba2.model;
 
 import it.iad.sigeba2.dto.TipoContoDto;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import lombok.Data;
 
 @Data
-public class TipoConto {
+@Entity
+public class TipoConto implements Serializable{
 
+    @Id
     private Long id;
+    @Column
     private String nome;
+    @Column
     private String descrizione;
+    @Column
     private Double costoOperazione;
+    @Column
     private Integer numeroOperazioniGratis;
+    @Column
     private Double interessiAnnui;
+    @Column
     private Double fido;
+    @Column
     private Boolean cartaCredito;
+    @Column
     private Double costoOperazioneBancomat;
 
     public TipoConto() {
