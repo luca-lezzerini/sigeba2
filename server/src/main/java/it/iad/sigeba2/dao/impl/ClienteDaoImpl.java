@@ -1,7 +1,6 @@
 package it.iad.sigeba2.dao.impl;
 
 import it.iad.sigeba2.dao.ClienteDao;
-import it.iad.sigeba2.dto.ClienteDto;
 import it.iad.sigeba2.model.Cliente;
 import java.util.ArrayList;
 import java.util.Collection;
