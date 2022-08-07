@@ -11,15 +11,54 @@ import java.util.List;
 
 public interface TipologieContiService {
 
-
+    /**
+     * Cerca la tipologia di conto che soddisfa il criterio di ricerca passato.
+     *
+     * @param criterio DTO con il criterio stringa, chiave parziale in or per
+     * nome o descrizione
+     * @return la lista dei tipi di conto che soddisfano il criterio, se non ne
+     * trova ritorna una lista vuota
+     */
     List<TipoContoDto> cercaTipoConto(CriterioTipoContoDto criterio);
 
+    /**
+     * inserisce un nuovo DTO nel DB
+     *
+     * @param contoDaInserireDto il DTO con i dati del dto da inserire e il
+     * criterio di ricerca da applicare dopo l'inserimento
+     * @return la lista dei tipi di conto, dopo l'inserimento, che soddisfano il
+     * criterio passato.
+     */
     List<TipoContoDto> inserisciTipoConto(CriterioInserimentoTipoContoDto contoDaInserireDto);
 
+    /**
+     * Cancella il tipo di conto dal DB.Il cliente da cancellare viene
+     * identificato mediante il criterio
+     *
+     * @param dtoCancellazione
+     * @return ritorna i clienti rimasti
+     */
     List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto dtoCancellazione);
 
+    /**
+     * Modifica il tipo di conto sostituendolo con quello passato tramite nome o
+     * descrizione
+     *
+     * @param modifica contiene il cliente da sostituire sul DB, e il criterio
+     * per ritornare la lista dei tipi di conto aggiornata
+     * @return la lista dei tipi di conto aggiornata filtrata con il criterio
+     * passato
+     */
     List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica);
-    
+
+    /**
+     * Recupera i dati di un tipo di conto fornito il nome o la descrizione. Se
+     * non lo trova ritorna null.
+     *
+     * @param tipocontodto il DTO con il nome o la descrizione del tipo di conto
+     * da cercare (diverso da null e da 0)
+     * @return il tipo di conto trovato o null se non lo trova
+     */
     TipoConto leggiTipoConto(SimpleIdDto tipocontodto);
 
 }
