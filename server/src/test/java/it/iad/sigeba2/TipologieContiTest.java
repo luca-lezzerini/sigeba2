@@ -1,5 +1,6 @@
 package it.iad.sigeba2;
 
+import it.iad.sigeba2.dto.CriterioCancellazioneTipoContoDto;
 import it.iad.sigeba2.dto.CriterioInserimentoTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
@@ -60,7 +61,7 @@ public class TipologieContiTest {
 
         //verifico che il tipoconto con Id 7 abbia la descrizione "conto prova"
         SimpleIdDto sid = new SimpleIdDto();
-        sid.setId(61L);
+        sid.setId(74L);
         TipoConto tip = tipologieContiService.leggiTipoConto(sid);
         Assertions.assertTrue(tip != null);
         Assertions.assertTrue(tip.getDescrizione().equals("Conto Prova") && tip.getCartaCredito().equals(true));
@@ -71,10 +72,20 @@ public class TipologieContiTest {
         List<TipoContoDto> contiTrovati = tipologieContiService.cercaTipoConto(criterio);
         Assertions.assertTrue(contiTrovati.size() == 2);
         Assertions.assertTrue(contiTrovati.get(0).getNome().equals("PincoPallo"));
+       
         criterio.setCriterio("p");
         contiTrovati = tipologieContiService.cercaTipoConto(criterio);
          Assertions.assertTrue(contiTrovati.size() == 2);
          
-         
+        //verifico cancellaTipoConto
+        CriterioCancellazioneTipoContoDto criterioCancellazione = new CriterioCancellazioneTipoContoDto();
+        criterioCancellazione.setIdTipoConto(75L);
+        criterio.setCriterio("");
+        criterioCancellazione.setFiltro(criterio);
+        //verifico che dopo l'esecuzione di cancellaTipoConto rimanga un solo conto in DB e che
+        //il conto rimasto corrisponda a "PincoPallo"
+        List<TipoContoDto> contiRimasti = tipologieContiService.cancellaTipoConto(criterioCancellazione);
+        Assertions.assertTrue(contiRimasti.size() == 1);
+        Assertions.assertTrue(contiRimasti.get(0).getNome().equals("PincoPallo"));
     }
 }
