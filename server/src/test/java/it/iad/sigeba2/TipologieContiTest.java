@@ -60,7 +60,7 @@ public class TipologieContiTest {
 
         //verifico che il tipoconto con Id 7 abbia la descrizione "conto prova"
         SimpleIdDto sid = new SimpleIdDto();
-        sid.setId(13L);
+        sid.setId(61L);
         TipoConto tip = tipologieContiService.leggiTipoConto(sid);
         Assertions.assertTrue(tip != null);
         Assertions.assertTrue(tip.getDescrizione().equals("Conto Prova") && tip.getCartaCredito().equals(true));
@@ -73,7 +73,7 @@ public class TipologieContiTest {
         Assertions.assertTrue(contiTrovati.get(0).getNome().equals("PincoPallo"));
         criterio.setCriterio("p");
         contiTrovati = tipologieContiService.cercaTipoConto(criterio);
-         Assertions.assertTrue(contiTrovati.size() == 1);
+         Assertions.assertTrue(contiTrovati.size() == 2);
          
          
     }
