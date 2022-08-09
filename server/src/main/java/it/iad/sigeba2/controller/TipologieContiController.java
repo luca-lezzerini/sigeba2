@@ -73,7 +73,13 @@ public class TipologieContiController {
     @RequestMapping("/modificaTipoConto")
     @ResponseBody
     public List<TipoContoDto> modificaTipoConto(@RequestBody CriterioModificaTipoContoDto modifica) {
-       return tipologieContiService.modificaTipoConto(modifica);
+        try {
+            return tipologieContiService.modificaTipoConto(modifica);
+        } catch (Exception e) {
+            // FIXME:
+        }
+        // FIXME
+        return null;
     }
 
     @RequestMapping("/leggiTipoConto")
