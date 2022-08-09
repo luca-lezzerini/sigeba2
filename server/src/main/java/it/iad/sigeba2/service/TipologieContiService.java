@@ -6,6 +6,7 @@ import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
+import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.model.TipoConto;
 import java.util.List;
 
@@ -18,8 +19,9 @@ public interface TipologieContiService {
      * nome o descrizione
      * @return la lista dei tipi di conto che soddisfano il criterio, se non ne
      * trova ritorna una lista vuota
+     * @throws it.iad.sigeba2.exception.SigebaException
      */
-    List<TipoContoDto> cercaTipoConto(CriterioTipoContoDto criterio);
+    List<TipoContoDto> cercaTipoConto(CriterioTipoContoDto criterio) throws SigebaException;
 
     /**
      * inserisce un nuovo DTO nel DB
@@ -28,8 +30,9 @@ public interface TipologieContiService {
      * criterio di ricerca da applicare dopo l'inserimento
      * @return la lista dei tipi di conto, dopo l'inserimento, che soddisfano il
      * criterio passato.
+     * @throws it.iad.sigeba2.exception.SigebaException
      */
-    List<TipoContoDto> inserisciTipoConto(CriterioInserimentoTipoContoDto contoDaInserireDto);
+    List<TipoContoDto> inserisciTipoConto(CriterioInserimentoTipoContoDto contoDaInserireDto) throws SigebaException;
 
     /**
      * Cancella il tipo di conto dal DB.Il cliente da cancellare viene
@@ -38,7 +41,7 @@ public interface TipologieContiService {
      * @param dtoCancellazione
      * @return ritorna i clienti rimasti
      */
-    List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto dtoCancellazione);
+    List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto dtoCancellazione) throws SigebaException;
 
     /**
      * Modifica il tipo di conto sostituendolo con quello passato tramite nome o
@@ -49,7 +52,7 @@ public interface TipologieContiService {
      * @return la lista dei tipi di conto aggiornata filtrata con il criterio
      * passato
      */
-    List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica);
+    List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica) throws SigebaException;
 
     /**
      * Recupera i dati di un tipo di conto fornito il nome o la descrizione. Se
@@ -59,6 +62,6 @@ public interface TipologieContiService {
      * da cercare (diverso da null e da 0)
      * @return il tipo di conto trovato o null se non lo trova
      */
-    TipoConto leggiTipoConto(SimpleIdDto tipocontodto);
+    TipoConto leggiTipoConto(SimpleIdDto tipocontodto) throws SigebaException;
 
 }
