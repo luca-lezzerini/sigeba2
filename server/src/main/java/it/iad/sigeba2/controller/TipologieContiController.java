@@ -73,7 +73,7 @@ public class TipologieContiController {
     @RequestMapping("/modificaTipoConto")
     @ResponseBody
     public List<TipoContoDto> modificaTipoConto(@RequestBody CriterioModificaTipoContoDto modifica) {
-        throw new UnsupportedOperationException();
+       return tipologieContiService.modificaTipoConto(modifica);
     }
 
     @RequestMapping("/leggiTipoConto")
