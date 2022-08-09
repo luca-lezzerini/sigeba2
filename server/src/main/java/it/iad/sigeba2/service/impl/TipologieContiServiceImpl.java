@@ -6,7 +6,9 @@ import it.iad.sigeba2.dto.CriterioModificaTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
+import it.iad.sigeba2.enumerated.GravitaStatoEnum;
 import it.iad.sigeba2.exception.SigebaException;
+import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.TipoConto;
 import it.iad.sigeba2.repository.TipoContoRepository;
 import it.iad.sigeba2.service.TipologieContiService;
@@ -27,6 +29,8 @@ public class TipologieContiServiceImpl implements TipologieContiService {
     public List<TipoContoDto> cercaTipoConto(CriterioTipoContoDto criterio) throws SigebaException {
         log.debug("Entrato in cercaTipoConto");
         if (criterio == null || criterio.getCriterio() == null) {
+            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito", 
+                    "Inserire un criterio di ricerca vamido", GravitaStatoEnum.CRITICA);
             throw new SigebaException("Criterio di ricerca null non è ammissibile");
         }
         String crit = criterio.getCriterio();

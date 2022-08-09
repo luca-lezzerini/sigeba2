@@ -5,6 +5,7 @@ import it.iad.sigeba2.dto.CriterioInserimentoTipoContoDto;
 import it.iad.sigeba2.dto.CriterioTipoContoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
+import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.model.TipoConto;
 import it.iad.sigeba2.repository.TipoContoRepository;
 import it.iad.sigeba2.service.TipologieContiService;
@@ -45,9 +46,21 @@ public class TipologieContiTest {
 
     private void verificaCancellazione(TipoConto tipoScelto) {
         //verifico cancellaTipoConto
+//        try {
+//            tipologieContiService.cancellaTipoConto(null);
+//        } catch (SigebaException e) {
+//            // ok, risultato atteso
+//        }
+        Assertions.assertThrows(
+                SigebaException.class,
+                () -> tipologieContiService.cancellaTipoConto(null));
         CriterioCancellazioneTipoContoDto criterioCancellazione = new CriterioCancellazioneTipoContoDto();
         criterioCancellazione.setIdTipoConto(tipoScelto.getId());
-        tipologieContiService.cancellaTipoConto(criterioCancellazione);
+        try {
+            tipologieContiService.cancellaTipoConto(criterioCancellazione);
+        } catch (SigebaException e) {
+            Assertions.fail();
+        }
         TipoConto tc = tipoContoRepository.findById(tipoScelto.getId())
                 .map(tx -> tx)
                 .orElse(null);
@@ -58,27 +71,35 @@ public class TipologieContiTest {
         //verifico ricerca tipoconto
         CriterioTipoContoDto criterio = new CriterioTipoContoDto();
         criterio.setCriterio("Pall");
-        List<TipoContoDto> contiTrovati = tipologieContiService.cercaTipoConto(criterio);
-        Assertions.assertTrue(contiTrovati.size() == 2);
-        for (TipoContoDto tc : contiTrovati) {
-            Assertions.assertTrue(tc.getNome().contains("Pall"));
-        }
+        try {
+            List<TipoContoDto> contiTrovati = tipologieContiService.cercaTipoConto(criterio);
+            Assertions.assertTrue(contiTrovati.size() == 2);
+            for (TipoContoDto tc : contiTrovati) {
+                Assertions.assertTrue(tc.getNome().contains("Pall"));
+            }
 
-        criterio.setCriterio("p");
-        contiTrovati = tipologieContiService.cercaTipoConto(criterio);
-        Assertions.assertTrue(contiTrovati.size() == numeroTipiInseriti);
+            criterio.setCriterio("p");
+            contiTrovati = tipologieContiService.cercaTipoConto(criterio);
+            Assertions.assertTrue(contiTrovati.size() == numeroTipiInseriti);
+        } catch (SigebaException e) {
+            Assertions.fail();
+        }
     }
 
     private void leggeEVerificaLetturaTipoConto(TipoConto tipoScelto) {
         //verifico che il tipoconto con Id uguale a quello scelto abbia la descrizione "conto prova"
         SimpleIdDto sid = new SimpleIdDto();
         sid.setId(tipoScelto.getId());
-        TipoConto tip = tipologieContiService.leggiTipoConto(sid);
-        Assertions.assertTrue(tip != null);
-        Assertions.assertTrue(tip.getDescrizione()
-                .equals(tipoScelto.getDescrizione())
-                && tip.getCartaCredito()
-                        .equals(tipoScelto.getCartaCredito()));
+        try {
+            TipoConto tip = tipologieContiService.leggiTipoConto(sid);
+            Assertions.assertTrue(tip != null);
+            Assertions.assertTrue(tip.getDescrizione()
+                    .equals(tipoScelto.getDescrizione())
+                    && tip.getCartaCredito()
+                            .equals(tipoScelto.getCartaCredito()));
+        } catch (SigebaException e) {
+            Assertions.fail();
+        }
     }
 
     private TipoConto scegliTipoContoACaso() {
@@ -93,65 +114,73 @@ public class TipologieContiTest {
     private void verificaNumeroTipiInseriti(int numeroTipiInseriti) {
         //verifico che i tipi di conto siano 2
         CriterioTipoContoDto criterioTuttiTipoConto = new CriterioTipoContoDto("");
-        List<TipoContoDto> lista = tipologieContiService.cercaTipoConto(criterioTuttiTipoConto);
-        Assertions.assertTrue(lista.size() == numeroTipiInseriti);
+        try {
+            List<TipoContoDto> lista = tipologieContiService.cercaTipoConto(criterioTuttiTipoConto);
+            Assertions.assertTrue(lista.size() == numeroTipiInseriti);
+        } catch (SigebaException e) {
+            Assertions.fail();
+        }
     }
 
     private int creaTipiContoDiTest() {
         //creo i conti di test
         int numeroTipiInseriti = 0;
-        TipoContoDto tipoContoDto = new TipoContoDto();
-        tipoContoDto.setId(null);
-        tipoContoDto.setNome("PincoPallo");
-        tipoContoDto.setDescrizione("Conto Prova");
-        tipoContoDto.setCostoOperazione(23.23);
-        tipoContoDto.setNumeroOperazioniGratis(3);
-        tipoContoDto.setInteressiAnnui(1.15);
-        tipoContoDto.setFido(3.55);
-        tipoContoDto.setCartaCredito(true);
-        tipoContoDto.setCostoOperazioneBancomat(1.5);
-        CriterioInserimentoTipoContoDto criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
-        tipologieContiService.inserisciTipoConto(criterioinserimento);
-        numeroTipiInseriti++;
-        tipoContoDto = new TipoContoDto();
-        tipoContoDto.setId(null);
-        tipoContoDto.setNome("Pallalcentro");
-        tipoContoDto.setDescrizione("Conto Prova 2");
-        tipoContoDto.setCostoOperazione(20.20);
-        tipoContoDto.setNumeroOperazioniGratis(5);
-        tipoContoDto.setInteressiAnnui(2.45);
-        tipoContoDto.setFido(5.66);
-        tipoContoDto.setCartaCredito(false);
-        tipoContoDto.setCostoOperazioneBancomat(1.5);
-        criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
-        tipologieContiService.inserisciTipoConto(criterioinserimento);
-        numeroTipiInseriti++;
-        tipoContoDto = new TipoContoDto();
-        tipoContoDto.setId(null);
-        tipoContoDto.setNome("Giovani");
-        tipoContoDto.setDescrizione("Conto Prova 3");
-        tipoContoDto.setCostoOperazione(40.20);
-        tipoContoDto.setNumeroOperazioniGratis(4);
-        tipoContoDto.setInteressiAnnui(1.45);
-        tipoContoDto.setFido(3.66);
-        tipoContoDto.setCartaCredito(false);
-        tipoContoDto.setCostoOperazioneBancomat(2.5);
-        criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
-        tipologieContiService.inserisciTipoConto(criterioinserimento);
-        numeroTipiInseriti++;
-        tipoContoDto = new TipoContoDto();
-        tipoContoDto.setId(null);
-        tipoContoDto.setNome("Giovani2");
-        tipoContoDto.setDescrizione("Conto Prova 4");
-        tipoContoDto.setCostoOperazione(40.20);
-        tipoContoDto.setNumeroOperazioniGratis(4);
-        tipoContoDto.setInteressiAnnui(1.45);
-        tipoContoDto.setFido(3.66);
-        tipoContoDto.setCartaCredito(false);
-        tipoContoDto.setCostoOperazioneBancomat(2.5);
-        criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
-        tipologieContiService.inserisciTipoConto(criterioinserimento);
-        numeroTipiInseriti++;
+        try {
+            TipoContoDto tipoContoDto = new TipoContoDto();
+            tipoContoDto.setId(null);
+            tipoContoDto.setNome("PincoPallo");
+            tipoContoDto.setDescrizione("Conto Prova");
+            tipoContoDto.setCostoOperazione(23.23);
+            tipoContoDto.setNumeroOperazioniGratis(3);
+            tipoContoDto.setInteressiAnnui(1.15);
+            tipoContoDto.setFido(3.55);
+            tipoContoDto.setCartaCredito(true);
+            tipoContoDto.setCostoOperazioneBancomat(1.5);
+            CriterioInserimentoTipoContoDto criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
+            tipologieContiService.inserisciTipoConto(criterioinserimento);
+            numeroTipiInseriti++;
+            tipoContoDto = new TipoContoDto();
+            tipoContoDto.setId(null);
+            tipoContoDto.setNome("Pallalcentro");
+            tipoContoDto.setDescrizione("Conto Prova 2");
+            tipoContoDto.setCostoOperazione(20.20);
+            tipoContoDto.setNumeroOperazioniGratis(5);
+            tipoContoDto.setInteressiAnnui(2.45);
+            tipoContoDto.setFido(5.66);
+            tipoContoDto.setCartaCredito(false);
+            tipoContoDto.setCostoOperazioneBancomat(1.5);
+            criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
+            tipologieContiService.inserisciTipoConto(criterioinserimento);
+            numeroTipiInseriti++;
+            tipoContoDto = new TipoContoDto();
+            tipoContoDto.setId(null);
+            tipoContoDto.setNome("Giovani");
+            tipoContoDto.setDescrizione("Conto Prova 3");
+            tipoContoDto.setCostoOperazione(40.20);
+            tipoContoDto.setNumeroOperazioniGratis(4);
+            tipoContoDto.setInteressiAnnui(1.45);
+            tipoContoDto.setFido(3.66);
+            tipoContoDto.setCartaCredito(false);
+            tipoContoDto.setCostoOperazioneBancomat(2.5);
+            criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
+            tipologieContiService.inserisciTipoConto(criterioinserimento);
+            numeroTipiInseriti++;
+            tipoContoDto = new TipoContoDto();
+            tipoContoDto.setId(null);
+            tipoContoDto.setNome("Giovani2");
+            tipoContoDto.setDescrizione("Conto Prova 4");
+            tipoContoDto.setCostoOperazione(40.20);
+            tipoContoDto.setNumeroOperazioniGratis(4);
+            tipoContoDto.setInteressiAnnui(1.45);
+            tipoContoDto.setFido(3.66);
+            tipoContoDto.setCartaCredito(false);
+            tipoContoDto.setCostoOperazioneBancomat(2.5);
+            criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
+            tipologieContiService.inserisciTipoConto(criterioinserimento);
+            numeroTipiInseriti++;
+        } catch (SigebaException e) {
+            Assertions.fail();
+        }
         return numeroTipiInseriti;
     }
 
