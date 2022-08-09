@@ -29,7 +29,7 @@ public class TipologieContiServiceImpl implements TipologieContiService {
     public List<TipoContoDto> cercaTipoConto(CriterioTipoContoDto criterio) throws SigebaException {
         log.debug("Entrato in cercaTipoConto");
         if (criterio == null || criterio.getCriterio() == null) {
-            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito", 
+            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito",
                     "Inserire un criterio di ricerca vamido", GravitaStatoEnum.CRITICA);
             throw new SigebaException("Criterio di ricerca null non è ammissibile");
         }
@@ -53,6 +53,8 @@ public class TipologieContiServiceImpl implements TipologieContiService {
         log.debug("Entra in inserisciTipoConto");
 
         if (contoDaInserireDto == null || contoDaInserireDto.getTipoConto() == null) {
+            SigebaStateCollector.addStatusMessage("Tipo conto null non consentito",
+                    "Inserire un tipo conto valido", GravitaStatoEnum.CRITICA);
             throw new SigebaException("Tipo conto da inserire null!!!");
         }
 
@@ -70,7 +72,9 @@ public class TipologieContiServiceImpl implements TipologieContiService {
 
         log.debug("Entrato in cancellaTipoConto");
         if (dtoCancellazione == null || dtoCancellazione.getIdTipoConto() == null) {
-            throw new SigebaException("Oggetto da canellare null!!");
+            SigebaStateCollector.addStatusMessage("Id da cancellare null non consentito",
+                    "Inserire una id valida", GravitaStatoEnum.CRITICA);
+            throw new SigebaException("Id da cancellare null!!");
         }
         // recupera l'id del tipoConto da rimuovere
         Long idDaRimuovere = dtoCancellazione.getIdTipoConto();
@@ -89,6 +93,8 @@ public class TipologieContiServiceImpl implements TipologieContiService {
     public List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica) throws SigebaException {
         log.debug("Entrato in modificaTipoConto");
         if (modifica == null || modifica.getTipoConto() != null) {
+            SigebaStateCollector.addStatusMessage("Tipo conto da modificare null non consentito",
+                    "Inserire tipo conto valido", GravitaStatoEnum.CRITICA);
             throw new SigebaException("Tipo conto da modificare null!!!");
         }
         TipoContoDto tipoContoModificato = modifica.getTipoConto();
@@ -105,6 +111,8 @@ public class TipologieContiServiceImpl implements TipologieContiService {
     public TipoConto leggiTipoConto(SimpleIdDto chiave) throws SigebaException {
         log.debug("Entrato in modificaTipoConto");
         if (chiave == null || chiave.getId() == null) {
+            SigebaStateCollector.addStatusMessage("Id da leggere null non consentito",
+                    "Id tipo conto valido", GravitaStatoEnum.CRITICA);
             throw new SigebaException("Id tipo conto da leggere null!!");
         }
         return tipoContoRepository.findById(chiave.getId())
