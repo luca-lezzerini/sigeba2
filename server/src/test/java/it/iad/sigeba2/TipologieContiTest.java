@@ -9,6 +9,7 @@ import it.iad.sigeba2.model.TipoConto;
 import it.iad.sigeba2.repository.TipoContoRepository;
 import it.iad.sigeba2.service.TipologieContiService;
 import java.util.List;
+import java.util.Random;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class TipologieContiTest {
+
+    Random random = new Random();
 
     @Autowired
     TipologieContiService tipologieContiService;
@@ -29,6 +32,7 @@ public class TipologieContiTest {
         tipoContoRepository.deleteAll();
 
         //creo i conti di test
+        int numeroTipiInseriti = 0;
         TipoContoDto tipoContoDto = new TipoContoDto();
         tipoContoDto.setId(null);
         tipoContoDto.setNome("PincoPallo");
@@ -41,6 +45,7 @@ public class TipologieContiTest {
         tipoContoDto.setCostoOperazioneBancomat(1.5);
         CriterioInserimentoTipoContoDto criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
         tipologieContiService.inserisciTipoConto(criterioinserimento);
+        numeroTipiInseriti++;
         tipoContoDto = new TipoContoDto();
         tipoContoDto.setId(null);
         tipoContoDto.setNome("Pallalcentro");
@@ -53,39 +58,75 @@ public class TipologieContiTest {
         tipoContoDto.setCostoOperazioneBancomat(1.5);
         criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
         tipologieContiService.inserisciTipoConto(criterioinserimento);
+        numeroTipiInseriti++;
+        tipoContoDto = new TipoContoDto();
+        tipoContoDto.setId(null);
+        tipoContoDto.setNome("Giovani");
+        tipoContoDto.setDescrizione("Conto Prova 3");
+        tipoContoDto.setCostoOperazione(40.20);
+        tipoContoDto.setNumeroOperazioniGratis(4);
+        tipoContoDto.setInteressiAnnui(1.45);
+        tipoContoDto.setFido(3.66);
+        tipoContoDto.setCartaCredito(false);
+        tipoContoDto.setCostoOperazioneBancomat(2.5);
+        criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
+        tipologieContiService.inserisciTipoConto(criterioinserimento);
+        numeroTipiInseriti++;
+        tipoContoDto = new TipoContoDto();
+        tipoContoDto.setId(null);
+        tipoContoDto.setNome("Giovani2");
+        tipoContoDto.setDescrizione("Conto Prova 4");
+        tipoContoDto.setCostoOperazione(40.20);
+        tipoContoDto.setNumeroOperazioniGratis(4);
+        tipoContoDto.setInteressiAnnui(1.45);
+        tipoContoDto.setFido(3.66);
+        tipoContoDto.setCartaCredito(false);
+        tipoContoDto.setCostoOperazioneBancomat(2.5);
+        criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
+        tipologieContiService.inserisciTipoConto(criterioinserimento);
+        numeroTipiInseriti++;
 
         //verifico che i tipi di conto siano 2
         CriterioTipoContoDto criterioTuttiTipoConto = new CriterioTipoContoDto("");
         List<TipoContoDto> lista = tipologieContiService.cercaTipoConto(criterioTuttiTipoConto);
-        Assertions.assertTrue(lista.size() == 2);
+        Assertions.assertTrue(lista.size() == numeroTipiInseriti);
 
-        //verifico che il tipoconto con Id 7 abbia la descrizione "conto prova"
+        // leggo tutti i tipi conto e ne scelgo uno a caso dalla lista appena letta
+        List<TipoConto> tipiConto = tipoContoRepository.findAll();
+        int numTipi = tipiConto.size();
+        int numContoPrescelto = random.nextInt(numTipi);
+        TipoConto tipoScelto = tipiConto.get(numContoPrescelto);
+
+        //verifico che il tipoconto con Id uguale a quello scelto abbia la descrizione "conto prova"
         SimpleIdDto sid = new SimpleIdDto();
-        sid.setId(74L);
+        sid.setId(tipoScelto.getId());
         TipoConto tip = tipologieContiService.leggiTipoConto(sid);
         Assertions.assertTrue(tip != null);
-        Assertions.assertTrue(tip.getDescrizione().equals("Conto Prova") && tip.getCartaCredito().equals(true));
+        Assertions.assertTrue(tip.getDescrizione()
+                .equals(tipoScelto.getDescrizione())
+                && tip.getCartaCredito()
+                        .equals(tipoScelto.getCartaCredito()));
 
         //verifico ricerca tipoconto
         CriterioTipoContoDto criterio = new CriterioTipoContoDto();
         criterio.setCriterio("Pall");
         List<TipoContoDto> contiTrovati = tipologieContiService.cercaTipoConto(criterio);
         Assertions.assertTrue(contiTrovati.size() == 2);
-        Assertions.assertTrue(contiTrovati.get(0).getNome().equals("PincoPallo"));
-       
+        for (TipoContoDto tc : contiTrovati) {
+            Assertions.assertTrue(tc.getNome().contains("Pall"));
+        }
+
         criterio.setCriterio("p");
         contiTrovati = tipologieContiService.cercaTipoConto(criterio);
-         Assertions.assertTrue(contiTrovati.size() == 2);
-         
+        Assertions.assertTrue(contiTrovati.size() == numeroTipiInseriti);
+
         //verifico cancellaTipoConto
         CriterioCancellazioneTipoContoDto criterioCancellazione = new CriterioCancellazioneTipoContoDto();
-        criterioCancellazione.setIdTipoConto(75L);
-        criterio.setCriterio("");
-        criterioCancellazione.setFiltro(criterio);
-        //verifico che dopo l'esecuzione di cancellaTipoConto rimanga un solo conto in DB e che
-        //il conto rimasto corrisponda a "PincoPallo"
-        List<TipoContoDto> contiRimasti = tipologieContiService.cancellaTipoConto(criterioCancellazione);
-        Assertions.assertTrue(contiRimasti.size() == 1);
-        Assertions.assertTrue(contiRimasti.get(0).getNome().equals("PincoPallo"));
+        criterioCancellazione.setIdTipoConto(tipoScelto.getId());
+        tipologieContiService.cancellaTipoConto(criterioCancellazione);
+        TipoConto tc = tipoContoRepository.findById(tipoScelto.getId())
+                .map(tx -> tx)
+                .orElse(null);
+        Assertions.assertTrue(tc == null, "Trovato record cancellato!!!");
     }
 }

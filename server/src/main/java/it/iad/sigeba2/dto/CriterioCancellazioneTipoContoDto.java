@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class CriterioCancellazioneTipoContoDto {
-    
+
     private Long idTipoConto;
-    private CriterioTipoContoDto filtro;
+    private CriterioTipoContoDto filtro = new CriterioTipoContoDto();
 
 }
