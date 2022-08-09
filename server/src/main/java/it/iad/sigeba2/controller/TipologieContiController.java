@@ -61,25 +61,34 @@ public class TipologieContiController {
 
     @RequestMapping("/cancellaTipoConto")
     @ResponseBody
-    public List<TipoContoDto> cancellaTipoConto(@RequestBody CriterioCancellazioneTipoContoDto dtoCancellazione) {
+    public RispostaConStato<List<TipoContoDto>> cancellaTipoConto(@RequestBody CriterioCancellazioneTipoContoDto dtoCancellazione) {
+        List<TipoContoDto> datiRisposta;
         try {
-            return tipologieContiService.cancellaTipoConto(dtoCancellazione);
+            datiRisposta = tipologieContiService.cancellaTipoConto(dtoCancellazione);
         } catch (SigebaException e) {
             log.warn("Eccezione nel controller cancellaTipoConto");
-            return Collections.emptyList();
+            datiRisposta = Collections.emptyList();
         }
+        RispostaConStato<List<TipoContoDto>> risp = new RispostaConStato<>(
+                datiRisposta,
+                SigebaStateCollector.getAndClean());
+        return risp;
     }
 
     @RequestMapping("/modificaTipoConto")
     @ResponseBody
-    public List<TipoContoDto> modificaTipoConto(@RequestBody CriterioModificaTipoContoDto modifica) {
+    public RispostaConStato<List<TipoContoDto>> modificaTipoConto(@RequestBody CriterioModificaTipoContoDto modifica) {
+        List<TipoContoDto> datiRisposta;
         try {
-            return tipologieContiService.modificaTipoConto(modifica);
-        } catch (Exception e) {
-            // FIXME:
+            datiRisposta = tipologieContiService.modificaTipoConto(modifica);
+        } catch (SigebaException e) {
+            log.warn("Eccezione nel controller modificaTipoConto");
+            datiRisposta = Collections.emptyList();
         }
-        // FIXME
-        return null;
+        RispostaConStato<List<TipoContoDto>> risp = new RispostaConStato<>(
+                datiRisposta,
+                SigebaStateCollector.getAndClean());
+        return risp;
     }
 
     @RequestMapping("/leggiTipoConto")
