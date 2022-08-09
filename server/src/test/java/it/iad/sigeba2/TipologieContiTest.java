@@ -28,9 +28,76 @@ public class TipologieContiTest {
 
     @Test
     public void testaCaricamentoTipologieConti() {
-        // cancello tutti i conti
-        tipoContoRepository.deleteAll();
+        cancellaDatiEsistenti();
 
+        int numeroTipiInseriti = creaTipiContoDiTest();
+
+        verificaNumeroTipiInseriti(numeroTipiInseriti);
+
+        TipoConto tipoScelto = scegliTipoContoACaso();
+
+        leggeEVerificaLetturaTipoConto(tipoScelto);
+
+        verificaRicercaPerChiaveParziale(numeroTipiInseriti);
+
+        verificaCancellazione(tipoScelto);
+    }
+
+    private void verificaCancellazione(TipoConto tipoScelto) {
+        //verifico cancellaTipoConto
+        CriterioCancellazioneTipoContoDto criterioCancellazione = new CriterioCancellazioneTipoContoDto();
+        criterioCancellazione.setIdTipoConto(tipoScelto.getId());
+        tipologieContiService.cancellaTipoConto(criterioCancellazione);
+        TipoConto tc = tipoContoRepository.findById(tipoScelto.getId())
+                .map(tx -> tx)
+                .orElse(null);
+        Assertions.assertTrue(tc == null, "Trovato record cancellato!!!");
+    }
+
+    private void verificaRicercaPerChiaveParziale(int numeroTipiInseriti) {
+        //verifico ricerca tipoconto
+        CriterioTipoContoDto criterio = new CriterioTipoContoDto();
+        criterio.setCriterio("Pall");
+        List<TipoContoDto> contiTrovati = tipologieContiService.cercaTipoConto(criterio);
+        Assertions.assertTrue(contiTrovati.size() == 2);
+        for (TipoContoDto tc : contiTrovati) {
+            Assertions.assertTrue(tc.getNome().contains("Pall"));
+        }
+
+        criterio.setCriterio("p");
+        contiTrovati = tipologieContiService.cercaTipoConto(criterio);
+        Assertions.assertTrue(contiTrovati.size() == numeroTipiInseriti);
+    }
+
+    private void leggeEVerificaLetturaTipoConto(TipoConto tipoScelto) {
+        //verifico che il tipoconto con Id uguale a quello scelto abbia la descrizione "conto prova"
+        SimpleIdDto sid = new SimpleIdDto();
+        sid.setId(tipoScelto.getId());
+        TipoConto tip = tipologieContiService.leggiTipoConto(sid);
+        Assertions.assertTrue(tip != null);
+        Assertions.assertTrue(tip.getDescrizione()
+                .equals(tipoScelto.getDescrizione())
+                && tip.getCartaCredito()
+                        .equals(tipoScelto.getCartaCredito()));
+    }
+
+    private TipoConto scegliTipoContoACaso() {
+        // leggo tutti i tipi conto e ne scelgo uno a caso dalla lista appena letta
+        List<TipoConto> tipiConto = tipoContoRepository.findAll();
+        int numTipi = tipiConto.size();
+        int numContoPrescelto = random.nextInt(numTipi);
+        TipoConto tipoScelto = tipiConto.get(numContoPrescelto);
+        return tipoScelto;
+    }
+
+    private void verificaNumeroTipiInseriti(int numeroTipiInseriti) {
+        //verifico che i tipi di conto siano 2
+        CriterioTipoContoDto criterioTuttiTipoConto = new CriterioTipoContoDto("");
+        List<TipoContoDto> lista = tipologieContiService.cercaTipoConto(criterioTuttiTipoConto);
+        Assertions.assertTrue(lista.size() == numeroTipiInseriti);
+    }
+
+    private int creaTipiContoDiTest() {
         //creo i conti di test
         int numeroTipiInseriti = 0;
         TipoContoDto tipoContoDto = new TipoContoDto();
@@ -85,48 +152,11 @@ public class TipologieContiTest {
         criterioinserimento = new CriterioInserimentoTipoContoDto(tipoContoDto);
         tipologieContiService.inserisciTipoConto(criterioinserimento);
         numeroTipiInseriti++;
+        return numeroTipiInseriti;
+    }
 
-        //verifico che i tipi di conto siano 2
-        CriterioTipoContoDto criterioTuttiTipoConto = new CriterioTipoContoDto("");
-        List<TipoContoDto> lista = tipologieContiService.cercaTipoConto(criterioTuttiTipoConto);
-        Assertions.assertTrue(lista.size() == numeroTipiInseriti);
-
-        // leggo tutti i tipi conto e ne scelgo uno a caso dalla lista appena letta
-        List<TipoConto> tipiConto = tipoContoRepository.findAll();
-        int numTipi = tipiConto.size();
-        int numContoPrescelto = random.nextInt(numTipi);
-        TipoConto tipoScelto = tipiConto.get(numContoPrescelto);
-
-        //verifico che il tipoconto con Id uguale a quello scelto abbia la descrizione "conto prova"
-        SimpleIdDto sid = new SimpleIdDto();
-        sid.setId(tipoScelto.getId());
-        TipoConto tip = tipologieContiService.leggiTipoConto(sid);
-        Assertions.assertTrue(tip != null);
-        Assertions.assertTrue(tip.getDescrizione()
-                .equals(tipoScelto.getDescrizione())
-                && tip.getCartaCredito()
-                        .equals(tipoScelto.getCartaCredito()));
-
-        //verifico ricerca tipoconto
-        CriterioTipoContoDto criterio = new CriterioTipoContoDto();
-        criterio.setCriterio("Pall");
-        List<TipoContoDto> contiTrovati = tipologieContiService.cercaTipoConto(criterio);
-        Assertions.assertTrue(contiTrovati.size() == 2);
-        for (TipoContoDto tc : contiTrovati) {
-            Assertions.assertTrue(tc.getNome().contains("Pall"));
-        }
-
-        criterio.setCriterio("p");
-        contiTrovati = tipologieContiService.cercaTipoConto(criterio);
-        Assertions.assertTrue(contiTrovati.size() == numeroTipiInseriti);
-
-        //verifico cancellaTipoConto
-        CriterioCancellazioneTipoContoDto criterioCancellazione = new CriterioCancellazioneTipoContoDto();
-        criterioCancellazione.setIdTipoConto(tipoScelto.getId());
-        tipologieContiService.cancellaTipoConto(criterioCancellazione);
-        TipoConto tc = tipoContoRepository.findById(tipoScelto.getId())
-                .map(tx -> tx)
-                .orElse(null);
-        Assertions.assertTrue(tc == null, "Trovato record cancellato!!!");
+    private void cancellaDatiEsistenti() {
+        // cancello tutti i conti
+        tipoContoRepository.deleteAll();
     }
 }
