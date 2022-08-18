@@ -78,7 +78,7 @@ public class TipologieContiTest {
                 Assertions.assertTrue(tc.getNome().contains("Pall"));
             }
 
-            criterio.setCriterio("p");
+            criterio.setCriterio("");
             contiTrovati = tipologieContiService.cercaTipoConto(criterio);
             Assertions.assertTrue(contiTrovati.size() == numeroTipiInseriti);
         } catch (SigebaException e) {

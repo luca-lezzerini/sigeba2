@@ -6,9 +6,9 @@ import it.iad.sigeba2.dto.CriterioCancellazioneClienteDto;
 import it.iad.sigeba2.dto.CriterioInserimentoClienteDto;
 import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
+import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.model.Cliente;
 import it.iad.sigeba2.service.AnagraficaClientiService;
-import it.iad.sigeba2.service.impl.AnagraficaClientiServiceImpl;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class AnagraficaClientiController {
      */
     @RequestMapping("/cercaCliente")
     @ResponseBody
-    public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) {
+    public List<ClienteDto> cercaCliente(@RequestBody CriterioClienteDto criterio) throws SigebaException {
         return anagraficaClientiService.cercaCliente(criterio);
     }
 
@@ -50,7 +50,7 @@ public class AnagraficaClientiController {
 // inserisco  la request verso inseriscicliente  
     @RequestMapping("/inserisciCliente")
 //creo il metodo inserisciCliente
-    public List<ClienteDto> inserisciCliente(@RequestBody CriterioInserimentoClienteDto dto) {
+    public List<ClienteDto> inserisciCliente(@RequestBody CriterioInserimentoClienteDto dto) throws SigebaException {
         return anagraficaClientiService.inserisciCliente(dto);
 
     }
@@ -64,7 +64,7 @@ public class AnagraficaClientiController {
      */
     @ResponseBody
     @RequestMapping("/leggiCliente")
-    public Cliente leggiCliente(@RequestBody SimpleIdDto cliente) {
+    public Cliente leggiCliente(@RequestBody SimpleIdDto cliente) throws SigebaException {
         return anagraficaClientiService.leggiCliente(cliente);
     }
 
@@ -78,7 +78,7 @@ public class AnagraficaClientiController {
      */
     @ResponseBody
     @RequestMapping("/modificaCliente")
-    public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modificaDto) {
+    public List<ClienteDto> modificaCliente(@RequestBody CriterioModificaClienteDto modificaDto) throws SigebaException {
         return anagraficaClientiService.modificaCliente(modificaDto);
     }
 
@@ -91,7 +91,7 @@ public class AnagraficaClientiController {
      */
     @RequestMapping("/cancellaCliente")
     @ResponseBody
-    public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto dtoCancellazione) {
+    public List<ClienteDto> cancellaCliente(@RequestBody CriterioCancellazioneClienteDto dtoCancellazione) throws SigebaException {
         return anagraficaClientiService.cancellaCliente(dtoCancellazione);
     }
 }

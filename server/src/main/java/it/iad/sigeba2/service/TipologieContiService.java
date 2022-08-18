@@ -40,6 +40,7 @@ public interface TipologieContiService {
      *
      * @param dtoCancellazione
      * @return ritorna i clienti rimasti
+     * @throws it.iad.sigeba2.exception.SigebaException
      */
     List<TipoContoDto> cancellaTipoConto(CriterioCancellazioneTipoContoDto dtoCancellazione) throws SigebaException;
 
@@ -51,16 +52,18 @@ public interface TipologieContiService {
      * per ritornare la lista dei tipi di conto aggiornata
      * @return la lista dei tipi di conto aggiornata filtrata con il criterio
      * passato
+     * @throws it.iad.sigeba2.exception.SigebaException
      */
     List<TipoContoDto> modificaTipoConto(CriterioModificaTipoContoDto modifica) throws SigebaException;
 
     /**
-     * Recupera i dati di un tipo di conto fornito il nome o la descrizione. Se
+     * Recupera i dati di un tipo di conto fornito il nome o la descrizione.Se
      * non lo trova ritorna null.
      *
      * @param tipocontodto il DTO con il nome o la descrizione del tipo di conto
      * da cercare (diverso da null e da 0)
      * @return il tipo di conto trovato o null se non lo trova
+     * @throws it.iad.sigeba2.exception.SigebaException
      */
     TipoConto leggiTipoConto(SimpleIdDto tipocontodto) throws SigebaException;
 
