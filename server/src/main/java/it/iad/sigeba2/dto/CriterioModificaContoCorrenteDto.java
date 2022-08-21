@@ -5,6 +5,9 @@ import lombok.Data;
 @Data
 public class CriterioModificaContoCorrenteDto {
 
+    private ContoCorrenteDto contoCorrente;
+    private CriterioContoCorrenteDto filtro = new CriterioContoCorrenteDto("");
+
     public CriterioModificaContoCorrenteDto() {
     }
 
@@ -16,6 +19,4 @@ public class CriterioModificaContoCorrenteDto {
         this.contoCorrente = contoCorrente;
         this.filtro = filtro;
     }
-    private ContoCorrenteDto contoCorrente;
-    private CriterioContoCorrenteDto filtro = new CriterioContoCorrenteDto("");
 }

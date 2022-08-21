@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class CriterioTipoContoDto {
-    
-    public CriterioTipoContoDto(){}    
-    
+
+    public CriterioTipoContoDto() {
+    }
+
     public CriterioTipoContoDto(String criterio) {
         this.criterio = criterio;
     }
