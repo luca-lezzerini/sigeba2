@@ -27,25 +27,28 @@ public interface ContoCorrenteService {
      * @throws SigebaException
      */
     List<ContoCorrenteDto> inserisciContoCorrente(CriterioInserimentoContoCorrenteDto contoCorrenteDaInserireDto) throws SigebaException;
-     /**
-      * 
-      * @param dtoCancellazione
-      * @return
-      * @throws SigebaException 
-      */
+
+    /**
+     *
+     * @param dtoCancellazione
+     * @return
+     * @throws SigebaException
+     */
     List<ContoCorrenteDto> cancellaContoCorrente(CriterioCancellazioneContoCorrenteDto dtoCancellazione) throws SigebaException;
-      /**
-       * 
-       * @param modifica
-       * @return
-       * @throws SigebaException 
-       */
+
+    /**
+     *
+     * @param modifica
+     * @return
+     * @throws SigebaException
+     */
     List<ContoCorrenteDto> modificaContoCorrente(CriterioModificaContoCorrenteDto modifica) throws SigebaException;
-       /**
-        * 
-        * @param contoCorrenteDto
-        * @return
-        * @throws SigebaException 
-        */
+
+    /**
+     *
+     * @param contoCorrenteDto
+     * @return
+     * @throws SigebaException
+     */
     ContoCorrente leggiContoCorrente(SimpleIdDto contoCorrenteDto) throws SigebaException;
 }

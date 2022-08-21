@@ -34,18 +34,18 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
             throw new SigebaException("Criterio di ricerca null non e' ammissibile");
         }
         String crit = criterio.getCriterio();
-        List<ContoCorrenteDto> listaConto = new ArrayList<>();
+        List<ContoCorrenteDto> listaContiCorrenti = new ArrayList<>();
 
         //Trova ContoCorrente
         String chiaveParziale = "%" + crit + "%";
-        List<ContoCorrente> listaContoCorrente = contoCorrenteRepository.findByIdLikeOrIbanLikeOrFidoLike(chiaveParziale, chiaveParziale, chiaveParziale);
+        List<ContoCorrente> listaConti = contoCorrenteRepository.findByIbanLike(chiaveParziale);
 
         //li converte il lista Dto
-        for (ContoCorrente contoCorrente : listaContoCorrente) {
-            listaConto.add(new ContoCorrenteDto(contoCorrente));
+        for (ContoCorrente contoCorrente : listaConti) {
+            listaContiCorrenti.add(new ContoCorrenteDto(contoCorrente));
         }
         log.debug("Uscito da cerca ContoCorrente");
-        return listaConto;
+        return listaContiCorrenti;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
         contoCorrenteRepository.deleteById(idContoDaRimuovere);
 
         //recupera i conti correnti rimasti
-        List<ContoCorrenteDto> tipoContiCorrentiRimasti;
-        tipoContiCorrentiRimasti = cercaContoCorrente(dtoCancellazione.getFiltro());
+        List<ContoCorrenteDto> ContiCorrentiRimasti;
+        ContiCorrentiRimasti = cercaContoCorrente(dtoCancellazione.getFiltro());
         log.debug("In uscita da cancella conto corrente");
-        return tipoContiCorrentiRimasti;
+        return ContiCorrentiRimasti;
     }
 
     @Override

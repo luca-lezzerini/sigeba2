@@ -45,7 +45,7 @@ public class ContoCorrenteTest {
     }
 
     private void verificaCancellazione(ContoCorrente tipoScelto) {
-
+//Verifico cancellaContoCorrente
         Assertions.assertThrows(
                 SigebaException.class,
                 () -> contoCorrenteService.cancellaContoCorrente(null));
@@ -70,7 +70,7 @@ public class ContoCorrenteTest {
             List<ContoCorrenteDto> contiCorrentiTrovati = contoCorrenteService.cercaContoCorrente(criterio);
             Assertions.assertTrue(contiCorrentiTrovati.size() == 2);
             for (ContoCorrenteDto cc : contiCorrentiTrovati) {
-                Assertions.assertTrue(cc.getIban().contains("r"));
+                Assertions.assertTrue(cc.getIban().contains("9k"));
             }
 
             criterio.setCriterio("");
@@ -82,7 +82,7 @@ public class ContoCorrenteTest {
     }
 
     private void leggeEVerificaLetturaContoCorrente(ContoCorrente tipoScelto) {
-//verifico che il conto corrente con Id uguale a quello scelto abbia la descrizione ""
+//verifico che il conto corrente con Id uguale a quello scelto abbia il fido "500.00"
         SimpleIdDto sid = new SimpleIdDto();
         sid.setId(tipoScelto.getId());
         try {
@@ -98,19 +98,19 @@ public class ContoCorrenteTest {
     }
 
     private ContoCorrente scegliContoCorrenteACaso() {
-
-        List<ContoCorrente> contoCorrente = contoCorrenteRepository.findAll();
-        int numConti = contoCorrente.size();
+// Leggo tutti i conti correnti e ne scelgo uno a caso dalla lista appena letta
+        List<ContoCorrente> contiCorrenti = contoCorrenteRepository.findAll();
+        int numConti = contiCorrenti.size();
         int numContoCorrentePrescelto = random.nextInt(numConti);
-        ContoCorrente tipoContoScelto = contoCorrente.get(numContoCorrentePrescelto);
+        ContoCorrente tipoContoScelto = contiCorrenti.get(numContoCorrentePrescelto);
         return tipoContoScelto;
     }
 
     private void verificaNumeroContoCorrenteInseriti(int numeroContiCorrentiInseriti) {
-
-        CriterioContoCorrenteDto criterioTuttiIContiCorrentiDto = new CriterioContoCorrenteDto("");
+// Verifico che i conti correnti siano 5
+        CriterioContoCorrenteDto criterioTuttiIContiCorrenti = new CriterioContoCorrenteDto("");
         try {
-            List<ContoCorrenteDto> lista = contoCorrenteService.cercaContoCorrente(criterioTuttiIContiCorrentiDto);
+            List<ContoCorrenteDto> lista = contoCorrenteService.cercaContoCorrente(criterioTuttiIContiCorrenti);
             Assertions.assertTrue(lista.size() == numeroContiCorrentiInseriti);
         } catch (SigebaException e) {
             Assertions.fail();
@@ -118,7 +118,7 @@ public class ContoCorrenteTest {
     }
 
     private int creaContoCorrenteDiTest() {
-
+// creo i conti correnti di test
         int numeroContiCorrentiInseriti = 0;
         try {
             ContoCorrenteDto contoCorrenteDto = new ContoCorrenteDto();
@@ -163,6 +163,7 @@ public class ContoCorrenteTest {
     }
 
     private void cancellaDatiEsistenti() {
+        // cancello tutti i conti correnti
         contoCorrenteRepository.deleteAll();
     }
 }

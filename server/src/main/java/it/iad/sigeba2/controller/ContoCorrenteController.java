@@ -28,12 +28,12 @@ public class ContoCorrenteController {
 
     @RequestMapping("/cercaContoCorrente")
     @ResponseBody
-    public RispostaConStato<List<ContoCorrenteDto>> cercaContoCorrente(@RequestBody CriterioContoCorrenteDto filtro) {
+    public RispostaConStato<List<ContoCorrenteDto>> cercaContoCorrente(@RequestBody CriterioContoCorrenteDto criterio) {
         List<ContoCorrenteDto> datiRisposta;
         try {
-            datiRisposta = contoCorrenteService.cercaContoCorrente(filtro);
+            datiRisposta = contoCorrenteService.cercaContoCorrente(criterio);
         } catch (SigebaException e) {
-            log.warn("Eccezione nel controller cerca Conto Corrente");
+            log.warn("Eccezione nel controller cerca ContoCorrente");
             datiRisposta = Collections.emptyList();
         }
 
@@ -50,17 +50,17 @@ public class ContoCorrenteController {
         try {
             datiRisposta = contoCorrenteService.inserisciContoCorrente(contoCorrenteDaInserireDto);
         } catch (SigebaException e) {
-                log.warn("Eccezione nelcontroller cercaContoCorrente");
-                datiRisposta = Collections.emptyList();
-            }
+            log.warn("Eccezione nelcontroller cercaContoCorrente");
+            datiRisposta = Collections.emptyList();
+        }
 
-            RispostaConStato<List<ContoCorrenteDto>> risp = new RispostaConStato<>(
-                    datiRisposta,
-                    SigebaStateCollector.getAndClean());
-            return risp;
-    
+        RispostaConStato<List<ContoCorrenteDto>> risp = new RispostaConStato<>(
+                datiRisposta,
+                SigebaStateCollector.getAndClean());
+        return risp;
+
     }
-        
+
     @RequestMapping("/modificaContoCorrente")
     @ResponseBody
     public RispostaConStato<List<ContoCorrenteDto>> modificaContoCorrente(@RequestBody CriterioModificaContoCorrenteDto modifica) {
@@ -68,25 +68,25 @@ public class ContoCorrenteController {
         try {
             datiRisposta = contoCorrenteService.modificaContoCorrente(modifica);
         } catch (SigebaException e) {
-            
-                log.warn("Eccezione nelcontroller modificaContoCorrente");
-                datiRisposta = Collections.emptyList();
-            }
 
-            RispostaConStato<List<ContoCorrenteDto>> risp = new RispostaConStato<>(
-                    datiRisposta,
-                    SigebaStateCollector.getAndClean());
-            return risp;
+            log.warn("Eccezione nelcontroller modificaContoCorrente");
+            datiRisposta = Collections.emptyList();
         }
-    
-@RequestMapping("/cancellaContoCorrente")
+
+        RispostaConStato<List<ContoCorrenteDto>> risp = new RispostaConStato<>(
+                datiRisposta,
+                SigebaStateCollector.getAndClean());
+        return risp;
+    }
+
+    @RequestMapping("/cancellaContoCorrente")
     @ResponseBody
     public RispostaConStato<List<ContoCorrenteDto>> cancellaContoCorrente(@RequestBody CriterioCancellazioneContoCorrenteDto dtoCancellazione) {
         List<ContoCorrenteDto> datiRisposta;
         try {
             datiRisposta = contoCorrenteService.cancellaContoCorrente(dtoCancellazione);
         } catch (SigebaException e) {
-            log.warn("Eccezione nel controller cancellaTipoConto");
+            log.warn("Eccezione nel controller cancellaContoCorrente");
             datiRisposta = Collections.emptyList();
         }
         RispostaConStato<List<ContoCorrenteDto>> risp = new RispostaConStato<>(
@@ -94,20 +94,12 @@ public class ContoCorrenteController {
                 SigebaStateCollector.getAndClean());
         return risp;
     }
-    
+
     @RequestMapping("/leggiContoCorrente")
     @ResponseBody
-    public RispostaConStato<List<ContoCorrenteDto>> leggiContoCorrente(@RequestBody SimpleIdDto leggi) {
-        List<ContoCorrenteDto> datiRisposta;
-        try {
-            datiRisposta = (List<ContoCorrenteDto>) contoCorrenteService.leggiContoCorrente(leggi);
-        } catch (SigebaException e) {
-            log.warn("Eccezione nel controller modificaTipoConto");
-            datiRisposta = Collections.emptyList();
-        }
-        RispostaConStato<List<ContoCorrenteDto>> risp = new RispostaConStato<>(
-                datiRisposta,
-                SigebaStateCollector.getAndClean());
-        return risp;
+    public List<ContoCorrenteDto> leggiContoCorrente(@RequestBody SimpleIdDto leggi) {
+        throw new UnsupportedOperationException();
     }
+    
 }
+

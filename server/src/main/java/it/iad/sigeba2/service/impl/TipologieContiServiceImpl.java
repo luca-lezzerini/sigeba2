@@ -86,7 +86,7 @@ public class TipologieContiServiceImpl implements TipologieContiService {
         tipoContoRimasti = cercaTipoConto(dtoCancellazione.getFiltro());
         log.debug("In uscita da cancellaTipoConto");
         return tipoContoRimasti;
-         
+
     }
 
     @Override

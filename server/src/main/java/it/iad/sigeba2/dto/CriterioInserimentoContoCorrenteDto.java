@@ -1,6 +1,6 @@
 package it.iad.sigeba2.dto;
 
-public class CriterioInserimentoContoCorrenteDto extends CriterioModificaContoCorrenteDto {
+public class CriterioInserimentoContoCorrenteDto extends CriterioModificaContoCorrenteDto{
 
     public CriterioInserimentoContoCorrenteDto() {
     }

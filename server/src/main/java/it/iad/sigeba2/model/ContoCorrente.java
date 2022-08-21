@@ -14,7 +14,7 @@ public class ContoCorrente implements Serializable {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @Column
     private String iban;
     @Column

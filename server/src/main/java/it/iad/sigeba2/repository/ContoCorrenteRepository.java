@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContoCorrenteRepository extends JpaRepository<ContoCorrente, Long> {
 
-    List<ContoCorrente> findByIdLikeOrIbanLikeOrFidoLike(String critId, String critIban, String critFido);
+    List<ContoCorrente> findByIbanLike(String critIban);
 
 }
