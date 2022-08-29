@@ -37,8 +37,13 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
         List<ContoCorrenteDto> listaContiCorrenti = new ArrayList<>();
 
         //Trova ContoCorrente
-        String chiaveParziale = "%" + crit + "%";
-        List<ContoCorrente> listaConti = contoCorrenteRepository.findByIbanLike(chiaveParziale);
+        List<ContoCorrente> listaConti;
+                if (crit.isBlank()) {
+                listaConti = contoCorrenteRepository.findAll();
+                } else {
+                    String chiaveParziale = "%" + "%";
+                    listaConti = contoCorrenteRepository.findByIbanLike(chiaveParziale);
+                }
 
         //li converte il lista Dto
         for (ContoCorrente contoCorrente : listaConti) {
