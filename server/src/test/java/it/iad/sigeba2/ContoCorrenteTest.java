@@ -11,15 +11,17 @@ import it.iad.sigeba2.repository.ContoCorrenteRepository;
 import it.iad.sigeba2.service.ContoCorrenteService;
 import java.util.List;
 import java.util.Random;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@Slf4j
 public class ContoCorrenteTest {
 
-    Random random = new Random();
+    Random random = new Random(2605);
 
     @Autowired
     ContoCorrenteService contoCorrenteService;
@@ -102,12 +104,13 @@ public class ContoCorrenteTest {
         List<ContoCorrente> contiCorrenti = contoCorrenteRepository.findAll();
         int numConti = contiCorrenti.size();
         int numContoCorrentePrescelto = random.nextInt(numConti);
+        log.debug("Il conto corrente prescelto e' il numero " + numContoCorrentePrescelto);
         ContoCorrente tipoContoScelto = contiCorrenti.get(numContoCorrentePrescelto);
         return tipoContoScelto;
     }
 
     private void verificaNumeroContoCorrenteInseriti(int numeroContiCorrentiInseriti) {
-// Verifico che i conti correnti siano 5
+// Vverifico che i conti correnti siano 5
         CriterioContoCorrenteDto criterioTuttiIContiCorrenti = new CriterioContoCorrenteDto("");
         try {
             List<ContoCorrenteDto> lista = contoCorrenteService.cercaContoCorrente(criterioTuttiIContiCorrenti);
@@ -121,10 +124,7 @@ public class ContoCorrenteTest {
 // creo i conti correnti di test
         int numeroContiCorrentiInseriti = 0;
         try {
-            ContoCorrenteDto contoCorrenteDto = new ContoCorrenteDto();
-            contoCorrenteDto.setFido(500.00);
-            contoCorrenteDto.setIban("346tre4789kj");
-            contoCorrenteDto.setId(null);
+            ContoCorrenteDto contoCorrenteDto = new ContoCorrenteDto("346tre4789kj", 500.0);
             CriterioInserimentoContoCorrenteDto criterioInserimentoConto = new CriterioInserimentoContoCorrenteDto(contoCorrenteDto);
             contoCorrenteService.inserisciContoCorrente(criterioInserimentoConto);
             numeroContiCorrentiInseriti++;
