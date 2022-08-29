@@ -24,7 +24,7 @@ public class FilialeServiceImpl implements FilialeService {
 
     @Autowired
     private FilialeRepository filialeRepository;
- 
+
     @Override
     public List<FilialeDto> cercaFiliale(CriterioFilialeDto criterio) throws SigebaException {
         log.debug("Entrato in cercaFiliale");
@@ -35,9 +35,14 @@ public class FilialeServiceImpl implements FilialeService {
         }
         String crit = criterio.getCriterio();
         List<FilialeDto> listaFiliali = new ArrayList<>();
-
-        String chiaveParziale = "%" + crit + "%";
-        List<Filiale> listaFiliale = filialeRepository.findByNomeLikeOrCodiceLike(chiaveParziale, chiaveParziale);
+        
+        List<Filiale> listaFiliale;
+        if (crit.isBlank()) {
+            listaFiliale = filialeRepository.findAll();
+        } else {
+            String chiaveParziale = "%" + crit + "%";
+            listaFiliale = filialeRepository.findByNomeLikeOrCodiceLike(chiaveParziale, chiaveParziale);
+        }
 
         for (Filiale filiale : listaFiliale) {
             listaFiliali.add(new FilialeDto(filiale));

@@ -5,22 +5,21 @@ import lombok.Data;
 @Data
 public class CriterioModificaImpiegatoDto {
 
-public CriterioModificaImpiegatoDto(){
-    
-}
-public CriterioModificaImpiegatoDto(ImpiegatoDto impiegato){
-    this.impiegato = impiegato;
-}
+    private ImpiegatoDto impiegato;
+    CriterioImpiegatoDto filtro = new CriterioImpiegatoDto("");
 
-public CriterioModificaImpiegatoDto(ImpiegatoDto impiegato,CriterioImpiegatoDto filtro){
-    
-    this.impiegato = impiegato;
-    this.filtro = filtro;
-}
-private ImpiegatoDto impiegato;
-CriterioImpiegatoDto filtro;
+    public CriterioModificaImpiegatoDto() {
 
+    }
 
+    public CriterioModificaImpiegatoDto(ImpiegatoDto impiegato) {
+        this.impiegato = impiegato;
+    }
 
+    public CriterioModificaImpiegatoDto(ImpiegatoDto impiegato, CriterioImpiegatoDto filtro) {
+
+        this.impiegato = impiegato;
+        this.filtro = filtro;
+    }
 
 }

@@ -6,5 +6,5 @@ import lombok.Data;
 public class CriterioCancellazioneImpiegatoDto {
 
     private Long idImpiegato;
-    private CriterioImpiegatoDto filtro;
+    private CriterioImpiegatoDto filtro = new CriterioImpiegatoDto("");
 }
