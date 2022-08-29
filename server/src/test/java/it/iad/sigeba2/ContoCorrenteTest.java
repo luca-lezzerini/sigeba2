@@ -21,7 +21,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Slf4j
 public class ContoCorrenteTest {
 
-    Random random = new Random(2605);
+    private static final int NUMERO_CONTI_GENERATI = 100;
+
+    Random random = new Random();
 
     @Autowired
     ContoCorrenteService contoCorrenteService;
@@ -41,7 +43,7 @@ public class ContoCorrenteTest {
 
         leggeEVerificaLetturaContoCorrente(tipoScelto);
 
-        verificaRicercaPerChiaveParziale(numeroContiCorrentiInseriti);
+        verificaRicercaPerChiaveParziale();
 
         verificaCancellazione(tipoScelto);
     }
@@ -64,27 +66,27 @@ public class ContoCorrenteTest {
         Assertions.assertTrue(cc == null, "Trovato record cancellato");
     }
 
-    private void verificaRicercaPerChiaveParziale(int numeroContiCorrentiInseriti) {
+    private void verificaRicercaPerChiaveParziale() {
         //verifico ricerca conto corrente
-        CriterioContoCorrenteDto criterio = new CriterioContoCorrenteDto();
-        criterio.setCriterio("9k");
+        List<ContoCorrente> listaTuttiCc = contoCorrenteRepository.findAll();
+        int ccScelto = random.nextInt(listaTuttiCc.size());
+        String k = listaTuttiCc.get(ccScelto).getIban();
+        CriterioContoCorrenteDto criterio = new CriterioContoCorrenteDto(k);
         try {
             List<ContoCorrenteDto> contiCorrentiTrovati = contoCorrenteService.cercaContoCorrente(criterio);
-            Assertions.assertTrue(contiCorrentiTrovati.size() == 2);
+            Assertions.assertTrue(contiCorrentiTrovati.size() == 1);
             for (ContoCorrenteDto cc : contiCorrentiTrovati) {
-                Assertions.assertTrue(cc.getIban().contains("9k"));
+                Assertions.assertTrue(cc.getIban().contains(k));
             }
-
             criterio.setCriterio("");
             contiCorrentiTrovati = contoCorrenteService.cercaContoCorrente(criterio);
-            Assertions.assertTrue(contiCorrentiTrovati.size() == numeroContiCorrentiInseriti);
+            Assertions.assertTrue(contiCorrentiTrovati.size() == listaTuttiCc.size());
         } catch (SigebaException e) {
             Assertions.fail();
         }
     }
 
     private void leggeEVerificaLetturaContoCorrente(ContoCorrente tipoScelto) {
-//verifico che il conto corrente con Id uguale a quello scelto abbia il fido "500.00"
         SimpleIdDto sid = new SimpleIdDto();
         sid.setId(tipoScelto.getId());
         try {
@@ -124,38 +126,16 @@ public class ContoCorrenteTest {
 // creo i conti correnti di test
         int numeroContiCorrentiInseriti = 0;
         try {
-            ContoCorrenteDto contoCorrenteDto = new ContoCorrenteDto("346tre4789kj", 500.0);
-            CriterioInserimentoContoCorrenteDto criterioInserimentoConto = new CriterioInserimentoContoCorrenteDto(contoCorrenteDto);
-            contoCorrenteService.inserisciContoCorrente(criterioInserimentoConto);
-            numeroContiCorrentiInseriti++;
-            contoCorrenteDto = new ContoCorrenteDto();
-            contoCorrenteDto.setFido(250.00);
-            contoCorrenteDto.setIban("4uf754rc72tt");
-            contoCorrenteDto.setId(null);
-            criterioInserimentoConto = new CriterioInserimentoContoCorrenteDto(contoCorrenteDto);
-            contoCorrenteService.inserisciContoCorrente(criterioInserimentoConto);
-            numeroContiCorrentiInseriti++;
-            contoCorrenteDto = new ContoCorrenteDto();
-            contoCorrenteDto.setFido(500.00);
-            contoCorrenteDto.setIban("ujk54r6389k4");
-            contoCorrenteDto.setId(null);
-            criterioInserimentoConto = new CriterioInserimentoContoCorrenteDto(contoCorrenteDto);
-            contoCorrenteService.inserisciContoCorrente(criterioInserimentoConto);
-            numeroContiCorrentiInseriti++;
-            contoCorrenteDto = new ContoCorrenteDto();
-            contoCorrenteDto.setFido(350.00);
-            contoCorrenteDto.setIban("340987yhnb23");
-            contoCorrenteDto.setId(null);
-            criterioInserimentoConto = new CriterioInserimentoContoCorrenteDto(contoCorrenteDto);
-            contoCorrenteService.inserisciContoCorrente(criterioInserimentoConto);
-            numeroContiCorrentiInseriti++;
-            contoCorrenteDto = new ContoCorrenteDto();
-            contoCorrenteDto.setFido(150.00);
-            contoCorrenteDto.setIban("plmnuter567a");
-            contoCorrenteDto.setId(null);
-            criterioInserimentoConto = new CriterioInserimentoContoCorrenteDto(contoCorrenteDto);
-            contoCorrenteService.inserisciContoCorrente(criterioInserimentoConto);
-            numeroContiCorrentiInseriti++;
+            ContoCorrenteDto contoCorrenteDto;
+
+            for (int i = 0; i < NUMERO_CONTI_GENERATI; i++) {
+                String ib = "IBANXYZ" + i;
+                Double fi = 10.0 * i;
+                contoCorrenteDto = new ContoCorrenteDto(ib, fi);
+                CriterioInserimentoContoCorrenteDto criterioInserimentoConto = new CriterioInserimentoContoCorrenteDto(contoCorrenteDto);
+                contoCorrenteService.inserisciContoCorrente(criterioInserimentoConto);
+                numeroContiCorrentiInseriti++;
+            }
         } catch (SigebaException e) {
             Assertions.fail();
         }

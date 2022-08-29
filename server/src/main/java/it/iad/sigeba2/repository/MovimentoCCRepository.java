@@ -8,10 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovimentoCCRepository extends JpaRepository<MovimentoCC, Long> {
 
-    List<MovimentoCC> findByNomeLikeOrCodiceLike(String critTipo, String critDescrizione);
-
-    List<MovimentoCC> findByIbanLike(String critIban);
-
     List<MovimentoCC> findByTipoLikeOrDescrizioneLike(String critTipo, String critDescr);
 
 }

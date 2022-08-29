@@ -8,6 +8,7 @@ import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.model.Filiale;
 import it.iad.sigeba2.repository.FilialeRepository;
+import it.iad.sigeba2.service.FilialeService;
 import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.Assertions;
