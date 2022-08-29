@@ -9,6 +9,7 @@ import it.iad.sigeba2.dto.RispostaConStato;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
+import it.iad.sigeba2.model.ContoCorrente;
 import it.iad.sigeba2.service.ContoCorrenteService;
 import java.util.Collections;
 import java.util.List;
@@ -97,9 +98,23 @@ public class ContoCorrenteController {
 
     @RequestMapping("/leggiContoCorrente")
     @ResponseBody
-    public List<ContoCorrenteDto> leggiContoCorrente(@RequestBody SimpleIdDto leggi) {
-        throw new UnsupportedOperationException();
+    public RispostaConStato<ContoCorrenteDto> leggiContoCorrente(@RequestBody SimpleIdDto idCCDaTrovare) {
+        ContoCorrenteDto datiRisposta;
+        try {
+            ContoCorrente ccTrovato = contoCorrenteService.leggiContoCorrente(idCCDaTrovare);
+            if (ccTrovato == null) {
+                datiRisposta = null;
+            } else {
+                datiRisposta = new ContoCorrenteDto(ccTrovato);
+            }
+        } catch (SigebaException e) {
+            log.warn("Eccezione nel controller cancellaContoCorrente");
+            datiRisposta = null;
+        }
+        RispostaConStato<ContoCorrenteDto> risp = new RispostaConStato<>(
+                datiRisposta,
+                SigebaStateCollector.getAndClean());
+        return risp;
     }
-    
-}
 
+}
