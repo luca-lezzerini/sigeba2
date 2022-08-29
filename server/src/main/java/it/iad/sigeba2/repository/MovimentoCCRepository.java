@@ -1,4 +1,3 @@
-
 package it.iad.sigeba2.repository;
 
 import it.iad.sigeba2.model.MovimentoCC;
@@ -7,8 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovimentoCCRepository extends JpaRepository<MovimentoCC ,Long>{
-    
-    List<MovimentoCC>findByNomeLikeOrCodiceLike(String critTipo, String critDescrizione);
-    
+public interface MovimentoCCRepository extends JpaRepository<MovimentoCC, Long> {
+
+    List<MovimentoCC> findByNomeLikeOrCodiceLike(String critTipo, String critDescrizione);
+
+    List<MovimentoCC> findByIbanLike(String critIban);
+
+    List<MovimentoCC> findByTipoLikeOrDescrizioneLike(String critTipo, String critDescr);
+
 }

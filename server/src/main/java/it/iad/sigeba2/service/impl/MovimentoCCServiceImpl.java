@@ -1,6 +1,7 @@
 package it.iad.sigeba2.service.impl;
 
 import it.iad.sigeba2.dto.CriterioCancellazioneMovimentoCCDto;
+import it.iad.sigeba2.dto.CriterioInserimentoMovimentoCCDto;
 import it.iad.sigeba2.dto.CriterioModificaMovimentoCCDto;
 import it.iad.sigeba2.dto.CriterioMovimentoCCDto;
 import it.iad.sigeba2.dto.MovimentoCCDto;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class MovimentoCCServiceImpl implements MovimentoCCService {
 
     @Autowired
-    private MovimentoCCRepository movimentoccRepository;
+    private MovimentoCCRepository movimentoCcRepository;
 
     @Override
     public List<MovimentoCCDto> cercaMovimentoCC(CriterioMovimentoCCDto criterio) throws SigebaException {
@@ -33,16 +34,17 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
             throw new SigebaException("Criterio di ricerca null non e' ammissibile");
         }
         String crit = criterio.getCriterio();
-        List<MovimentoCCDto> listaMovimentoCC = new ArrayList<>();
+        List<MovimentoCC> listaMovimentoCC;
+        List<MovimentoCCDto> risultatoMovCc = new ArrayList<>();
 
         String chiaveParziale = "%" + crit + "%";
-        List<MovimentoCC> listaMovimentoCC = movimentoCCRepository.findByIbanLike(chiaveParziale);
+        listaMovimentoCC = movimentoCcRepository.findByTipoLikeOrDescrizioneLike(chiaveParziale, chiaveParziale);
 
         for (MovimentoCC movimentocc : listaMovimentoCC) {
-            listaMovimentoCC.add(new MovimentoCCDto(movimentocc));
+            risultatoMovCc.add(new MovimentoCCDto(movimentocc));
         }
         log.debug("Uscito da cerca MovimentoCC");
-        return listaMovimentoCC;
+        return risultatoMovCc;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
             throw new SigebaException("Id da cancellare null!!");
         }
         Long idDaRimuovere = dtoCancellazione.getIdMovimentoCC();
-        movimentoccRepository.deleteById(idDaRimuovere);
+        movimentoCcRepository.deleteById(idDaRimuovere);
 
         List<MovimentoCCDto> movimentoccRimasti;
         movimentoccRimasti = cercaMovimentoCC(dtoCancellazione.getFiltro());
@@ -67,15 +69,15 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
     @Override
     public List<MovimentoCCDto> modificaMovimentoCC(CriterioModificaMovimentoCCDto modifica) throws SigebaException {
         log.debug("Entrato in modificaMovimentoCC");
-        if (modifica == null || modifica.getMovimentoCC() != null) {
+        if (modifica == null || modifica.getMovimentoCc() != null) {
             SigebaStateCollector.addStatusMessage("MovimentoCC da modificare null non consentito",
                     "Inserire MovimentoCC valido", GravitaStatoEnum.CRITICA);
             throw new SigebaException("MovimentoCC da modificare null!!!");
         }
-        MovimentoCCDto movimentoccModificato = modifica.getMovimentoCC();
+        MovimentoCCDto movimentoccModificato = modifica.getMovimentoCc();
         MovimentoCC filialeCheSostituisce = new MovimentoCC(movimentoccModificato);
 
-        movimentoccRepository.save(filialeCheSostituisce);
+        movimentoCcRepository.save(filialeCheSostituisce);
 
         log.debug("Esce da modificaMovimentoCC");
         return cercaMovimentoCC(modifica.getFiltro());
@@ -89,9 +91,16 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
                     "Id movimentocc valido", GravitaStatoEnum.CRITICA);
             throw new SigebaException("Id movimentocc da leggere null!!");
         }
-        return movimentoccRepository.findById(chiave.getId())
+        return movimentoCcRepository.findById(chiave.getId())
                 .map(cx -> cx)
                 .orElse(null);
     }
+
+    @Override
+    public List<MovimentoCCDto> inserisciMovimentoCC(CriterioInserimentoMovimentoCCDto movimentoccDaInserireDto) throws SigebaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
 
 }
