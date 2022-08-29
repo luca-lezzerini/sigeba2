@@ -24,7 +24,7 @@ public class FilialeServiceImpl implements FilialeService {
 
     @Autowired
     private FilialeRepository filialeRepository;
-
+ 
     @Override
     public List<FilialeDto> cercaFiliale(CriterioFilialeDto criterio) throws SigebaException {
         log.debug("Entrato in cercaFiliale");
