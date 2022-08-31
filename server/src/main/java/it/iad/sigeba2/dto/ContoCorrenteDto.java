@@ -19,4 +19,8 @@ public class ContoCorrenteDto {
         fido = contoCorrente.getFido();
     }
 
+    public ContoCorrenteDto(String iban, double fido) {
+        this.iban = iban;
+        this.fido = fido;
+    }
 }
