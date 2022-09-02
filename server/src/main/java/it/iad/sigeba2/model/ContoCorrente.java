@@ -29,7 +29,7 @@ public class ContoCorrente implements Serializable {
     
     @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Filiale filiale;
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoConto tipo;

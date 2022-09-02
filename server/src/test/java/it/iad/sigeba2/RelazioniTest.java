@@ -5,6 +5,8 @@ import it.iad.sigeba2.model.ContoCorrente;
 import it.iad.sigeba2.repository.ClienteRepository;
 import it.iad.sigeba2.repository.ContoCorrenteRepository;
 import it.iad.sigeba2.service.AnagraficaClientiService;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.Assertions;
@@ -14,45 +16,45 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class RelazioniTest {
-
+    
     private static final int NUMERO_CLIENTI = 100;
-    private static final int NUMERO_CONTI_CORRENTI = 2000;
-
+    private static final int NUMERO_CONTI_CORRENTI = 200;
+    
     Random random = new Random(12345);
     @Autowired
     AnagraficaClientiService anagraficaClientiService;
-
+    
     @Autowired
     ClienteRepository clienteRepository;
     @Autowired
     ContoCorrenteRepository contoCorrenteRepository;
-
+    
     @Test
     public void testaClienteContoCorrente() {
         cancellaDatiEsistenti();
-
+        
         creaClienti();
         creaContiCorrenti();
-
+        
         System.out.println("Sto associando conti e clienti");
         List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
         List<Cliente> listaClienti = clienteRepository.findAll();
 //        listaClienti.remove(0);
 //        listaConti.remove(0);
-        int numCliente = 0;
         for (ContoCorrente cc : listaConti) {
-            int clienteScelto = numCliente++ % NUMERO_CLIENTI;
+            int clienteScelto = random.nextInt(NUMERO_CLIENTI);
             Cliente cli = listaClienti.get(clienteScelto);
             cc.setCliente(cli);
             contoCorrenteRepository.save(cc);
         }
-
+        
         System.out.println("Sto verificando conti e clienti");
         for (Cliente cli : listaClienti) {
-            Assertions.assertTrue(cli.getContiCorrenti().size() == 2, "Il conto non ha il numero esatto di conti associati!");
+            int numCC = contoCorrenteRepository.contaCCPerClienteJPQL(cli.getId());
+            Assertions.assertTrue(cli.getContiCorrenti().size() == numCC, "Numero conti errato!");
         }
     }
-
+    
     private void creaClienti() {
         // creazione clienti
         System.out.println("Creazione clienti ...");
@@ -63,7 +65,7 @@ public class RelazioniTest {
             clienteRepository.save(new Cliente(n, c, cf));
         }
     }
-
+    
     private void creaContiCorrenti() {
         // creazione clienti
         System.out.println("Creazione conti ...");
@@ -73,10 +75,14 @@ public class RelazioniTest {
             contoCorrenteRepository.save(new ContoCorrente(iban, fido));
         }
     }
-
+    
     private void cancellaDatiEsistenti() {
         //Cancello tutti i dati
-        contoCorrenteRepository.deleteAll();
-        clienteRepository.deleteAll();
+        contoCorrenteRepository.deleteAllInBatch();
+        Instant i1 =Instant.now();
+        clienteRepository.deleteAllInBatch();
+        Instant i2 =Instant.now();
+        Duration d = Duration.between(i1, i2);
+        System.out.println("Tempo impiegato per cancellare " + d.toMillis());
     }
 }

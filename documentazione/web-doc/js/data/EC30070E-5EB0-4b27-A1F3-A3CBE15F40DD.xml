@@ -1,7 +1,7 @@
-tocTab[tocTab.length] = new Array("0.6.1:1", "", "Anagrafica Clienti", "EARoot/EA6/EA1/EA120.htm", "175.png", "17", "0", "", "Logical diagram0","{CE03D3AA-9B66-46dc-A718-F6FC2918B023}");
-tocTab[tocTab.length] = new Array("0.6.1:2", "", "ClienteDto", "EARoot/EA6/EA1/EA123.htm", "5.png", "E73", "0", "", "Class0","{B2F7553E-B5AC-4e4d-AC0A-95CA68DC8AA5}");
-tocTab[tocTab.length] = new Array("0.6.1:3", "", "CriterioCancellazioneClienteDto", "EARoot/EA6/EA1/EA124.htm", "5.png", "E74", "0", "", "Class0","{76AA6E61-0201-41e2-930C-5E2F119C9DE8}");
-tocTab[tocTab.length] = new Array("0.6.1:4", "", "CriterioClienteDto", "EARoot/EA6/EA1/EA125.htm", "5.png", "E72", "0", "", "Class0","{43DE88D3-4061-41c2-A08F-9F9A4582D89B}");
-tocTab[tocTab.length] = new Array("0.6.1:5", "", "CriterioModificaClienteDto", "EARoot/EA6/EA1/EA126.htm", "5.png", "E75", "0", "", "Class0","{CEDE327D-C66F-45e5-9FAD-362F0F3E0CFC}");
-tocTab[tocTab.length] = new Array("0.6.1:6", "", "SimpleIdDto", "EARoot/EA6/EA1/EA127.htm", "5.png", "E77", "0", "", "Class0","{0D69AC06-A367-4e22-85C9-7D75F7192041}");
-tocTab[tocTab.length] = new Array("0.6.1:7", "", "TipologiaContiController", "EARoot/EA6/EA1/EA128.htm", "5.png", "E69", "0", "", "Class0","{815B5C7B-1819-4c57-8DEC-673222030BAF}");
+tocTab[tocTab.length] = new Array("0.6.1:1", "", "Anagrafica Clienti", "EARoot/EA6/EA1/EA121.htm", "175.png", "17", "0", "", "Logical diagram0","{CE03D3AA-9B66-46dc-A718-F6FC2918B023}");
+tocTab[tocTab.length] = new Array("0.6.1:2", "", "ClienteDto", "EARoot/EA6/EA1/EA124.htm", "5.png", "E73", "0", "", "Class0","{B2F7553E-B5AC-4e4d-AC0A-95CA68DC8AA5}");
+tocTab[tocTab.length] = new Array("0.6.1:3", "", "CriterioCancellazioneClienteDto", "EARoot/EA6/EA1/EA125.htm", "5.png", "E74", "0", "", "Class0","{76AA6E61-0201-41e2-930C-5E2F119C9DE8}");
+tocTab[tocTab.length] = new Array("0.6.1:4", "", "CriterioClienteDto", "EARoot/EA6/EA1/EA126.htm", "5.png", "E72", "0", "", "Class0","{43DE88D3-4061-41c2-A08F-9F9A4582D89B}");
+tocTab[tocTab.length] = new Array("0.6.1:5", "", "CriterioModificaClienteDto", "EARoot/EA6/EA1/EA127.htm", "5.png", "E75", "0", "", "Class0","{CEDE327D-C66F-45e5-9FAD-362F0F3E0CFC}");
+tocTab[tocTab.length] = new Array("0.6.1:6", "", "SimpleIdDto", "EARoot/EA6/EA1/EA128.htm", "5.png", "E77", "0", "", "Class0","{0D69AC06-A367-4e22-85C9-7D75F7192041}");
+tocTab[tocTab.length] = new Array("0.6.1:7", "", "TipologiaContiController", "EARoot/EA6/EA1/EA129.htm", "5.png", "E69", "0", "", "Class0","{815B5C7B-1819-4c57-8DEC-673222030BAF}");
