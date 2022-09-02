@@ -2,6 +2,7 @@ package it.iad.sigeba2.model;
 
 import it.iad.sigeba2.dto.TipoContoDto;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class TipoConto implements Serializable{
+public class TipoConto implements Serializable {
 
     @Id
     @GeneratedValue
@@ -31,6 +32,8 @@ public class TipoConto implements Serializable{
     private Boolean cartaCredito;
     @Column
     private Double costoOperazioneBancomat;
+
+    private List<ContoCorrente> contiCorrenti;
 
     public TipoConto() {
     }

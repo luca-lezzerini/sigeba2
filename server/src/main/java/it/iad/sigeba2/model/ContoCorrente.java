@@ -2,6 +2,7 @@ package it.iad.sigeba2.model;
 
 import it.iad.sigeba2.dto.ContoCorrenteDto;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,10 @@ public class ContoCorrente implements Serializable {
     private String iban;
     @Column
     private Double fido;
+    
+    private List<MovimentoCC> movimentiDa;
+    
+    private List<MovimentoCC> movimentiPer;
 
     public ContoCorrente() {
     }

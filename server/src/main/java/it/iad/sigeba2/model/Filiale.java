@@ -2,6 +2,7 @@ package it.iad.sigeba2.model;
 
 import it.iad.sigeba2.dto.FilialeDto;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,8 @@ public class Filiale implements Serializable {
     private String nome;
     @Column
     private String codice;
+
+    private List<ContoCorrente> contiCorrenti;
 
     public Filiale() {
     }

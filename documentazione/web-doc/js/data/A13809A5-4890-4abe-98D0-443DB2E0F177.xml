@@ -1,6 +1,1 @@
 tocTab[tocTab.length] = new Array("0.2.1:1", "", "Esercizi Agosto", "EARoot/EA2/EA1/EA29.htm", "175.png", "21", "0", "", "Logical diagram0","{07F7A78D-8773-425f-9755-00681B543A4A}");
-tocTab[tocTab.length] = new Array("0.2.1:2", "", "ContoCorrente", "EARoot/EA2/EA1/EA38.htm", "5.png", "E92", "0", "", "Class0","{1DB2F0D7-E605-495e-A476-F390EA538E63}");
-tocTab[tocTab.length] = new Array("0.2.1:3", "", "Filiale", "EARoot/EA2/EA1/EA39.htm", "5.png", "E95", "0", "", "Class0","{CBE9A6F5-9FB6-480b-8A95-18D53D8F20BE}");
-tocTab[tocTab.length] = new Array("0.2.1:4", "", "Impiegato", "EARoot/EA2/EA1/EA40.htm", "5.png", "E94", "0", "", "Class0","{3CEBD65C-5BF1-404e-B3FC-6D797A5E77BE}");
-tocTab[tocTab.length] = new Array("0.2.1:5", "", "LibrettoRisparmio", "EARoot/EA2/EA1/EA41.htm", "5.png", "E96", "0", "", "Class0","{C76F5DDE-5F7A-4a0b-9037-61A3EA2D4793}");
-tocTab[tocTab.length] = new Array("0.2.1:6", "", "MovimentoCC", "EARoot/EA2/EA1/EA42.htm", "5.png", "E93", "0", "", "Class0","{F7EDA0DC-AC2A-419e-BC44-C71BB725804D}");

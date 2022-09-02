@@ -1,3 +1,3 @@
-tocTab[tocTab.length] = new Array("0.4:1", "", "Interfacce Utente", "EARoot/EA4/EA75.htm", "176.png", "7", "0", "", "Package diagram0","{41DF3512-7347-4298-93C4-CDC1A7832527}");
-tocTab[tocTab.length] = new Array("0.4.1", "1", "Generale", "EARoot/EA4/EA1/EA82.htm", "4.png", "", "", "{96666A93-1F82-4099-A29A-4F900B6CFAFB}", "Package");
-tocTab[tocTab.length] = new Array("0.4.2", "1", "Gestione Clienti", "EARoot/EA4/EA2/EA86.htm", "4.png", "", "", "{46CF4D25-A2FF-4f55-94BE-A4574B60AF36}", "Package");
+tocTab[tocTab.length] = new Array("0.4:1", "", "Interfacce Utente", "EARoot/EA4/EA70.htm", "176.png", "7", "0", "", "Package diagram0","{41DF3512-7347-4298-93C4-CDC1A7832527}");
+tocTab[tocTab.length] = new Array("0.4.1", "1", "Generale", "EARoot/EA4/EA1/EA77.htm", "4.png", "", "", "{96666A93-1F82-4099-A29A-4F900B6CFAFB}", "Package");
+tocTab[tocTab.length] = new Array("0.4.2", "1", "Gestione Clienti", "EARoot/EA4/EA2/EA81.htm", "4.png", "", "", "{46CF4D25-A2FF-4f55-94BE-A4574B60AF36}", "Package");
