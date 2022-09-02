@@ -21,7 +21,7 @@ public class Filiale implements Serializable {
     @Column
     private String codice;
 
-    private List<ContoCorrente> contiCorrenti;
+//    private List<ContoCorrente> contiCorrenti;
 
     public Filiale() {
     }

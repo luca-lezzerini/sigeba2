@@ -33,7 +33,7 @@ public class TipoConto implements Serializable {
     @Column
     private Double costoOperazioneBancomat;
 
-    private List<ContoCorrente> contiCorrenti;
+//    private List<ContoCorrente> contiCorrenti;
 
     public TipoConto() {
     }
