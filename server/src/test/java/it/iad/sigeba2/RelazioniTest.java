@@ -41,10 +41,20 @@ public class RelazioniTest {
 
         cc.setCliente(cli);
         contoCorrenteRepository.save(cc);
+        
+        cc = listaConti.get(1);
+        cli = listaClienti.get(1);
+        
+        List<ContoCorrente> mieiConti = cli.getContiCorrenti();
+        mieiConti.add(cc);
+//        cli.setContiCorrenti(mieiConti);
+        clienteRepository.save(cli);
+        
     }
 
     private void creaClienti() {
         // creazione clienti
+        System.out.println("Creazione clienti ...");
         for (int i = 0; i < NUMERO_CLIENTI; i++) {
             String n = "Nome" + i;
             String c = "Cognome" + i;
@@ -55,6 +65,7 @@ public class RelazioniTest {
 
     private void creaContiCorrenti() {
         // creazione clienti
+        System.out.println("Creazione conti ...");
         for (int i = 0; i < NUMERO_CONTI_CORRENTI; i++) {
             String iban = "IBAN" + i;
             double fido = 0.0;

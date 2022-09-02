@@ -2,6 +2,7 @@ package it.iad.sigeba2.model;
 
 import it.iad.sigeba2.dto.ClienteDto;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Cliente implements Serializable{
     @Column
     private String codiceFiscale;
     
-    @OneToMany
+    @OneToMany(mappedBy = "cliente")
     private List<ContoCorrente> contiCorrenti;
     
     public Cliente() {

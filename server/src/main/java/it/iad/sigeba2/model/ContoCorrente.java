@@ -28,6 +28,10 @@ public class ContoCorrente implements Serializable {
     
     @ManyToOne
     private Cliente cliente;
+    @ManyToOne
+    private Filiale filiale;
+    @ManyToOne
+    private TipoConto tipo;
 
     public ContoCorrente() {
     }

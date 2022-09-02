@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.Data;
 
 @Data
@@ -33,7 +34,8 @@ public class TipoConto implements Serializable {
     @Column
     private Double costoOperazioneBancomat;
 
-//    private List<ContoCorrente> contiCorrenti;
+    @OneToMany(mappedBy = "tipo")
+    private List<ContoCorrente> contiCorrenti;
 
     public TipoConto() {
     }

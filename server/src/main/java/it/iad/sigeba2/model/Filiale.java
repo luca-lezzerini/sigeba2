@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.Data;
 
 @Data
@@ -21,8 +22,8 @@ public class Filiale implements Serializable {
     @Column
     private String codice;
 
-//    private List<ContoCorrente> contiCorrenti;
-
+    @OneToMany(mappedBy = "filiale")
+    private List<ContoCorrente> contiCorrenti;
     public Filiale() {
     }
 
