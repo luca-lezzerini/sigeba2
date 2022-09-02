@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -26,11 +27,11 @@ public class ContoCorrente implements Serializable {
 //    
 //    private List<MovimentoCC> movimentiPer;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
     @ManyToOne
     private Filiale filiale;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private TipoConto tipo;
 
     public ContoCorrente() {

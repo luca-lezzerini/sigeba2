@@ -7,6 +7,7 @@ import it.iad.sigeba2.repository.ContoCorrenteRepository;
 import it.iad.sigeba2.service.AnagraficaClientiService;
 import java.util.List;
 import java.util.Random;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class RelazioniTest {
 
     private static final int NUMERO_CLIENTI = 100;
-    private static final int NUMERO_CONTI_CORRENTI = 200;
+    private static final int NUMERO_CONTI_CORRENTI = 2000;
 
-    Random random = new Random();
+    Random random = new Random(12345);
     @Autowired
     AnagraficaClientiService anagraficaClientiService;
 
@@ -33,23 +34,23 @@ public class RelazioniTest {
         creaClienti();
         creaContiCorrenti();
 
+        System.out.println("Sto associando conti e clienti");
         List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
         List<Cliente> listaClienti = clienteRepository.findAll();
+//        listaClienti.remove(0);
+//        listaConti.remove(0);
+        int numCliente = 0;
+        for (ContoCorrente cc : listaConti) {
+            int clienteScelto = numCliente++ % NUMERO_CLIENTI;
+            Cliente cli = listaClienti.get(clienteScelto);
+            cc.setCliente(cli);
+            contoCorrenteRepository.save(cc);
+        }
 
-        ContoCorrente cc = listaConti.get(0);
-        Cliente cli = listaClienti.get(0);
-
-        cc.setCliente(cli);
-        contoCorrenteRepository.save(cc);
-        
-        cc = listaConti.get(1);
-        cli = listaClienti.get(1);
-        
-        List<ContoCorrente> mieiConti = cli.getContiCorrenti();
-        mieiConti.add(cc);
-//        cli.setContiCorrenti(mieiConti);
-        clienteRepository.save(cli);
-        
+        System.out.println("Sto verificando conti e clienti");
+        for (Cliente cli : listaClienti) {
+            Assertions.assertTrue(cli.getContiCorrenti().size() == 2, "Il conto non ha il numero esatto di conti associati!");
+        }
     }
 
     private void creaClienti() {
