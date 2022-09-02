@@ -38,12 +38,12 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
 
         //Trova ContoCorrente
         List<ContoCorrente> listaConti;
-                if (crit.isBlank()) {
-                listaConti = contoCorrenteRepository.findAll();
-                } else {
-                    String chiaveParziale = "%" + "%";
-                    listaConti = contoCorrenteRepository.findByIbanLike(chiaveParziale);
-                }
+        if (crit.isBlank()) {
+            listaConti = contoCorrenteRepository.findAll();
+        } else {
+            String chiaveParziale = "%" + crit + "%";
+            listaConti = contoCorrenteRepository.findByIbanLike(chiaveParziale);
+        }
 
         //li converte il lista Dto
         for (ContoCorrente contoCorrente : listaConti) {
