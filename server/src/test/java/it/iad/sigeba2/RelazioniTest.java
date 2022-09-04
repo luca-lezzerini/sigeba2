@@ -134,4 +134,34 @@ public class RelazioniTest {
         Duration d = Duration.between(i1, i2);
         System.out.println("Tempo impiegato per cancellare " + d.toMillis());
     }
+    
+    @Test
+    public void testaContoCorrenteFiliale() {
+        cancellaDatiEsistenti();
+        
+        creaContiCorrenti();
+        creaFiliale();
+        
+        System.out.println("Sto associando conti e filiali");
+        List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
+        List<Filiale> listaFiliali = filialeRepository.findAll();
+        for (Filiale f : listaFiliali) {
+            int ccScelto = random.nextInt(NUMERO_CONTI_CORRENTI);
+            ContoCorrente cf = listaConti.get(ccScelto);
+            f.getContiCorrenti().add(cf);
+            filialeRepository.save(f);
+        }
+        
+    }
+        
+    private void cancellaContiCorrenti() {
+        //Cancello tutti i dati
+        filialeRepository.deleteAllInBatch();
+        Instant i1 =Instant.now();
+        contoCorrenteRepository.deleteAllInBatch();
+        Instant i2 =Instant.now();
+        Duration d = Duration.between(i1, i2);
+        System.out.println("Tempo impiegato per cancellare " + d.toMillis());
+    }
+
 }
