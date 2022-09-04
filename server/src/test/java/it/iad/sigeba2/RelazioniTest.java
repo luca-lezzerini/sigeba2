@@ -18,29 +18,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class RelazioniTest {
-    
+
     private static final int NUMERO_CLIENTI = 100;
     private static final int NUMERO_CONTI_CORRENTI = 200;
     private static final int NUMERO_FILIALI = 10;
-    
+
     Random random = new Random(12345);
     @Autowired
     AnagraficaClientiService anagraficaClientiService;
-    
+
     @Autowired
     ClienteRepository clienteRepository;
     @Autowired
     ContoCorrenteRepository contoCorrenteRepository;
     @Autowired
     FilialeRepository filialeRepository;
-    
+
     @Test
     public void testaClienteContoCorrente() {
         cancellaDatiEsistenti();
-        
+
         creaClienti();
         creaContiCorrenti();
-        
+
         System.out.println("Sto associando conti e clienti");
         List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
         List<Cliente> listaClienti = clienteRepository.findAll();
@@ -52,14 +52,14 @@ public class RelazioniTest {
             cc.setCliente(cli);
             contoCorrenteRepository.save(cc);
         }
-        
+
         System.out.println("Sto verificando conti e clienti");
         for (Cliente cli : listaClienti) {
             int numCC = contoCorrenteRepository.contaCCPerClienteJPQL(cli.getId());
             Assertions.assertTrue(cli.getContiCorrenti().size() == numCC, "Numero conti errato!");
         }
     }
-    
+
     private void creaClienti() {
         // creazione clienti
         System.out.println("Creazione clienti ...");
@@ -70,7 +70,7 @@ public class RelazioniTest {
             clienteRepository.save(new Cliente(n, c, cf));
         }
     }
-    
+
     private void creaContiCorrenti() {
         // creazione clienti
         System.out.println("Creazione conti ...");
@@ -80,24 +80,52 @@ public class RelazioniTest {
             contoCorrenteRepository.save(new ContoCorrente(iban, fido));
         }
     }
-    
+
     private void cancellaDatiEsistenti() {
         //Cancello tutti i dati
         contoCorrenteRepository.deleteAllInBatch();
-        Instant i1 =Instant.now();
+        Instant i1 = Instant.now();
         clienteRepository.deleteAllInBatch();
-        Instant i2 =Instant.now();
+        Instant i2 = Instant.now();
         Duration d = Duration.between(i1, i2);
         System.out.println("Tempo impiegato per cancellare " + d.toMillis());
     }
-    
+
+    @Test
+    public void testaContoCorrenteCliente() {
+        cancellaConti();
+
+        creaContiCorrenti();
+        creaClienti();
+
+        System.out.println("Sto associando clienti a conti");
+        List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
+        List<Cliente> listaClienti = clienteRepository.findAll();
+        for (Cliente cli : listaClienti) {
+            int ccScelto = random.nextInt(NUMERO_CONTI_CORRENTI);
+            ContoCorrente cf = listaConti.get(ccScelto);
+            cli.getContiCorrenti().add(cf);
+            clienteRepository.save(cli);
+        }
+    }
+
+    private void cancellaConti() {
+        //Cancello tutti i dati
+        clienteRepository.deleteAllInBatch();
+        Instant i1 = Instant.now();
+        contoCorrenteRepository.deleteAllInBatch();
+        Instant i2 = Instant.now();
+        Duration d = Duration.between(i1, i2);
+        System.out.println("Tempo impiegato per cancellare " + d.toMillis());
+    }
+
     @Test
     public void testaFilialeContoCorrente() {
         cancellaDatiEsistenti();
-        
+
         creaFiliale();
         creaContiCorrenti();
-        
+
         System.out.println("Sto associando filili e conti");
         List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
         List<Filiale> listaFiliali = filialeRepository.findAll();
@@ -107,14 +135,14 @@ public class RelazioniTest {
             cc.setFiliale(f);
             contoCorrenteRepository.save(cc);
         }
-        
+
         System.out.println("Sto verificando filiali e conti");
         for (Filiale f : listaFiliali) {
             int numCC = contoCorrenteRepository.contaCCPerFilialeJPQL(f.getId());
             Assertions.assertTrue(f.getContiCorrenti().size() == numCC, "Numero conti errato!");
         }
     }
-    
+
     private void creaFiliale() {
         // creazione filiali
         System.out.println("Creazione filiali ...");
@@ -124,24 +152,24 @@ public class RelazioniTest {
             filialeRepository.save(new Filiale(n, c));
         }
     }
-    
+
     private void cancellaFiliali() {
         //Cancello tutti i dati
         contoCorrenteRepository.deleteAllInBatch();
-        Instant i1 =Instant.now();
+        Instant i1 = Instant.now();
         filialeRepository.deleteAllInBatch();
-        Instant i2 =Instant.now();
+        Instant i2 = Instant.now();
         Duration d = Duration.between(i1, i2);
         System.out.println("Tempo impiegato per cancellare " + d.toMillis());
     }
-    
+
     @Test
     public void testaContoCorrenteFiliale() {
         cancellaDatiEsistenti();
-        
+
         creaContiCorrenti();
         creaFiliale();
-        
+
         System.out.println("Sto associando conti e filiali");
         List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
         List<Filiale> listaFiliali = filialeRepository.findAll();
@@ -151,15 +179,15 @@ public class RelazioniTest {
             f.getContiCorrenti().add(cf);
             filialeRepository.save(f);
         }
-        
+
     }
-        
+
     private void cancellaContiCorrenti() {
         //Cancello tutti i dati
         filialeRepository.deleteAllInBatch();
-        Instant i1 =Instant.now();
+        Instant i1 = Instant.now();
         contoCorrenteRepository.deleteAllInBatch();
-        Instant i2 =Instant.now();
+        Instant i2 = Instant.now();
         Duration d = Duration.between(i1, i2);
         System.out.println("Tempo impiegato per cancellare " + d.toMillis());
     }
