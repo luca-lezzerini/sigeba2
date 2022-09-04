@@ -24,7 +24,13 @@ public class Filiale implements Serializable {
 
     @OneToMany(mappedBy = "filiale")
     private List<ContoCorrente> contiCorrenti;
+    
     public Filiale() {
+    }
+
+    public Filiale(String nome, String codice) {
+        this.nome = nome;
+        this.codice = codice;
     }
 
     public Filiale(FilialeDto dto) {

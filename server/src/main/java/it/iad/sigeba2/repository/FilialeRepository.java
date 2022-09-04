@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface FilialeRepository extends JpaRepository<Filiale, Long> {
 
     List<Filiale> findByNomeLikeOrCodiceLike(String critNome, String critCodice);
-
-}
+    
+    }
