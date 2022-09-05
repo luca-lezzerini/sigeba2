@@ -33,6 +33,8 @@ public class ContoCorrente implements Serializable {
     private Filiale filiale;
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoConto tipo;
+    
+    
 
     public ContoCorrente() {
     }

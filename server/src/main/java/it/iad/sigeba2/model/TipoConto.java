@@ -63,7 +63,15 @@ public class TipoConto implements Serializable {
         this.costoOperazioneBancomat = costoOperazioneBancomat;
         this.contiCorrenti = contiCorrenti;
     }
-
     
-
+    public TipoConto(String nome, String descrizione, Double costoOperazione, Integer numeroOperazioniGratis, Double interessiAnnui, Double fido, Boolean cartaCredito, Double costoOperazioneBancomat) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.costoOperazione = costoOperazione;
+        this.numeroOperazioniGratis = numeroOperazioniGratis;
+        this.interessiAnnui = interessiAnnui;
+        this.fido = fido;
+        this.cartaCredito = cartaCredito;
+        this.costoOperazioneBancomat = costoOperazioneBancomat;
+    }
 }

@@ -28,8 +28,9 @@ public class RelazioniTest {
 
 
     Random random = new Random(12345);
-    @Autowired
+    /*@Autowired
     AnagraficaClientiService anagraficaClientiService;
+    */
 
     @Autowired
     ClienteRepository clienteRepository;
@@ -87,15 +88,6 @@ public class RelazioniTest {
         }
     }
 
-    private void cancellaDatiEsistenti() {
-        //Cancello tutti i dati
-        contoCorrenteRepository.deleteAllInBatch();
-        Instant i1 = Instant.now();
-        clienteRepository.deleteAllInBatch();
-        Instant i2 = Instant.now();
-        Duration d = Duration.between(i1, i2);
-        System.out.println("Tempo impiegato per cancellare " + d.toMillis());
-    }
 
     @Test
     public void testaContoCorrenteCliente() {
@@ -159,6 +151,7 @@ public class RelazioniTest {
         }
     }
 
+    /*
     private void cancellaFiliali() {
         //Cancello tutti i dati
         contoCorrenteRepository.deleteAllInBatch();
@@ -168,6 +161,7 @@ public class RelazioniTest {
         Duration d = Duration.between(i1, i2);
         System.out.println("Tempo impiegato per cancellare " + d.toMillis());
     }
+*/
 
     @Test
     public void testaContoCorrenteFiliale() {
@@ -188,6 +182,7 @@ public class RelazioniTest {
 
     }
 
+    /*
     private void cancellaContiCorrenti() {
         //Cancello tutti i dati
         filialeRepository.deleteAllInBatch();
@@ -197,6 +192,7 @@ public class RelazioniTest {
         Duration d = Duration.between(i1, i2);
         System.out.println("Tempo impiegato per cancellare " + d.toMillis());
     }
+*/
 
     @Test
     public void testaTipoContoConto() {
@@ -216,12 +212,15 @@ public class RelazioniTest {
             contoCorrenteRepository.save(cc);
         }
 
+        /*
         System.out.println("Sto verificando conti e TipoConto");
         for (TipoConto tc : listaTipoConto) {
             int numCC = contoCorrenteRepository.contaCCPerClienteJPQL(tc.getId());
             Assertions.assertTrue(tc.getContiCorrenti().size() == numCC, "Numero conti errato!");
         }
-    }
+    */ 
+}
+
 
     private void creaTipiConto(){
         // creazione tipo conto
@@ -235,21 +234,44 @@ public class RelazioniTest {
             Double fd = (double)i;
             Boolean cdc = true;
             Double cob = (double)i;
-            tipoContoRepository.save(new TipoConto(n,d,co,nog,ia,fd,cdc,cob));
-                    
-            
+            tipoContoRepository.save(new TipoConto(n,d,co,nog,ia,fd,cdc,cob)); 
         }
     }
 
+    
+     @Test
+    public void testaContoTipoConto() {
+        cancellaDatiEsistenti();
 
+        creaContiCorrenti();
+        creaTipiConto();
+       
+
+        System.out.println("Sto associando tipiConto e conti");
+        List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
+        List<TipoConto> listaTipoConto = tipoContoRepository.findAll();
+        
+        for (TipoConto tc : listaTipoConto) {
+            int ContoScelto = random.nextInt(NUMERO_CONTI_CORRENTI);
+            ContoCorrente c = listaConti.get(ContoScelto);
+            tc.getContiCorrenti().add(c);
+            tipoContoRepository.save(tc);
+        }
+    }
+    
     private void cancellaDatiEsistenti() {
         //Cancello tutti i dati
         contoCorrenteRepository.deleteAllInBatch();
         Instant i1 = Instant.now();
         clienteRepository.deleteAllInBatch();
         Instant i2 = Instant.now();
+        tipoContoRepository.deleteAllInBatch();
+        Instant i3 = Instant.now();
+        filialeRepository.deleteAllInBatch();
+        Instant i4 = Instant.now();
         Duration d = Duration.between(i1, i2);
-        System.out.println("Tempo impiegato per cancellare " + d.toMillis());
+        Duration d2 = Duration.between(i3, i4);
+        System.out.println("Tempo impiegato per cancellare " + (d.toMillis() + d2.toMillis()) );
     }
 
 }
