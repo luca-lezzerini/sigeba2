@@ -3,9 +3,18 @@ package it.iad.sigeba2.enumerated;
 public enum MessaggioStatoEnum {
     
     OK("Operazione eseguita con successo","",GravitaStatoEnum.OK),
-    UTENTE_NON_AUTORIZZATO("L'utente non è autorizzato a compiere l'operazione","Accedere con un utente diverso o richiedere all'amministratore i privilegi necessari",GravitaStatoEnum.CRITICA), 
-    CLIENTE_NON_TROVATO("Il cliente non è presente del database", "verificare l'esatteza dei criteri di ricerca", GravitaStatoEnum.CRITICA), 
-    CONTO_CORRENTE_NON_TROVATO("Il conto corrente non è presente del database", "verificare l'esatteza dei criteri di ricerca", GravitaStatoEnum.CRITICA);
+    UTENTE_NON_AUTORIZZATO("L'utente non è autorizzato a compiere l'operazione",
+            "Accedere con un utente diverso o richiedere all'amministratore i privilegi necessari",
+            GravitaStatoEnum.CRITICA), 
+    CLIENTE_NON_TROVATO("Il cliente non è presente del database", 
+            "verificare l'esatteza dei criteri di ricerca", 
+            GravitaStatoEnum.CRITICA), 
+    CONTO_CORRENTE_NON_TROVATO("Il conto corrente non è presente del database", 
+            "verificare l'esatteza dei criteri di ricerca", 
+            GravitaStatoEnum.CRITICA),
+    ENTITA_DA_ASSOCIARE_NULL("Le entità da associare sono null", 
+            "Verificare che siano state inserite delle entità", 
+            GravitaStatoEnum.CRITICA);
     
     private final String messaggio;
     private final String azione;
@@ -15,6 +24,18 @@ public enum MessaggioStatoEnum {
         this.messaggio = messaggio;
         this.azione = azione;
         this.gravita = gravita;
+    }
+
+    public String getMessaggio() {
+        return messaggio;
+    }
+
+    public String getAzione() {
+        return azione;
+    }
+
+    public GravitaStatoEnum getGravita() {
+        return gravita;
     }
     
 }

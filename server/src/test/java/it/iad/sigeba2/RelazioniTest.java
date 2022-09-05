@@ -91,7 +91,7 @@ public class RelazioniTest {
 
     @Test
     public void testaContoCorrenteCliente() {
-        cancellaConti();
+        cancellaContiEClienti();
 
         creaContiCorrenti();
         creaClienti();
@@ -107,7 +107,7 @@ public class RelazioniTest {
         }
     }
 
-    private void cancellaConti() {
+    private void cancellaContiEClienti() {
         //Cancello tutti i dati
         clienteRepository.deleteAllInBatch();
         Instant i1 = Instant.now();
@@ -241,10 +241,13 @@ public class RelazioniTest {
     
      @Test
     public void testaContoTipoConto() {
+        
         cancellaDatiEsistenti();
 
         creaContiCorrenti();
         creaTipiConto();
+        
+        cancellaDatiEsistenti();
        
 
         System.out.println("Sto associando tipiConto e conti");
@@ -261,13 +264,13 @@ public class RelazioniTest {
     
     private void cancellaDatiEsistenti() {
         //Cancello tutti i dati
-        contoCorrenteRepository.deleteAllInBatch();
+        contoCorrenteRepository.deleteAll();
         Instant i1 = Instant.now();
-        clienteRepository.deleteAllInBatch();
+        clienteRepository.deleteAll();
         Instant i2 = Instant.now();
-        tipoContoRepository.deleteAllInBatch();
+        tipoContoRepository.deleteAll();
         Instant i3 = Instant.now();
-        filialeRepository.deleteAllInBatch();
+        filialeRepository.deleteAll();
         Instant i4 = Instant.now();
         Duration d = Duration.between(i1, i2);
         Duration d2 = Duration.between(i3, i4);

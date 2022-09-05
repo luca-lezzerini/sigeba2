@@ -1,7 +1,7 @@
 package it.iad.sigeba2.helper;
 
 import it.iad.sigeba2.dto.StatoRisposta;
-import it.iad.sigeba2.enumerated.GravitaStatoEnum;
+import it.iad.sigeba2.enumerated.MessaggioStatoEnum;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,12 +12,13 @@ public class SigebaStateCollector {
 
     /**
      * Aggiunge un messaggio di stato in contestoStati con 
-     * @param messaggio Stringa che descrive la tipologia di segnalazione
-     * @param azione Stringa che descrive l'eventuale azione correttiva, se si tratta di un errore
-     * @param gravita Enum che ci descrive la gravità dell'eventuale errore
+     * @param messaggio Enumerato che descrive la tipologia di segnalazione
      */
-    public static void addStatusMessage(String messaggio, String azione, GravitaStatoEnum gravita) {
-        StatoRisposta stato = new StatoRisposta(messaggio, azione, gravita);
+    public static void addStatusMessage(MessaggioStatoEnum messaggio) {
+        StatoRisposta stato = new StatoRisposta(
+                messaggio.getMessaggio(), 
+                messaggio.getAzione(), 
+                messaggio.getGravita());
         List<StatoRisposta> statiPrecedenti = contestoStati.get();
         if (statiPrecedenti == null) {
             statiPrecedenti = new ArrayList<>();
