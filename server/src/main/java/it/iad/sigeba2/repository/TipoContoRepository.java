@@ -1,5 +1,4 @@
 
- 
 package it.iad.sigeba2.repository;
 
 import it.iad.sigeba2.model.TipoConto;

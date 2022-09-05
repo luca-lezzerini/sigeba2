@@ -8,14 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class MovimentoCCTest {
-    
-  Random random = new Random();
+
+    Random random = new Random();
 
     @Autowired
-    MovimentoCCService movimentoccService;
+    MovimentoCCService movimentoCcService;
 
     @Autowired
-    MovimentoCCRepository movimentoccRepository; 
-    
+    MovimentoCCRepository movimentoccRepository;
+
 //    @Test
 }

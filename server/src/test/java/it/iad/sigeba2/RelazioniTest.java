@@ -3,9 +3,11 @@ package it.iad.sigeba2;
 import it.iad.sigeba2.model.Cliente;
 import it.iad.sigeba2.model.Filiale;
 import it.iad.sigeba2.model.ContoCorrente;
+import it.iad.sigeba2.model.TipoConto;
 import it.iad.sigeba2.repository.ClienteRepository;
 import it.iad.sigeba2.repository.ContoCorrenteRepository;
 import it.iad.sigeba2.repository.FilialeRepository;
+import it.iad.sigeba2.repository.TipoContoRepository;
 import it.iad.sigeba2.service.AnagraficaClientiService;
 import java.time.Duration;
 import java.time.Instant;
@@ -22,6 +24,8 @@ public class RelazioniTest {
     private static final int NUMERO_CLIENTI = 100;
     private static final int NUMERO_CONTI_CORRENTI = 200;
     private static final int NUMERO_FILIALI = 10;
+    private static final int NUMERO_TIPO_CONTO = 20;
+
 
     Random random = new Random(12345);
     @Autowired
@@ -33,6 +37,8 @@ public class RelazioniTest {
     ContoCorrenteRepository contoCorrenteRepository;
     @Autowired
     FilialeRepository filialeRepository;
+     @Autowired
+    TipoContoRepository tipoContoRepository;
 
     @Test
     public void testaClienteContoCorrente() {
@@ -187,6 +193,60 @@ public class RelazioniTest {
         filialeRepository.deleteAllInBatch();
         Instant i1 = Instant.now();
         contoCorrenteRepository.deleteAllInBatch();
+        Instant i2 = Instant.now();
+        Duration d = Duration.between(i1, i2);
+        System.out.println("Tempo impiegato per cancellare " + d.toMillis());
+    }
+
+    @Test
+    public void testaTipoContoConto() {
+        cancellaDatiEsistenti();
+
+        creaTipiConto();
+        creaContiCorrenti();
+
+        System.out.println("Sto associando conto e tipoconto");
+        List<ContoCorrente> listaConti = contoCorrenteRepository.findAll();
+        List<TipoConto> listaTipoConto = tipoContoRepository.findAll();
+        
+        for (ContoCorrente cc : listaConti) {
+            int tipoContoScelto = random.nextInt(NUMERO_TIPO_CONTO);
+            TipoConto tc = listaTipoConto.get(tipoContoScelto);
+            cc.setTipo(tc);
+            contoCorrenteRepository.save(cc);
+        }
+
+        System.out.println("Sto verificando conti e TipoConto");
+        for (TipoConto tc : listaTipoConto) {
+            int numCC = contoCorrenteRepository.contaCCPerClienteJPQL(tc.getId());
+            Assertions.assertTrue(tc.getContiCorrenti().size() == numCC, "Numero conti errato!");
+        }
+    }
+
+    private void creaTipiConto(){
+        // creazione tipo conto
+        System.out.println("Creazione tipi conto ...");
+        for (int i = 0; i < NUMERO_TIPO_CONTO; i++) {
+            String n = "Nome" + i;
+            String d = "Descrizione" + i;
+            Double co = (double)i;
+            Integer nog = i;
+            Double ia = (double)i;
+            Double fd = (double)i;
+            Boolean cdc = true;
+            Double cob = (double)i;
+            tipoContoRepository.save(new TipoConto(n,d,co,nog,ia,fd,cdc,cob));
+                    
+            
+        }
+    }
+
+
+    private void cancellaDatiEsistenti() {
+        //Cancello tutti i dati
+        contoCorrenteRepository.deleteAllInBatch();
+        Instant i1 = Instant.now();
+        clienteRepository.deleteAllInBatch();
         Instant i2 = Instant.now();
         Duration d = Duration.between(i1, i2);
         System.out.println("Tempo impiegato per cancellare " + d.toMillis());
