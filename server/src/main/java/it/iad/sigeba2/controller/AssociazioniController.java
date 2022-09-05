@@ -31,7 +31,7 @@ public class AssociazioniController {
     @RequestMapping("/associaClienteAConto")
     @ResponseBody
     public RispostaConStato<Void> associaClienteAConto(@RequestBody IdAssociazioneDto idAssociazione) {
-        log.debug("Entrato nel controller associaClienteAConto");
+        log.info("Entrato nel controller associaClienteAConto");
         try {
             associazioniService.associaClienteAConto(idAssociazione.getIdConto(), idAssociazione.getIdCliente());
         } catch (SigebaException e) {
