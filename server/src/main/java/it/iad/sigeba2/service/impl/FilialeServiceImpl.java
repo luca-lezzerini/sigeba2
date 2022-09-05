@@ -7,6 +7,7 @@ import it.iad.sigeba2.dto.CriterioFilialeDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.FilialeDto;
 import it.iad.sigeba2.enumerated.GravitaStatoEnum;
+import it.iad.sigeba2.enumerated.MessaggioStatoEnum;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.Filiale;
@@ -29,8 +30,7 @@ public class FilialeServiceImpl implements FilialeService {
     public List<FilialeDto> cercaFiliale(CriterioFilialeDto criterio) throws SigebaException {
         log.debug("Entrato in cercaFiliale");
         if (criterio == null || criterio.getCriterio() == null) {
-            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito",
-                    "Inserire un criterio di ricerca vamido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Criterio di ricerca null non è ammissibile");
         }
         String crit = criterio.getCriterio();
@@ -56,8 +56,7 @@ public class FilialeServiceImpl implements FilialeService {
         log.debug("Entra in inserisciFiliale");
 
         if (filialeDaInserireDto == null || filialeDaInserireDto.getFiliale() == null) {
-            SigebaStateCollector.addStatusMessage("Filiale null non consentito",
-                    "Inserire una filiale valida", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Filiale da inserire null!!!");
         }
 
@@ -75,8 +74,7 @@ public class FilialeServiceImpl implements FilialeService {
 
         log.debug("Entrato in cancellaFiliale");
         if (dtoCancellazione == null || dtoCancellazione.getIdFiliale() == null) {
-            SigebaStateCollector.addStatusMessage("Id da cancellare null non consentito",
-                    "Inserire una id valida", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id da cancellare null!!");
         }
         Long idDaRimuovere = dtoCancellazione.getIdFiliale();
@@ -93,8 +91,7 @@ public class FilialeServiceImpl implements FilialeService {
     public List<FilialeDto> modificaFiliale(CriterioModificaFilialeDto modifica) throws SigebaException {
         log.debug("Entrato in modificaFiliale");
         if (modifica == null || modifica.getFiliale() != null) {
-            SigebaStateCollector.addStatusMessage("Filiale da modificare null non consentito",
-                    "Inserire Filiale valida", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Filiale da modificare null!!!");
         }
         FilialeDto filialeModificata = modifica.getFiliale();
@@ -111,8 +108,7 @@ public class FilialeServiceImpl implements FilialeService {
     public Filiale leggiFiliale(SimpleIdDto chiave) throws SigebaException {
         log.debug("Entrato in modificaFiliale");
         if (chiave == null || chiave.getId() == null) {
-            SigebaStateCollector.addStatusMessage("Id da leggere null non consentito",
-                    "Id filiale valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id filiale da leggere null!!");
         }
         return filialeRepository.findById(chiave.getId())

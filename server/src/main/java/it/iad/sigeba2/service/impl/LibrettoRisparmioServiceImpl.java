@@ -7,6 +7,7 @@ import it.iad.sigeba2.dto.CriterioModificaLibrettoRisparmioDto;
 import it.iad.sigeba2.dto.LibrettoRisparmioDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.enumerated.GravitaStatoEnum;
+import it.iad.sigeba2.enumerated.MessaggioStatoEnum;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.LibrettoRisparmio;
@@ -29,8 +30,7 @@ public class LibrettoRisparmioServiceImpl implements LibrettoRisparmioService{
     public List<LibrettoRisparmioDto> cercaLibrettoRisparmio(CriterioLibrettoRisparmioDto criterio) throws SigebaException {
         log.debug("Entrato in cercaLibrettoRisparmio");
         if (criterio == null || criterio.getCriterio() == null) {
-            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito",
-                    "Inserire un criterio di ricerca valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Criterio di ricerca null non è ammissibile");
         }
         String crit = criterio.getCriterio();
@@ -53,8 +53,7 @@ public class LibrettoRisparmioServiceImpl implements LibrettoRisparmioService{
         log.debug("Entra in inserisciLibrettoRisparmio");
 
         if (librettoRisparmioDaInserireDto == null || librettoRisparmioDaInserireDto.getLibrettoRisparmio() == null) {
-            SigebaStateCollector.addStatusMessage("LibrettoRisparmio null non consentito",
-                    "Inserire un LibrettoRisparmio valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("LibrettoRisparmio da inserire null!");
         }
 
@@ -71,8 +70,7 @@ public class LibrettoRisparmioServiceImpl implements LibrettoRisparmioService{
     public List<LibrettoRisparmioDto> cancellaLibrettoRisparmio(CriterioCancellazioneLibrettoRisparmioDto dtoCancellazione) throws SigebaException {
       log.debug("Entrato in cancellaLibrettoRisparmio");
         if (dtoCancellazione == null || dtoCancellazione.getIdLibrettoRisparmio()== null) {
-            SigebaStateCollector.addStatusMessage("Id da cancellare null non consentito",
-                    "Inserire una id valida", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id da cancellare null!");
         }
         // recupera l'id del librettoRisparmio da rimuovere
@@ -91,8 +89,7 @@ public class LibrettoRisparmioServiceImpl implements LibrettoRisparmioService{
     public List<LibrettoRisparmioDto> modificaLibrettoRisparmio(CriterioModificaLibrettoRisparmioDto modifica) throws SigebaException {
         log.debug("Entrato in modificaLibrettoRisparmio");
         if (modifica == null || modifica.getLibrettoRisparmio()!= null) {
-            SigebaStateCollector.addStatusMessage("LibrettoRisparmio da modificare null non consentito",
-                    "Inserire LibrettoRisparmio valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("LibrettoRisparmio da modificare null!");
         }
         LibrettoRisparmioDto librettoRisparmioModificato = modifica.getLibrettoRisparmio();
@@ -108,8 +105,7 @@ public class LibrettoRisparmioServiceImpl implements LibrettoRisparmioService{
     public LibrettoRisparmio leggiLibrettoRisparmio(SimpleIdDto librettoRisparmioDto) throws SigebaException {
         log.debug("Entrato in leggiLibrettoRisparmio");
         if (librettoRisparmioDto == null || librettoRisparmioDto.getId() == null) {
-            SigebaStateCollector.addStatusMessage("Id da leggere null non consentito",
-                    "Id librettoRisparmio non valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id librettoRisparmio da leggere null!");
         }
         return librettoRisparmioRepository.findById(librettoRisparmioDto.getId())

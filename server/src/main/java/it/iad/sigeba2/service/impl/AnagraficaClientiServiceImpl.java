@@ -7,6 +7,7 @@ import it.iad.sigeba2.dto.CriterioInserimentoClienteDto;
 import it.iad.sigeba2.dto.CriterioModificaClienteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.enumerated.GravitaStatoEnum;
+import it.iad.sigeba2.enumerated.MessaggioStatoEnum;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.Cliente;
@@ -30,8 +31,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
         log.debug("Entrato in cercaCliente");
         if (criterio == null || criterio.getCriterio() == null) {
-            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito",
-                    "Inserire un criterio di ricerca valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Criterio di ricerca null non ammissibile");
         }
         String crit = criterio.getCriterio();
@@ -53,8 +53,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
     public List<ClienteDto> inserisciCliente(CriterioInserimentoClienteDto clienteDaInserireDto) throws SigebaException {
         log.debug("Entra in inserisciCliente");
         if (clienteDaInserireDto == null || clienteDaInserireDto.getCliente() == null) {
-            SigebaStateCollector.addStatusMessage("Cliente null non consentito",
-                    "Inserire un cliente valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Cliente da inserire null!!!");
         }
 
@@ -71,8 +70,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
     public Cliente leggiCliente(SimpleIdDto chiave) throws SigebaException {
         log.debug("Entrato in modifica cliente");
         if (chiave == null || chiave.getId() == null) {
-            SigebaStateCollector.addStatusMessage("Id da leggere null non consentito",
-                    "Inserire Id cliente valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id cliente da leggere null!!");
         }
         return clienteRepository.findById(chiave.getId())
@@ -84,8 +82,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
     public List<ClienteDto> modificaCliente(CriterioModificaClienteDto modifica) throws SigebaException {
         log.debug("Entrato in modificaClienti");
         if (modifica == null || modifica.getCliente() != null) {
-            SigebaStateCollector.addStatusMessage("Cliente da modificare null non consentito",
-                    "Inserirre cliente valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Cliente da modificare null!!!");
         }
 
@@ -103,8 +100,7 @@ public class AnagraficaClientiServiceImpl implements AnagraficaClientiService {
 
         log.debug("Entrato in cancellaCliente");
         if (dtoCancellazione == null || dtoCancellazione.getIdCliente() == null) {
-            SigebaStateCollector.addStatusMessage("Id da cancellare null non consentito",
-                    "Inserire un Id valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id da cancellare null!!");
         }
 

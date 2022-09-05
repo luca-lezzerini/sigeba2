@@ -7,6 +7,7 @@ import it.iad.sigeba2.dto.CriterioMovimentoCCDto;
 import it.iad.sigeba2.dto.MovimentoCCDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.enumerated.GravitaStatoEnum;
+import it.iad.sigeba2.enumerated.MessaggioStatoEnum;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.MovimentoCC;
@@ -29,8 +30,7 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
     public List<MovimentoCCDto> cercaMovimentoCC(CriterioMovimentoCCDto criterio) throws SigebaException {
         log.debug("Entrato in cercaMovimentoCC");
         if (criterio == null || criterio.getCriterio() == null) {
-            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito",
-                    "Inserire un criterio di ricerca valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Criterio di ricerca null non e' ammissibile");
         }
         String crit = criterio.getCriterio();
@@ -52,8 +52,7 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
 
         log.debug("Entrato in cancellaMovimentoCC");
         if (dtoCancellazione == null || dtoCancellazione.getIdMovimentoCC() == null) {
-            SigebaStateCollector.addStatusMessage("Id da cancellare null non consentito",
-                    "Inserire una id valida", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id da cancellare null!!");
         }
         Long idDaRimuovere = dtoCancellazione.getIdMovimentoCC();
@@ -70,8 +69,7 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
     public List<MovimentoCCDto> modificaMovimentoCC(CriterioModificaMovimentoCCDto modifica) throws SigebaException {
         log.debug("Entrato in modificaMovimentoCC");
         if (modifica == null || modifica.getMovimentoCc() != null) {
-            SigebaStateCollector.addStatusMessage("MovimentoCC da modificare null non consentito",
-                    "Inserire MovimentoCC valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("MovimentoCC da modificare null!!!");
         }
         MovimentoCCDto movimentoccModificato = modifica.getMovimentoCc();
@@ -87,8 +85,7 @@ public class MovimentoCCServiceImpl implements MovimentoCCService {
     public MovimentoCC leggiMovimentoCC(SimpleIdDto chiave) throws SigebaException {
         log.debug("Entrato in modificaMovimentoCC");
         if (chiave == null || chiave.getId() == null) {
-            SigebaStateCollector.addStatusMessage("Id da leggere null non consentito",
-                    "Id movimentocc valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id movimentocc da leggere null!!");
         }
         return movimentoCcRepository.findById(chiave.getId())

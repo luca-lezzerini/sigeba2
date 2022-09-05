@@ -7,6 +7,7 @@ import it.iad.sigeba2.dto.CriterioInserimentoContoCorrenteDto;
 import it.iad.sigeba2.dto.CriterioModificaContoCorrenteDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.enumerated.GravitaStatoEnum;
+import it.iad.sigeba2.enumerated.MessaggioStatoEnum;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.ContoCorrente;
@@ -29,8 +30,7 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
     public List<ContoCorrenteDto> cercaContoCorrente(CriterioContoCorrenteDto criterio) throws SigebaException {
         log.debug("Entrato in cercaContoCorrente");
         if (criterio == null || criterio.getCriterio() == null) {
-            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito",
-                    "Inserire un criterio di ricerca valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Criterio di ricerca null non e' ammissibile");
         }
         String crit = criterio.getCriterio();
@@ -58,8 +58,7 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
         log.debug("Entra in inserisciContoCorrente");
 
         if (contoCorrenteDaInserireDto == null || contoCorrenteDaInserireDto.getContoCorrente() == null) {
-            SigebaStateCollector.addStatusMessage("Conto Corrente null non consentito",
-                    "Inserire un Conto Corrente valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Conto Corrente da inserire null!!!");
         }
 
@@ -77,8 +76,7 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
 
         log.debug("Entrato in Canella Conto Corrente");
         if (dtoCancellazione == null || dtoCancellazione.getIdContoCorrente() == null) {
-            SigebaStateCollector.addStatusMessage("Id Conto da cancellare null non consentito",
-                    "Inserire un Id conto valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id Conto da cancellare null!!");
         }
         //recupere l'Id del Conto Corrente da rimuovere
@@ -98,8 +96,7 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
 
         log.debug("Entrato in modifica Conto Corrente");
         if (modifica == null || modifica.getContoCorrente() != null) {
-            SigebaStateCollector.addStatusMessage("Tipo Conto Corrente da modificare null non consentito",
-                    "Inserire tipo conto corrente valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SecurityException("Tipo Conto Corrente da modificare null!!");
         }
         ContoCorrenteDto contoCorrenteModificato = modifica.getContoCorrente();
@@ -115,8 +112,7 @@ public class ContoCorrenteServiceImpl implements ContoCorrenteService {
     public ContoCorrente leggiContoCorrente(SimpleIdDto chiave) throws SigebaException {
         log.debug("Entrato in modificaContoCorrente");
         if (chiave == null || chiave.getId() == null) {
-            SigebaStateCollector.addStatusMessage("Id da leggere null non consentito",
-                    "Inserire Id Conto Corrente valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id Conto Corrrente null!!");
         }
         return contoCorrenteRepository.findById(chiave.getId())

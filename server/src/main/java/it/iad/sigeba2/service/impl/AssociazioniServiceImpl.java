@@ -10,6 +10,7 @@ import it.iad.sigeba2.repository.ContoCorrenteRepository;
 import it.iad.sigeba2.service.AssociazioniService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AssociazioniServiceImpl implements AssociazioniService {
@@ -19,6 +20,7 @@ public class AssociazioniServiceImpl implements AssociazioniService {
     @Autowired
     ContoCorrenteRepository contoCorrenteRepository;
 
+    @Transactional(rollbackFor = {SigebaException.class})
     @Override
     public void associaClienteAConto(Long idConto, Long idCliente) throws SigebaException {
 
@@ -45,7 +47,7 @@ public class AssociazioniServiceImpl implements AssociazioniService {
         //associamo i due oggetti
         contoCorrente.setCliente(cliente);
         contoCorrenteRepository.save(contoCorrente);
-        
+        throw new SigebaException();
     }
 
 }

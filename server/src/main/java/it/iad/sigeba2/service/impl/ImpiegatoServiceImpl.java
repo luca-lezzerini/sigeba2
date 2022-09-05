@@ -12,6 +12,7 @@ import it.iad.sigeba2.dto.ImpiegatoDto;
 import it.iad.sigeba2.dto.SimpleIdDto;
 import it.iad.sigeba2.dto.TipoContoDto;
 import it.iad.sigeba2.enumerated.GravitaStatoEnum;
+import it.iad.sigeba2.enumerated.MessaggioStatoEnum;
 import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.Impiegato;
@@ -37,8 +38,7 @@ public class ImpiegatoServiceImpl implements ImpiegatoService {
     public List<ImpiegatoDto> cercaImpiegato(CriterioImpiegatoDto criterio) throws SigebaException {
         log.debug("Entrato in cercaImpiegato");
         if (criterio == null || criterio.getCriterio() == null) {
-            SigebaStateCollector.addStatusMessage("Criterio di ricerca null non consentito",
-                    "Inserire un criterio di ricerca valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Criterio di ricerca null non è ammissibile");
         }
         String crit = criterio.getCriterio();
@@ -61,8 +61,7 @@ public class ImpiegatoServiceImpl implements ImpiegatoService {
         log.debug("Entra in inserisciTipoConto");
 
         if (impiegatoDaInserireDto == null || impiegatoDaInserireDto.getImpiegato()== null) {
-            SigebaStateCollector.addStatusMessage("Tipo conto null non consentito",
-                    "Inserire un tipo conto valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Tipo conto da inserire null!!!");
         }
 
@@ -80,8 +79,7 @@ public class ImpiegatoServiceImpl implements ImpiegatoService {
 
         log.debug("Entrato in cancellaTipoConto");
         if (dtoCancellazione == null || dtoCancellazione.getIdImpiegato()== null) {
-            SigebaStateCollector.addStatusMessage("Id da cancellare null non consentito",
-                    "Inserire una id valida", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id da cancellare null!!");
         }
         // recupera l'id del tipoConto da rimuovere
@@ -101,8 +99,7 @@ public class ImpiegatoServiceImpl implements ImpiegatoService {
     public List<ImpiegatoDto> modificaImpiegato(CriterioModificaImpiegatoDto modifica) throws SigebaException {
         log.debug("Entrato in modificaImpiegato");
         if (modifica == null || modifica.getImpiegato() != null) {
-            SigebaStateCollector.addStatusMessage("Tipo conto da modificare null non consentito",
-                    "Inserire tipo conto valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Tipo conto da modificare null!!!");
         }
         ImpiegatoDto impiegatoModificato = modifica.getImpiegato();
@@ -119,8 +116,7 @@ public class ImpiegatoServiceImpl implements ImpiegatoService {
     public Impiegato leggiImpiegato(SimpleIdDto chiave) throws SigebaException {
         log.debug("Entrato in modificaTipoConto");
         if (chiave == null || chiave.getId() == null) {
-            SigebaStateCollector.addStatusMessage("Id da leggere null non consentito",
-                    "Id tipo conto valido", GravitaStatoEnum.CRITICA);
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.UTENTE_NON_AUTORIZZATO);
             throw new SigebaException("Id tipo conto da leggere null!!");
         }
         return impiegatoRepository.findById(chiave.getId())
