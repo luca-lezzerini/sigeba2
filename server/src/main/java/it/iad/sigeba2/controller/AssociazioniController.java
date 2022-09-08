@@ -105,7 +105,7 @@ public class AssociazioniController {
     public RispostaConStato<Void> disassociaTipoContoDaConto(@RequestBody IdAssociazioneDto idAssociazione) {
         log.info("Entrato nel controller disassociaTipoContoDaConto");
         try {
-            associazioniService.disassociaClienteDaConto(idAssociazione.getIdConto(), idAssociazione.getIdTipoConto());
+            associazioniService.disassociaTipoContoDaConto(idAssociazione.getIdConto(), idAssociazione.getIdTipoConto());
         } catch (SigebaException e) {
             log.warn("Ricevuta eccezione dal servizio disassociaTipoContoDaConto", e);
         }
@@ -116,4 +116,32 @@ public class AssociazioniController {
     }
 
 
+    @RequestMapping("/associaContoAFiliale")
+    @ResponseBody
+    public RispostaConStato<Void> associaContoAFiliale(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller associaContoAFiliale");
+        try {
+            associazioniService.associaContoAFiliale(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio associaContoAFiliale", e);
+        }
+        RispostaConStato<Void> risposta = new RispostaConStato<>();
+        risposta.setStato(SigebaStateCollector.getAndClean());
+        return risposta;
+    }
+    
+    @RequestMapping("/disassociaContoDaFiliale")
+    @ResponseBody
+    public RispostaConStato<Void> disassociaContoDaFiliale(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller disassociaContoDaFiliale");
+        try {
+            associazioniService.disassociaContoDaFiliale(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio disassociaContoDaFiliale", e);
+        }
+        RispostaConStato<Void> risposta = new RispostaConStato<>();
+        risposta.setStato(SigebaStateCollector.getAndClean());
+        return risposta;
+        
+    }
 }
