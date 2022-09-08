@@ -111,14 +111,15 @@ public class AssociazioniServiceImpl implements AssociazioniService {
 
         //associamo i due oggetti
         List<ContoCorrente> conti;
-
         conti = cliente.getContiCorrenti();
+        System.out.println("Cerco la lista conti");
         if (conti == null){
-        conti = new ArrayList<ContoCorrente>();
+            System.out.println("Lista null, quindi creo una nuova lista");
+            conti = new ArrayList<>();
     }
 
+    associaClienteAConto(idConto, idCliente);
     conti.add (contoCorrente);
-
     clienteRepository.save (cliente);
 
     //   throw new SigebaException();
