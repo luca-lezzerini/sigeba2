@@ -115,21 +115,57 @@ public class AssociazioniServiceImpl implements AssociazioniService {
         List<ContoCorrente> conti;
         conti = cliente.getContiCorrenti();
         log.debug("Cerco la lista conti");
-        if (conti == null){
+        if (conti == null) {
             log.debug("Lista null, quindi creo una nuova lista");
             conti = new ArrayList<>();
-            
+
+        }
+
+        associaClienteAConto(idConto, idCliente);
+        conti.add(contoCorrente);
+        clienteRepository.save(cliente);
+
+        //   throw new SigebaException();
     }
 
-    associaClienteAConto(idConto, idCliente);
-    conti.add (contoCorrente);
-    clienteRepository.save (cliente);
+    /**
+     *
+     * @param idCliente
+     * @param idConto
+     * @throws SigebaException
+     */
+    @Transactional(rollbackFor = {SigebaException.class})
+    @Override
+    public void disassociaContoDaCliente(Long idCliente, Long idConto) throws SigebaException {
 
-    //   throw new SigebaException();
-}
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idConto == null || idCliente == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idCliente null");
+        }
+        //devono esistere sul db
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CLIENTE_NON_TROVATO);
+                    return new SigebaException("Cliente non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+        List<ContoCorrente> contiCliente = cliente.getContiCorrenti();
 
-@Override
-public void disassociaContoDaCliente(Long idCliente, Long idConto) throws SigebaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (contiCliente.contains(contoCorrente)) {
+            //disassociamo i due oggetti
+            contiCliente.remove(contoCorrente);
+            disassociaClienteDaConto(idConto, idCliente);
+            clienteRepository.save(cliente);
+        } else {
+            throw new SigebaException("Cliente e ContoCorrente non corrispondono");
+        }
     }
 }
