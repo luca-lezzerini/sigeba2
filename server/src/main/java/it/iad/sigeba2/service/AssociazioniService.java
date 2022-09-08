@@ -22,4 +22,10 @@ public interface AssociazioniService {
     void associaTipoContoAConto(Long idConto,Long idTipoConto) throws SigebaException;
     
     void disassociaTipoContoDaConto(Long idConto,Long idTipoConto) throws SigebaException;
+    
+    void associaContoAFiliale(Long idFiliale, Long idConto ) throws SigebaException;
+
+    void disassociaContoDaFiliale(Long idFiliale, Long idConto ) throws SigebaException;
+    
+    
 }
