@@ -14,6 +14,9 @@ public enum MessaggioStatoEnum {
             GravitaStatoEnum.CRITICA),
     ENTITA_DA_ASSOCIARE_NULL("Le entità da associare sono null", 
             "Verificare che siano state inserite delle entità", 
+            GravitaStatoEnum.CRITICA),
+    TIPO_CONTO_NON_TROVATO("Il tipoconto non è presente nel database",
+    "verificare l'esatteza dei criteri di ricerca", 
             GravitaStatoEnum.CRITICA);
     
     private final String messaggio;

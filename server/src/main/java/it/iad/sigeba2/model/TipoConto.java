@@ -1,4 +1,4 @@
-package it.iad.sigeba2.model;
+    package it.iad.sigeba2.model;
 
 import it.iad.sigeba2.dto.TipoContoDto;
 import java.io.Serializable;
