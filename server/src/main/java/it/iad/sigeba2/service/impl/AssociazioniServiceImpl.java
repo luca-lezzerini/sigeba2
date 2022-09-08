@@ -10,10 +10,12 @@ import it.iad.sigeba2.repository.ContoCorrenteRepository;
 import it.iad.sigeba2.service.AssociazioniService;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class AssociazioniServiceImpl implements AssociazioniService {
 
@@ -112,10 +114,11 @@ public class AssociazioniServiceImpl implements AssociazioniService {
         //associamo i due oggetti
         List<ContoCorrente> conti;
         conti = cliente.getContiCorrenti();
-        System.out.println("Cerco la lista conti");
+        log.debug("Cerco la lista conti");
         if (conti == null){
-            System.out.println("Lista null, quindi creo una nuova lista");
+            log.debug("Lista null, quindi creo una nuova lista");
             conti = new ArrayList<>();
+            
     }
 
     associaClienteAConto(idConto, idCliente);
@@ -129,6 +132,4 @@ public class AssociazioniServiceImpl implements AssociazioniService {
 public void disassociaContoDaCliente(Long idCliente, Long idConto) throws SigebaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-}
-
 }
