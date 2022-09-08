@@ -110,23 +110,43 @@ public class AssociazioniServiceImpl implements AssociazioniService {
                 });
 
         //associamo i due oggetti
-        List<ContoCorrente> conti;
+        cliente.setContoCorrente(contoCorrente);
 
-        conti = cliente.getContiCorrenti();
-        if (conti == null){
-        conti = new ArrayList<ContoCorrente>();
+        clienteRepository.save(cliente);
+
+        //   throw new SigebaException();
     }
 
-    conti.add (contoCorrente);
+    @Override
+    public void disassociaContoDaCliente(Long idConto, Long idCliente) throws SigebaException {
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idConto == null || idCliente == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idCliente null");
+        }
+        //devono esistere sul db
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CLIENTE_NON_TROVATO);
+                    return new SigebaException("Cliente non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
 
-    clienteRepository.save (cliente);
-
-    //   throw new SigebaException();
+        if (cliente == contoCorrente.getCliente()) {
+            //disassociamo i due oggetti
+            contoCorrente.setCliente(null);
+            contoCorrenteRepository.save(contoCorrente);
+        } else {
+            throw new SigebaException("Cliente e ContoCorrente non corrispondono");
+        }
+    }
 }
-
-@Override
-public void disassociaContoDaCliente(Long idCliente, Long idConto) throws SigebaException {
-    
-    }
 
 }
