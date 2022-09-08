@@ -25,5 +25,5 @@ public interface AssociazioniService {
 
     void associaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException;
 
-    void diassociaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException;
+    void disassociaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException;
 }

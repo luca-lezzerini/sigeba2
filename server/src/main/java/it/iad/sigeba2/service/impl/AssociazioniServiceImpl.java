@@ -268,7 +268,7 @@ public class AssociazioniServiceImpl implements AssociazioniService {
     }
 
     @Override
-    public void diassociaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException {
+    public void disassociaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException {
 
         //verificare la correttezza degli input
         //devono essere non null
