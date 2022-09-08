@@ -31,8 +31,6 @@ public class AssociazioniServiceImpl implements AssociazioniService {
     ClienteRepository clienteRepository;
     @Autowired
     ContoCorrenteRepository contoCorrenteRepository;
-    @Autowired
-    FilialeRepository filialeRepository;
 
     @Transactional(rollbackFor = {SigebaException.class})
     @Override
@@ -343,7 +341,7 @@ public class AssociazioniServiceImpl implements AssociazioniService {
     }
 
     @Override
-    public void disassociaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException {
+    public void disassociaFilialeDaConto(Long idConto, Long idFiliale) throws SigebaException {
 
         //verificare la correttezza degli input
         //devono essere non null
