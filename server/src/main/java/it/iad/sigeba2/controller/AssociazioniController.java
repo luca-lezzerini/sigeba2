@@ -116,4 +116,32 @@ public class AssociazioniController {
     }
 
 
+    @RequestMapping("/associaContoAFiliale")
+    @ResponseBody
+    public RispostaConStato<Void> associaContoAFiliale(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller associaContoAFiliale");
+        try {
+            associazioniService.associaContoAFiliale(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio associaContoAFiliale", e);
+        }
+        RispostaConStato<Void> risposta = new RispostaConStato<>();
+        risposta.setStato(SigebaStateCollector.getAndClean());
+        return risposta;
+    }
+    
+    @RequestMapping("/disassociaContoDaFiliale")
+    @ResponseBody
+    public RispostaConStato<Void> disassociaContoDaFiliale(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller disassociaContoDaFiliale");
+        try {
+            associazioniService.disassociaContoDaFiliale(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio disassociaContoDaFiliale", e);
+        }
+        RispostaConStato<Void> risposta = new RispostaConStato<>();
+        risposta.setStato(SigebaStateCollector.getAndClean());
+        return risposta;
+        
+    }
 }

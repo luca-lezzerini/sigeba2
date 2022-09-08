@@ -5,9 +5,11 @@ import it.iad.sigeba2.exception.SigebaException;
 import it.iad.sigeba2.helper.SigebaStateCollector;
 import it.iad.sigeba2.model.Cliente;
 import it.iad.sigeba2.model.ContoCorrente;
+import it.iad.sigeba2.model.Filiale;
 import it.iad.sigeba2.model.TipoConto;
 import it.iad.sigeba2.repository.ClienteRepository;
 import it.iad.sigeba2.repository.ContoCorrenteRepository;
+import it.iad.sigeba2.repository.FilialeRepository;
 import it.iad.sigeba2.repository.TipoContoRepository;
 import it.iad.sigeba2.service.AssociazioniService;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class AssociazioniServiceImpl implements AssociazioniService {
     ClienteRepository clienteRepository;
     @Autowired
     ContoCorrenteRepository contoCorrenteRepository;
+    @Autowired
+    FilialeRepository filialeRepository;
 
     @Transactional(rollbackFor = {SigebaException.class})
     @Override
@@ -235,17 +239,77 @@ public class AssociazioniServiceImpl implements AssociazioniService {
         }
     }
 
+    @Transactional(rollbackFor = {SigebaException.class})
+    @Override
+    public void associaContoAFiliale(Long idFiliale, Long idConto) throws SigebaException {
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idFiliale == null || idConto == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idFiliale null");
+        }
+        //devono esistere sul db
+        Filiale filiale = filialeRepository.findById(idFiliale)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.FILIALE_NON_TROVATA);
+                    return new SigebaException("Filiale non trovata");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+
+        //associamo i due oggetti
+        List<ContoCorrente> conti;
+        conti = filiale.getContiCorrenti();
+        log.debug("Cerco la lista conti");
+        if (conti == null) {
+            log.debug("Lista null, quindi creo una nuova lista");
+            conti = new ArrayList<>();
+
+        }
+
+        associaFilialeAConto(idConto, idFiliale);
+        conti.add(contoCorrente);
+        filialeRepository.save(filiale);
+    }
 
 
+@Transactional(rollbackFor = {SigebaException.class})
+    @Override
+    public void disassociaContoDaFiliale(Long idFiliale, Long idConto) throws SigebaException {
+       //verificare la correttezza degli input
+        //devono essere non null
+        if (idConto == null || idFiliale == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idFiliale null");
+        }
+        //devono esistere sul db
+        Filiale filiale = filialeRepository.findById(idFiliale)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.FILIALE_NON_TROVATA);
+                    return new SigebaException("Cliente non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+        List<ContoCorrente> contiFiliale = filiale.getContiCorrenti();
 
-
-
-
-
-
-
-
-
-
+        if (contiFiliale.contains(contoCorrente)) {
+            //disassociamo i due oggetti
+            contiFiliale.remove(contoCorrente);
+            disassociaFilialeDaConto(idConto, idFiliale);
+            filialeRepository.save(filiale);
+        } else {
+            throw new SigebaException("Filiale e ContoCorrente non corrispondono");
+        }
+    }
 
 }
