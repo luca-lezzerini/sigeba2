@@ -15,11 +15,15 @@ public interface AssociazioniService {
 
     void disassociaClienteDaConto(Long idConto, Long idCliente) throws SigebaException;
 
-    void associaContoACliente(Long idCliente,Long idConto ) throws SigebaException;
+    void associaContoACliente(Long idCliente, Long idConto) throws SigebaException;
 
-    void disassociaContoDaCliente(Long idCliente,Long idConto ) throws SigebaException;
+    void disassociaContoDaCliente(Long idCliente, Long idConto) throws SigebaException;
 
-    void associaTipoContoAConto(Long idConto,Long idTipoConto) throws SigebaException;
-    
-    void disassociaTipoContoDaConto(Long idConto,Long idTipoConto) throws SigebaException;
+    void associaTipoContoAConto(Long idConto, Long idTipoConto) throws SigebaException;
+
+    void disassociaTipoContoDaConto(Long idConto, Long idTipoConto) throws SigebaException;
+
+    void associaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException;
+
+    void diassociaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException;
 }

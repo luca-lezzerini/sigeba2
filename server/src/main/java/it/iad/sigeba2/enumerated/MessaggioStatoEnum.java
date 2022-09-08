@@ -17,6 +17,9 @@ public enum MessaggioStatoEnum {
             GravitaStatoEnum.CRITICA),
     TIPO_CONTO_NON_TROVATO("Il tipoconto non è presente nel database",
     "verificare l'esatteza dei criteri di ricerca", 
+            GravitaStatoEnum.CRITICA),
+    FILIALE_NON_TROVATA("La filiale non e' presente nel database",
+            "verificare l'esatteza dei criteri di ricerca", 
             GravitaStatoEnum.CRITICA);
     
     private final String messaggio;
