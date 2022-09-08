@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AssociazioniServiceImpl implements AssociazioniService {
 
     @Autowired
+    FilialeRepository filialeRepository;
+    @Autowired
     TipoContoRepository tipoContoRepository;
     @Autowired
     ClienteRepository clienteRepository;
@@ -312,4 +314,63 @@ public class AssociazioniServiceImpl implements AssociazioniService {
         }
     }
 
+    @Override
+    public void associaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException {
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idConto == null || idFiliale == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idFiliale null");
+        }
+        //devono esistere sul db
+        Filiale filiale = filialeRepository.findById(idFiliale)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.FILIALE_NON_TROVATA);
+                    return new SigebaException("Cliente non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+
+        //associamo i due oggetti
+        contoCorrente.setFiliale(filiale);
+        contoCorrenteRepository.save(contoCorrente);
+        //   throw new SigebaException();
+    }
+
+    @Override
+    public void diassociaFilialeAConto(Long idConto, Long idFiliale) throws SigebaException {
+
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idConto == null || idFiliale == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idFiliale null");
+        }
+        //devono esistere sul db
+        Filiale filiale = filialeRepository.findById(idFiliale)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.FILIALE_NON_TROVATA);
+                    return new SigebaException("Filiale non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+
+        if (filiale == contoCorrente.getFiliale()) {
+            //disassociamo i due oggetti
+            contoCorrente.setFiliale(null);
+            contoCorrenteRepository.save(contoCorrente);
+        } else {
+            throw new SigebaException("Filiale e ContoCorrente non corrispondono");
+        }
+    }
 }
