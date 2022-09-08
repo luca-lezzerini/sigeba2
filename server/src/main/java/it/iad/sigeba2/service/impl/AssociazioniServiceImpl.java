@@ -129,5 +129,6 @@ public class AssociazioniServiceImpl implements AssociazioniService {
 public void disassociaContoDaCliente(Long idCliente, Long idConto) throws SigebaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+}
 
 }
