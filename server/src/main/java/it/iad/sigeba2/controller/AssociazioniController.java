@@ -105,7 +105,7 @@ public class AssociazioniController {
     public RispostaConStato<Void> disassociaTipoContoDaConto(@RequestBody IdAssociazioneDto idAssociazione) {
         log.info("Entrato nel controller disassociaTipoContoDaConto");
         try {
-            associazioniService.disassociaClienteDaConto(idAssociazione.getIdConto(), idAssociazione.getIdTipoConto());
+            associazioniService.disassociaTipoContoDaConto(idAssociazione.getIdConto(), idAssociazione.getIdTipoConto());
         } catch (SigebaException e) {
             log.warn("Ricevuta eccezione dal servizio disassociaTipoContoDaConto", e);
         }

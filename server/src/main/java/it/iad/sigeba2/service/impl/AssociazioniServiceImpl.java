@@ -231,8 +231,21 @@ public class AssociazioniServiceImpl implements AssociazioniService {
             contoCorrente.setTipo(null);
             contoCorrenteRepository.save(contoCorrente);
         } else {
-            throw new SigebaException("Cliente e ContoCorrente non corrispondono");
+            throw new SigebaException("TipoConto e ContoCorrente non corrispondono");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
