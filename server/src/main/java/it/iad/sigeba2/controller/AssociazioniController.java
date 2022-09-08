@@ -149,7 +149,7 @@ public class AssociazioniController {
     public RispostaConStato<Void> associaFilialeAConto(@RequestBody IdAssociazioneDto idAssociazione) {
         log.info("Entrato nel controller associaFilialeAConto");
         try {
-            associazioniService.associaFilialeAConto(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
+            associazioniService.associaFilialeAConto(idAssociazione.getIdConto(), idAssociazione.getIdFiliale());
         } catch (SigebaException e) {
             log.warn("Ricevuta eccezione dal servizio associaFilialeAConto", e);
         }
@@ -163,7 +163,7 @@ public class AssociazioniController {
     public RispostaConStato<Void> disassociaFilialeDaConto(@RequestBody IdAssociazioneDto idAssociazione) {
         log.info("Entrato nel controller disassociaFilialeDaConto");
         try {
-            associazioniService.disassociaFilialeDaConto(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
+            associazioniService.disassociaFilialeDaConto(idAssociazione.getIdConto(), idAssociazione.getIdFiliale());
         } catch (SigebaException e) {
             log.warn("Ricevuta eccezione dal servizio disassociaFilialeDaConto", e);
         }
