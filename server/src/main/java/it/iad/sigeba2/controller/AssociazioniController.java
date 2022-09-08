@@ -71,7 +71,20 @@ public class AssociazioniController {
         return risposta;
     }
 
-
+@RequestMapping("/disassociaContoDaCliente")
+    @ResponseBody
+    public RispostaConStato<Void> disassociaContoDaCliente(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller disassociaContoDaCliente");
+        try {
+            associazioniService.disassociaContoDaCliente(idAssociazione.getIdCliente(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio disassociaContoDaCliente", e);
+        }
+        RispostaConStato<Void> risposta = new RispostaConStato<>();
+        risposta.setStato(SigebaStateCollector.getAndClean());
+        return risposta;
+        
+    }
 
 
 
