@@ -47,7 +47,39 @@ public class AssociazioniServiceImpl implements AssociazioniService {
         //associamo i due oggetti
         contoCorrente.setCliente(cliente);
         contoCorrenteRepository.save(contoCorrente);
-        throw new SigebaException();
+        //   throw new SigebaException();
     }
 
+    @Transactional(rollbackFor = {SigebaException.class})
+    @Override
+    public void disassociaClienteDaConto(Long idConto, Long idCliente) throws SigebaException {
+
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idConto == null || idCliente == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idCliente null");
+        }
+        //devono esistere sul db
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CLIENTE_NON_TROVATO);
+                    return new SigebaException("Cliente non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+        
+        if (cliente == contoCorrente.getCliente()) {
+            //disassociamo i due oggetti
+            contoCorrente.setCliente(null);
+            contoCorrenteRepository.save(contoCorrente);
+        } else {
+            throw new SigebaException("Cliente e ContoCorrente non corrispondono");
+        }
+    }
 }

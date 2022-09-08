@@ -20,5 +20,5 @@ public interface ContoCorrenteRepository extends JpaRepository<ContoCorrente, Lo
     
     @Query(value = "select count(cc) from ContoCorrente cc where cc.filiale.id = :idFiliale")
     int contaCCPerFilialeJPQL(Long idFiliale);
-
+    
 }

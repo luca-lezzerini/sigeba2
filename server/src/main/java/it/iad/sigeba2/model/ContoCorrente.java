@@ -48,5 +48,5 @@ public class ContoCorrente implements Serializable {
         id = dto.getId();
         iban = dto.getIban();
         fido = dto.getFido();
-    }
+    } 
 }
