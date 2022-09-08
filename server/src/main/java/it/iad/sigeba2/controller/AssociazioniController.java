@@ -28,7 +28,7 @@ public class AssociazioniController {
     @Autowired
     private AssociazioniService associazioniService;
 
-    @RequestMapping("/associaClienteAConto")
+   @RequestMapping("/associaClienteAConto")
     @ResponseBody
     public RispostaConStato<Void> associaClienteAConto(@RequestBody IdAssociazioneDto idAssociazione) {
         log.info("Entrato nel controller associaClienteAConto");
@@ -57,4 +57,24 @@ public class AssociazioniController {
         
     }
     
+@RequestMapping("/associaContoACliente")
+    @ResponseBody
+    public RispostaConStato<Void> associaContoACliente(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller associaContoACliente");
+        try {
+            associazioniService.associaContoACliente(idAssociazione.getIdCliente(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio associaContoACliente", e);
+        }
+        RispostaConStato<Void> risposta = new RispostaConStato<>();
+        risposta.setStato(SigebaStateCollector.getAndClean());
+        return risposta;
+    }
+
+
+
+
+
+
+
 }
