@@ -401,12 +401,12 @@ public class AssociazioniServiceImpl implements AssociazioniService {
             SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
             throw new SigebaException("idConto o idFiliale null");
         }
-        //devono esistere sul db
+       //devono esistere sul db
         Filiale filiale = filialeRepository.findById(idFiliale)
                 .map(it -> it)
                 .orElseThrow(() -> {
                     SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.FILIALE_NON_TROVATA);
-                    return new SigebaException("Cliente non trovato");
+                    return new SigebaException("Filiale non trovata");
                 });
         ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
                 .map(it -> it)
@@ -418,7 +418,6 @@ public class AssociazioniServiceImpl implements AssociazioniService {
         //associamo i due oggetti
         contoCorrente.setFiliale(filiale);
         contoCorrenteRepository.save(contoCorrente);
-        //   throw new SigebaException();
     }
 
     @Override
