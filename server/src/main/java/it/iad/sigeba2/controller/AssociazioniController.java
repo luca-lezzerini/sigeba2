@@ -113,7 +113,20 @@ public class AssociazioniController {
         risposta.setStato(SigebaStateCollector.getAndClean());
         return risposta;
 
+
+@RequestMapping("/associaContoATipoConto")
+    @ResponseBody
+    public RispostaConStato<Void> associaContoATipoConto(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller associaContoATipoConto");
+        try {
+            associazioniService.associaContoATipoConto(idAssociazione.getIdTipoConto(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio associaContoATipoConto", e);
+
+
+
     }
+
 
     @RequestMapping("/associaContoAFiliale")
     @ResponseBody
@@ -123,11 +136,25 @@ public class AssociazioniController {
             associazioniService.associaContoAFiliale(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
         } catch (SigebaException e) {
             log.warn("Ricevuta eccezione dal servizio associaContoAFiliale", e);
+
         }
         RispostaConStato<Void> risposta = new RispostaConStato<>();
         risposta.setStato(SigebaStateCollector.getAndClean());
         return risposta;
     }
+
+
+    @RequestMapping("/disassociaContoDaTipoConto")
+    @ResponseBody
+    public RispostaConStato<Void> disassociaContoDaTipoConto(@RequestBody IdAssociazioneDto idAssociazione) {
+        log.info("Entrato nel controller disassociaContoDaCliente");
+        try {
+            associazioniService.disassociaContoDaTipoConto(idAssociazione.getIdTipoConto(), idAssociazione.getIdConto());
+        } catch (SigebaException e) {
+            log.warn("Ricevuta eccezione dal servizio disassociaContoDaCliente", e);
+
+    
+
 
     @RequestMapping("/disassociaContoDaFiliale")
     @ResponseBody
@@ -137,6 +164,7 @@ public class AssociazioniController {
             associazioniService.disassociaContoDaFiliale(idAssociazione.getIdFiliale(), idAssociazione.getIdConto());
         } catch (SigebaException e) {
             log.warn("Ricevuta eccezione dal servizio disassociaContoDaFiliale", e);
+
         }
         RispostaConStato<Void> risposta = new RispostaConStato<>();
         risposta.setStato(SigebaStateCollector.getAndClean());

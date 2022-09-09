@@ -238,6 +238,87 @@ public class AssociazioniServiceImpl implements AssociazioniService {
             throw new SigebaException("TipoConto e ContoCorrente non corrispondono");
         }
     }
+    @Transactional(rollbackFor = {SigebaException.class})
+    @Override
+    public void associaContoATipoConto(Long idTipoConto, Long idConto) throws SigebaException {
+   
+    
+
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idTipoConto == null || idConto == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idTipoConto null");
+        }
+        //devono esistere sul db
+        TipoConto tipoConto = tipoContoRepository.findById(idTipoConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.TIPO_CONTO_NON_TROVATO);
+                    return new SigebaException("TipoConto non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+
+        //associamo i due oggetti
+        List<ContoCorrente> tipoConti;
+        tipoConti = tipoConto.getContiCorrenti();
+        log.debug("Cerco la lista conti");
+        if (tipoConti == null) {
+            log.debug("Lista null, quindi creo una nuova lista");
+            tipoConti = new ArrayList<>();
+
+        }
+
+        associaTipoContoAConto(idConto, idTipoConto);
+        tipoConti.add(contoCorrente);
+        tipoContoRepository.save(tipoConto);
+
+        //   throw new SigebaException();
+    }
+
+    
+
+    @Transactional(rollbackFor = {SigebaException.class})
+    @Override
+    public void disassociaContoDaTipoConto(Long idTipoConto, Long idConto) throws SigebaException {
+
+        //verificare la correttezza degli input
+        //devono essere non null
+        if (idConto == null || idTipoConto == null) {
+            SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.ENTITA_DA_ASSOCIARE_NULL);
+            throw new SigebaException("idConto o idCliente null");
+        }
+        //devono esistere sul db
+        TipoConto tipoConto = tipoContoRepository.findById(idTipoConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.TIPO_CONTO_NON_TROVATO);
+                    return new SigebaException("TipoContoCorrente non trovato");
+                });
+        ContoCorrente contoCorrente = contoCorrenteRepository.findById(idConto)
+                .map(it -> it)
+                .orElseThrow(() -> {
+                    SigebaStateCollector.addStatusMessage(MessaggioStatoEnum.CONTO_CORRENTE_NON_TROVATO);
+                    return new SigebaException("Conto Corrente non trovato");
+                });
+        List<ContoCorrente> tipiConti = tipoConto.getContiCorrenti();
+
+        if (tipiConti.contains(contoCorrente)) {
+            //disassociamo i due oggetti
+            tipiConti.remove(contoCorrente);
+            disassociaTipoContoDaConto(idConto, idTipoConto);
+            tipoContoRepository.save(tipoConto);
+        } else {
+            throw new SigebaException("TipoConto e ContoCorrente non corrispondono");
+        }
+    }
+   
+
 
     @Transactional(rollbackFor = {SigebaException.class})
     @Override

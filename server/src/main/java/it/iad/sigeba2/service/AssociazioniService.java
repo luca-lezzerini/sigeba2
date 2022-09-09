@@ -26,9 +26,16 @@ public interface AssociazioniService {
     void associaTipoContoAConto(Long idConto,Long idTipoConto) throws SigebaException;
     
     void disassociaTipoContoDaConto(Long idConto,Long idTipoConto) throws SigebaException;
+
+
+    void associaContoATipoConto(Long idTipoConto,Long idConto) throws SigebaException;
+
+    void disassociaContoDaTipoConto(Long idTipoConto,Long idConto)throws SigebaException;
+
     
     void associaContoAFiliale(Long idFiliale, Long idConto ) throws SigebaException;
 
     void disassociaContoDaFiliale(Long idFiliale, Long idConto ) throws SigebaException;
     
+
 }
